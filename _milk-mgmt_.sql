@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `milkmgmt`
+-- Database: `milk-mgmt`
 --
 
 -- --------------------------------------------------------
@@ -33,15 +33,6 @@ CREATE TABLE `billno` (
   `count` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `billno`
---
-
-INSERT INTO `billno` (`sno`, `count`) VALUES
-(1, 2),
-(2, 1),
-(3, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -53,14 +44,6 @@ CREATE TABLE `category` (
   `name` varchar(255) NOT NULL,
   `active` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `category`
---
-
-INSERT INTO `category` (`id`, `name`, `active`) VALUES
-(1, 'Milk', 1),
-(2, 'Curd', 1);
 
 -- --------------------------------------------------------
 
@@ -163,14 +146,6 @@ CREATE TABLE `products` (
   `active` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `products`
---
-
-INSERT INTO `products` (`id`, `category_id`, `name`, `price`, `active`) VALUES
-(1, 1, 'Vijaya Milk', '24', 1),
-(2, 1, 'Arokya Milk', '25', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -184,15 +159,6 @@ CREATE TABLE `stores` (
   `code` varchar(255) NOT NULL,
   `active` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `stores`
---
-
-INSERT INTO `stores` (`id`, `name`, `type`, `code`, `active`) VALUES
-(1, 'Venkatadhri Nagar', 1, 'VENK', 1),
-(2, 'Vijaya Lakshmi Kiranam', 2, 'VILK', 1),
-(3, 'Pandey Stores', 2, 'PNDS', 1);
 
 -- --------------------------------------------------------
 
@@ -210,16 +176,6 @@ CREATE TABLE `subscribe` (
   `active` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `subscribe`
---
-
-INSERT INTO `subscribe` (`id`, `subscribe_no`, `user_id`, `store_id`, `net_amount`, `last_modified`, `active`) VALUES
-(1, 'VENK/00001', 6, 1, '24.00', '09:01:34 31-01-2021', 1),
-(2, 'VILK/00001', 7, 2, '980.00', '09:01:25 31-01-2021', 1),
-(3, 'PNDS/00001', 8, 3, '975.00', '09:01:38 31-01-2021', 1),
-(4, 'VENK/00002', 9, 1, '24.00', '09:01:44 31-01-2021', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -235,18 +191,6 @@ CREATE TABLE `subscribed_items` (
   `amount` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `subscribed_items`
---
-
-INSERT INTO `subscribed_items` (`id`, `order_id`, `product_id`, `product_name`, `qty`, `amount`) VALUES
-(1, 1, 1, 'Vijaya Milk', '1', '24.00'),
-(7, 2, 1, 'Vijaya Milk', '20', '480.00'),
-(8, 2, 2, 'Arokya Milk', '20', '500.00'),
-(9, 3, 1, 'Vijaya Milk', '25', '600.00'),
-(10, 3, 2, 'Arokya Milk', '15', '375.00'),
-(11, 4, 1, 'Vijaya Milk', '1', '24.00');
-
 -- --------------------------------------------------------
 
 --
@@ -261,19 +205,16 @@ CREATE TABLE `users` (
   `lastname` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
-  `store_id` int(11) NOT NULL
+  `store_id` int(11) NOT NULL,
+  `subscribed` int(11) DEFAULT 2
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `firstname`, `lastname`, `phone`, `address`, `store_id`) VALUES
-(1, 'admin', '$2y$10$yfi5nUQGXUZtMdl27dWAyOd/jMOmATBpiUvJDmUu9hJ5Ro6BE5wsK', 'Swakhil', 'M', '9848124934', '', 1),
-(6, 'mswakhil_vkn', '$2y$10$wt1JEv2pSIKYYW5aWhkKGOneAtaWaSJDYMe5UQUVwYD/CSIBzjuTe', 'swakhil', 'rao', '9848124934', '', 1),
-(7, 'test_vkn', '$2y$10$HcWyEg..o6ur73cdI2sFvOOwwk376vmzStoSiNX73XRqbd4JqWrZS', 'Test', '', '9876543215', '', 2),
-(8, 'test1_pnds', '$2y$10$qamWmzD9wT8SucvzaP1KCOXTvPUuEoxvRes0Bzk2u5YsE0X0dtkYq', 'test1', '', '9876543215', '', 3),
-(9, 'yamini_vnkn', '$2y$10$WUHE0PbEvG88Xs89s2Xhv.Ko9PdsO18wO63RRxPlDOkQNPvRqngqO', 'Yamini', '', '9875432157', '', 1);
+INSERT INTO `users` (`id`, `username`, `password`, `firstname`, `lastname`, `phone`, `address`, `store_id`, `subscribed`) VALUES
+(1, 'admin', '$2y$10$yfi5nUQGXUZtMdl27dWAyOd/jMOmATBpiUvJDmUu9hJ5Ro6BE5wsK', 'Swakhil', 'M', '9848124934', '', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -292,16 +233,7 @@ CREATE TABLE `user_group` (
 --
 
 INSERT INTO `user_group` (`id`, `user_id`, `group_id`) VALUES
-(1, 1, 1),
-(7, 0, 2),
-(9, 6, 2),
-(10, 7, 3),
-(11, 8, 2),
-(12, 9, 2);
-
---
--- Indexes for dumped tables
---
+(1, 1, 1);
 
 --
 -- Indexes for table `billno`
@@ -437,7 +369,7 @@ ALTER TABLE `subscribed_items`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `user_group`

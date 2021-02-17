@@ -48,11 +48,12 @@ class Model_subscribe extends CI_Model
 		date_default_timezone_set("Asia/Kolkata");
 		$date = date('h:m:s d-m-Y');
 		$date=((string)$date);
+		$user_id= $this->input->post('user_name');
 		
 		$data = array(
     		'subscribe_no' => $subscription_no,
 			'store_id' => $store_id,
-            'user_id' => $this->input->post('user_name'),
+            'user_id' => $user_id,
             'net_amount' => $this->input->post('gross_amount'),
             'last_modified' => $date,
             'active' => 1,
@@ -76,6 +77,8 @@ class Model_subscribe extends CI_Model
 
     		$this->db->insert('subscribed_items', $items);
     	}
+
+    	$update_subscribe = $this->db->query("UPDATE users SET subscribed = '1' WHERE id = $user_id");
 
 		return ($order_id) ? $order_id : false;
 	}

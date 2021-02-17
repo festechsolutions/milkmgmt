@@ -38,12 +38,12 @@ class Model_users extends CI_Model
 	public function getActiveUsersData($store_id)
 	{
 		if($store_id) {
-			$sql = "SELECT id,username FROM users WHERE store_id = ? AND id > 5";
+			$sql = "SELECT id,username from users WHERE store_id = ? AND id > 5 AND subscribed = 2";
 			$query = $this->db->query($sql, array($store_id));
 			return $query->result_array();
 		}
 
-		$sql = "SELECT id,username FROM users WHERE store_id = ? AND id > 5 ORDER BY id DESC";
+		$sql = "SELECT id,username from users WHERE store_id = ? AND id > 5 AND subscribed = 2 ORDER BY id DESC";
 		$query = $this->db->query($sql, array($store_id));
 		return $query->result_array();
 	}
