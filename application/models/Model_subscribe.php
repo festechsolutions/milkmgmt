@@ -114,7 +114,7 @@ class Model_subscribe extends CI_Model
 			$data = array(
 	    		'net_amount' => $this->input->post('gross_amount'),
 	            'last_modified' => $date,
-	            'active' => 1,
+	            'active' => $this->input->post('active'),
 	    	);
 
 			$this->db->where('id', $id);

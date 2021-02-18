@@ -116,7 +116,8 @@ $(document).ready(function() {
   // initialize the datatable 
   manageTable = $('#manageTable').DataTable({
     'ajax': base_url + 'subscribe/fetchSubscriptionData',
-    'order': []
+    'order': [],
+    "sScrollX": '100%'
   });
 
 });
