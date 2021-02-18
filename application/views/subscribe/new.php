@@ -187,7 +187,7 @@
                         
                       html += '</select>'+
                     '</td>'+ 
-                    '<td><input type="number" name="qty[]" id="qty_'+row_id+'" class="form-control" onkeyup="getTotal('+row_id+')"></td>'+
+                    '<td><input type="text" name="qty[]" id="qty_'+row_id+'" class="form-control" onkeyup="getTotal('+row_id+')"></td>'+
                     '<td><input type="text" name="rate[]" id="rate_'+row_id+'" class="form-control" readonly="true"><input type="hidden" name="rate_value[]" id="rate_value_'+row_id+'" class="form-control"></td>'+
                     '<td><input type="text" name="amount[]" id="amount_'+row_id+'" class="form-control" readonly="true"><input type="hidden" name="amount_value[]" id="amount_value_'+row_id+'" class="form-control"></td>'+
                     '<td style="width:10%;text-align:center"><button type="button" class="btn btn-default" onclick="removeRow(\''+row_id+'\')" style="background-color:#f44336;color:white"><i class="fa fa-close"></i></button></td>'+
@@ -214,7 +214,7 @@
     if(row) {
       var total = Number($("#rate_value_"+row).val()) * Number($("#qty_"+row).val());
       total = total.toFixed(2);
-      $("#amount_"+row).val(total);
+      //$("#amount_"+row).val(total);
       $("#amount_value_"+row).val(total);
       
       subAmount();
@@ -227,7 +227,7 @@
   // get the product information from the server
   function getProductData(row_id)
   {
-    var product_id = $("#product_"+row_id).val();    
+    var product_id = $("#product_"+row_id).val();  
     if(product_id == "") {
       $("#rate_"+row_id).val("");
       $("#rate_value_"+row_id).val("");
@@ -307,7 +307,7 @@
     $("#gross_amount_value").val(totalSubAmount);
 
     // total amount
-    var totalAmount = (Number(totalSubAmount) + Number(vat) + Number(service));
+    var totalAmount = Number(totalSubAmount);
     totalAmount = totalAmount.toFixed(2);
     $("#net_amount").val(totalAmount);
     $("#totalAmountValue").val(totalAmount);

@@ -105,14 +105,14 @@
                           </select>
                           </select>
                         </td>
-                        <td><input type="text" name="qty[]" id="qty_1" class="form-control" required onkeyup="getTotal(<?php echo $x; ?>)" value="<?php echo $val['qty'] ?>" autocomplete="off"></td>
+                        <td><input type="text" name="qty[]" id="qty_<?php echo $x; ?>" class="form-control" required onkeyup="getTotal(<?php echo $x; ?>)" value="<?php echo $val['qty'] ?>" autocomplete="off"></td>
                         <td>
                           <input type="text" name="rate[]" id="rate_<?php echo $x; ?>" class="form-control" readonly="true" value="<?php echo $val['amount']/$val['qty'] ?>" autocomplete="off">
                           <input type="hidden" name="rate_value[]" id="rate_value_<?php echo $x; ?>" value="<?php echo $val['amount']/$val['qty']?>" class="form-control" autocomplete="off">
                         </td>
                         <td>
                           <input type="text" name="amount[]" id="amount_<?php echo $x; ?>" class="form-control" readonly="true" value="<?php echo $val['amount'] ?>" autocomplete="off">
-                          <input type="hidden" name="amount_value[]" id="amount_value_<?php echo $x; ?>" class="form-control" autocomplete="off">
+                          <input type="hidden" name="amount_value[]" id="amount_value_<?php echo $x; ?>" class="form-control" autocomplete="off" value="<?php echo $val['amount'] ?>">
                         </td>
                         <td style="width:10%;text-align:center"><button type="button" class="btn btn-default" style="background-color:#f44336;color:white" onclick="removeRow('1')"><i class="fa fa-close"></i></button></td>
                      </tr>
@@ -131,6 +131,16 @@
                     <div class="col-sm-7">
                       <input type="text" class="form-control" id="gross_amount" name="gross_amount" readonly="true" value="<?php echo $subscribe_data['subscribe']['net_amount'] ?>" autocomplete="off">
                       <input type="hidden" class="form-control" id="gross_amount_value" name="gross_amount_value" value="<?php echo $subscribe_data['subscribe']['net_amount'] ?>" autocomplete="off">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="active_status" class="col-sm-5 control-label">Status</label>
+                    <div class="col-sm-7">
+                      <select type="text" class="form-control" id="active" name="active">
+                        <option value="1" <?php if($subscribe_data['subscribe']['active'] == 1) { echo 'selected="selected"'; } ?>>Active</option>
+                        <option value="2" <?php if($subscribe_data['subscribe']['active'] == 2) { echo 'selected="selected"'; } ?>>In Active</option>
+                      </select>
                     </div>
                   </div>
 
@@ -196,7 +206,7 @@
                         
                       html += '</select>'+
                     '</td>'+ 
-                    '<td><input type="number" name="qty[]" id="qty_'+row_id+'" class="form-control" onkeyup="getTotal('+row_id+')"></td>'+
+                    '<td><input type="text" name="qty[]" id="qty_'+row_id+'" class="form-control" onkeyup="getTotal('+row_id+')"></td>'+
                     '<td><input type="text" name="rate[]" id="rate_'+row_id+'" class="form-control" readonly="true"><input type="hidden" name="rate_value[]" id="rate_value_'+row_id+'" class="form-control"></td>'+
                     '<td><input type="text" name="amount[]" id="amount_'+row_id+'" class="form-control" readonly="true"><input type="hidden" name="amount_value[]" id="amount_value_'+row_id+'" class="form-control"></td>'+
                     '<td style="width:10%;text-align:center"><button type="button" class="btn btn-default" onclick="removeRow(\''+row_id+'\')" style="background-color:#f44336;color:white"><i class="fa fa-close"></i></button></td>'+
