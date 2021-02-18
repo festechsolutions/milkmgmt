@@ -1,10 +1,10 @@
 ######################
 Super Admin Crednetial
 ######################
-email: admin@admin.com
+email: admin
 password: password
 
-database name: restaurant
+database name: milkmgmt
 
 
 ###################
