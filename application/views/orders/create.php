@@ -46,63 +46,57 @@
                 <?php echo validation_errors(); ?>
 
                 <div class="form-group">
-                  <label for="gross_amount" class="col-sm-12 control-label">Date: <?php date_default_timezone_set("Asia/Kolkata"); echo date('Y-m-d') ?></label>
-                </div>
-                <div class="form-group">
-                  <label for="gross_amount" class="col-sm-12 control-label">Date: <?php date_default_timezone_set("Asia/Kolkata"); echo date('h:i a') ?></label>
+                  <label for="gross_amount" class="col-sm-12 control-label">Date-Time: <?php date_default_timezone_set("Asia/Kolkata"); echo date('h:i A, d-M-Y') ?></label>
                 </div>
 
                 <div class="col-md-4 col-xs-12 pull pull-left">
                   <div class="form-group">
-                    <h4><label for="gross_amount" class="col-sm-5 control-label" style="text-align:center;">Select Colony :</label></h4>
+                    <h4><label for="store_name" class="col-sm-5 control-label" style="text-align:center;">Select Store / Colony Name:</label></h4>
                     <div class="col-sm-7">
-                       <select class="form-control select_group product" data-row-id="row_1" id="product_1" name="product[]" style="width:100%;" onchange="getProductData(1)" placeholder="Please select Store/Colony" required>
-                            <option value=""></option>
-                            <?php foreach ($store as $k => $v): ?>
+                       <select class="form-control" id="store_name" name="store_name" onchange="getUsersData()" style="width:100%;" required>
+                            <option value="">Please select Store / Colony</option>
+                            <?php foreach ($stores as $k => $v): ?>
                               <option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option>
                             <?php endforeach ?>
                         </select>
                     </div>
                   </div>
-                </div><br><br><br>
+                </div><br>
                 
                 <br /> <br/>
                 <table class="table table-bordered" id="product_info_table">
                   <thead>
                     <tr valign="middle">
-                      <th style="width:20%;text-align:center">Quantity</th>
-                      <th style="width:30%;text-align:center">Product Name</th>
-                      <th style="width:20%;text-align:center">Type</th>
-                      <th style="width:20%;text-align:center">Amount</th>
-                      <th style="width:10%;text-align:center"><button type="button" id="add_row" style="background-color:#4CAF50" class="btn btn-default"><i class="fa fa-plus" style="color:white"></i></button></th>
+                      <th style="width:30%;text-align:center">Name</th>
+                      <th style="width:10%;text-align:center">Milk</th>
+                      <th style="width:10%;text-align:center">Curd</th>
+                      <th colspan='2' style="width:40%;text-align:center">Extra</th>
                     </tr>
                   </thead>
 
                    <tbody>
-                     <tr id="row_1" valign="baseline">
-                       <td><input type="number" name="qty[]" id="qty_1" class="form-control" placeholder="ENTER QUANTITY" required onkeyup="getTotal(1)"></td>
-                       <td>
-                        <select class="form-control select_group product" data-row-id="row_1" id="product_1" name="product[]" style="width:100%;" onchange="getProductData(1)" required>
-                            <option value=""></option>
+                     <tr>
+                      <td style="width:20%;text-align:center">Swakhil M</td>
+                      <td style="width:10%;text-align:center"><input type="checkbox"></td>
+                      <td style="width:10%;text-align:center"><input type="checkbox"></td>
+                      <td style="width:30%;text-align:center">
+                        <select class="form-control" id="product_name" name="product_name" onchange="getProductsData()" style="width:100%;" required>
+                            <option value="">Product</option>
                             <?php foreach ($products as $k => $v): ?>
                               <option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option>
                             <?php endforeach ?>
+                        </select>
+                        <td style="width:20%;text-align:center">
+                          <select type="text" class="form-control" id="qty" name="qty">
+                            <option value="">Select Quantity</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
                           </select>
                         </td>
-                        <td>
-                          <input type="text" name="type[]" id="type_1" class="form-control" style='text-transform:uppercase' placeholder="Enter Type" required autocomplete="off">
-                        </td>
-                        <td>
-                          <input type="text" name="amount[]" id="amount_1" class="form-control amount" placeholder="ENTER AMOUNT" required autocomplete="off">
-                          <input type="hidden" name="amount_value[]" id="amount_value_1" class="form-control" autocomplete="off">
-                        </td>
-                        <td style="text-align:center"><button type="button" class="btn btn-default" style="background-color:#f44336" onclick="removeRow('1')"><i class="fa fa-close" style="color:white"></i></button></td>
-                     </tr>
-                     <tr>
-                      <td><input type="checkbox"></td>
-                      <td><input type="checkbox"></td>
-                      <td><input type="checkbox"></td>
-                      <td><input type="checkbox"></td>
+                      </td>
                     </tr>
                    </tbody>
                 </table>
