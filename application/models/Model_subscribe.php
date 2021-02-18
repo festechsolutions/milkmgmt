@@ -77,6 +77,8 @@ class Model_subscribe extends CI_Model
     		$this->db->insert('subscribed_items', $items);
     	}
 
+    	$update_subscribe = $this->db->query("UPDATE users SET subscribed = '1' WHERE id = $user_id");
+
 		return ($order_id) ? $order_id : false;
 	}
 

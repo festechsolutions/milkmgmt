@@ -46,10 +46,10 @@
                 <?php echo validation_errors(); ?>
 
                 <div class="form-group">
-                  <label for="gross_amount" class="col-sm-12 control-label">Date: <?php date_default_timezone_set("Asia/Kolkata"); echo date('Y-m-d') ?></label>
+                  <label for="gross_amount" class="col-sm-12 control-label">Date: <?php date_default_timezone_set("Asia/Kolkata"); echo date('d-m-Y') ?></label>
                 </div>
                 <div class="form-group">
-                  <label for="gross_amount" class="col-sm-12 control-label">Date: <?php date_default_timezone_set("Asia/Kolkata"); echo date('h:i a') ?></label>
+                  <label for="gross_amount" class="col-sm-12 control-label">Time: <?php date_default_timezone_set("Asia/Kolkata"); echo date('h:i a') ?></label>
                 </div>
 
                 <div class="col-md-4 col-xs-12 pull pull-left">
