@@ -185,7 +185,7 @@ class Subscribe extends Admin_Controller
 
         $response = array();
         if($product_id) {
-            $delete = $this->model_products->remove($product_id);
+            $delete = $this->model_subscribe->remove($product_id);
             if($delete == true) {
                 $response['success'] = true;
                 $response['messages'] = "Successfully removed"; 
