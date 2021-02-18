@@ -106,49 +106,6 @@
         <?php endif; ?>
         
 
-        <?php if(in_array('createOrder', $user_permission) || in_array('updateOrder', $user_permission) || in_array('viewOrder', $user_permission) || in_array('deleteOrder', $user_permission)): ?>
-            <li class="treeview" id="OrderMainNav">
-              <a href="#">
-                <i class="fa fa-database"></i>
-                <span>Deliver</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <?php if(in_array('createOrder', $user_permission)): ?>
-                  <li id="createOrderSubMenu"><a href="<?php echo base_url('orders/create') ?>"><i class="fa fa-circle-o"></i> To Colonies</a></li>
-                <?php endif; ?>
-                <?php if(in_array('createOrder', $user_permission)): ?>
-                  <li id="createOrderSubMenu"><a href="<?php echo base_url('orders/create') ?>"><i class="fa fa-circle-o"></i> To Stores</a></li>
-                <?php endif; ?>
-                <?php if(in_array('updateOrder', $user_permission) || in_array('viewOrder', $user_permission) || in_array('deleteOrder', $user_permission)): ?>
-                <li id="manageOrderSubMenu"><a href="<?php echo base_url('orders') ?>"><i class="fa fa-circle-o"></i> Manage Deliveries</a></li>
-                <?php endif; ?>
-              </ul>
-            </li>
-          <?php endif; ?>
-
-          <?php if(in_array('viewReport', $user_permission)): ?>
-            <li class="treeview" id="ReportMainNav">
-              <a href="#">
-                <i class="fa fa-signal"></i>
-                <span>Reports</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <?php if(in_array('viewReport', $user_permission)): ?>
-                  <li id="productReportSubMenu"><a href="<?php echo base_url('reports') ?>"><i class="fa fa-circle-o"></i> Total shops</a></li>
-                  <li id="storeReportSubMenu"><a href="<?php echo base_url('reports/storewise') ?>"><i class="fa fa-circle-o"></i> Shop wise</a></li>
-                  <li id="daywiseReportSubMenu"><a href="<?php echo base_url('reports/daywise') ?>"><i class="fa fa-circle-o"></i> Day wise</a></li>
-                  <li id="summaryReportSubMenu"><a href="<?php echo base_url('reports/summary') ?>"><i class="fa fa-circle-o"></i> Summary</a></li>
-                <?php endif; ?>
-              </ul>
-            </li>
-          <?php endif; ?>
-
           <?php if(in_array('updateCompany', $user_permission)): ?>
             <li id="companyMainNav"><a href="<?php echo base_url('company/') ?>"><i class="fa fa-files-o"></i> <span>Company Info</span></a></li>
           <?php endif; ?>
