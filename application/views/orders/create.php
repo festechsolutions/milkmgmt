@@ -49,13 +49,22 @@
                   <label for="gross_amount" class="col-sm-12 control-label">Date-Time: <?php date_default_timezone_set("Asia/Kolkata"); echo date('h:i A, d-M-Y') ?></label>
                 </div>
 
+                <div class="col-md-4 col-xs-12 pull pull-right">
+                  <div class="form-group">
+                    <h4><label for="gross_amount" class="col-sm-5 control-label" style="text-align:left;">Select Date :</label></h4>
+                    <div class="col-sm-7">
+                       <input type="date" name="date" id="date" class="form-control" max="<?php echo date('d-m-Y'); ?>" required autocomplete="off" placeholder="Select Date">
+                    </div>
+                  </div>
+                </div>
+
                 <div class="col-md-4 col-xs-12 pull pull-left">
                   <div class="form-group">
                     <h4><label for="store_name" class="col-sm-5 control-label" style="text-align:center;">Select Store / Colony Name:</label></h4>
                     <div class="col-sm-7">
                        <select class="form-control" id="store_name" name="store_name" onchange="getUsersData()" style="width:100%;" required>
                             <option value="">Please select Store / Colony</option>
-                            <?php foreach ($stores as $k => $v): ?>
+                            <?php foreach ($store as $k => $v): ?>
                               <option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option>
                             <?php endforeach ?>
                         </select>
@@ -68,8 +77,7 @@
                   <thead>
                     <tr valign="middle">
                       <th style="width:30%;text-align:center">Name</th>
-                      <th style="width:10%;text-align:center">Milk</th>
-                      <th style="width:10%;text-align:center">Curd</th>
+                      <th style="width:10%;text-align:center">Subscribed</th>
                       <th colspan='2' style="width:40%;text-align:center">Extra</th>
                     </tr>
                   </thead>
@@ -77,7 +85,6 @@
                    <tbody>
                      <tr>
                       <td style="width:20%;text-align:center">Swakhil M</td>
-                      <td style="width:10%;text-align:center"><input type="checkbox"></td>
                       <td style="width:10%;text-align:center"><input type="checkbox"></td>
                       <td style="width:30%;text-align:center">
                         <select class="form-control" id="product_name" name="product_name" onchange="getProductsData()" style="width:100%;" required>
@@ -256,7 +263,7 @@
     
     var maxDate = year + '-' + month + '-' + day;
     //alert(maxDate);
-    $('#due_date').attr('min', maxDate);
+    $('#date').attr('max', maxDate);
 });
 
 </script>

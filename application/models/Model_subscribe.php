@@ -110,15 +110,19 @@ class Model_subscribe extends CI_Model
 			date_default_timezone_set("Asia/Kolkata");
 			$date = date('h:m:s d-m-Y');
 			$date=((string)$date);
+			$active = $this->input->post('active');
 			
 			$data = array(
 	    		'net_amount' => $this->input->post('gross_amount'),
 	            'last_modified' => $date,
-	            'active' => $this->input->post('active'),
+	            'active' => $active,
 	    	);
 
 			$this->db->where('id', $id);
 			$update = $this->db->update('subscribe', $data);
+			$fetch_id = $this->db->query("SELECT * FROM subscribe where id=$id");
+			$que = $fetch_id->row_array();
+			$user_id = $que['user_id'];
 
 			// now remove the order item data 
 			$this->db->where('order_id', $id);
@@ -138,6 +142,9 @@ class Model_subscribe extends CI_Model
 	    		);
 	    		$this->db->insert('subscribed_items', $items);
 	    	}
+
+	    	$update_subscribe = $this->db->query("UPDATE users SET subscribed = $active WHERE id = $user_id");
+
 			return true;
 		}
 	}
