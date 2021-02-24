@@ -49,20 +49,20 @@
                   <label for="gross_amount" class="col-sm-12 control-label">Date-Time: <?php date_default_timezone_set("Asia/Kolkata"); echo date('h:i A, d-M-Y') ?></label>
                 </div>
 
-                <div class="col-md-4 col-xs-12 pull pull-right">
+                <!--<div class="col-md-4 col-xs-12 pull pull-right">
                   <div class="form-group">
                     <h4><label for="gross_amount" class="col-sm-5 control-label" style="text-align:left;">Select Date :</label></h4>
                     <div class="col-sm-7">
                        <input type="date" name="date" id="date" class="form-control" max="<?php echo date('d-m-Y'); ?>" required autocomplete="off" placeholder="Select Date">
                     </div>
                   </div>
-                </div>
+                </div>-->
 
                 <div class="col-md-4 col-xs-12 pull pull-left">
                   <div class="form-group">
                     <h4><label for="store_name" class="col-sm-5 control-label" style="text-align:center;">Select Store / Colony Name:</label></h4>
                     <div class="col-sm-7">
-                       <select class="form-control" id="store_name" name="store_name" onchange="getUsersData()" style="width:100%;" required>
+                       <select class="form-control" id="store_name" name="store_name" onchange="getSubscribedUsersData()" style="width:100%;" required>
                             <option value="">Please select Store / Colony</option>
                             <?php foreach ($store as $k => $v): ?>
                               <option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option>
@@ -73,7 +73,7 @@
                 </div><br>
                 
                 <br /> <br/>
-                <table class="table table-bordered" id="product_info_table">
+                <table class="table table-bordered" id="users_info_table">
                   <thead>
                     <tr valign="middle">
                       <th style="width:30%;text-align:center">Name</th>
@@ -83,46 +83,11 @@
                   </thead>
 
                    <tbody>
-                     <tr>
-                      <td style="width:20%;text-align:center">Swakhil M</td>
-                      <td style="width:10%;text-align:center"><input type="checkbox"></td>
-                      <td style="width:30%;text-align:center">
-                        <select class="form-control" id="product_name" name="product_name" onchange="getProductsData()" style="width:100%;" required>
-                            <option value="">Product</option>
-                            <?php foreach ($products as $k => $v): ?>
-                              <option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option>
-                            <?php endforeach ?>
-                        </select>
-                        <td style="width:20%;text-align:center">
-                          <select type="text" class="form-control" id="qty" name="qty">
-                            <option value="">Select Quantity</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                          </select>
-                        </td>
-                      </td>
-                    </tr>
+                      <tr></tr>
                    </tbody>
                 </table>
 
                 <br /> <br/>
-
-                <div class="col-md-6 col-xs-12 pull pull-right">
-
-                  <div class="form-group">
-                    <label for="net_amount" class="col-sm-5 control-label">Net Amount</label>
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" id="net_amount" name="net_amount" disabled autocomplete="off">
-                      <input type="hidden" class="form-control" id="net_amount_value" name="net_amount_value" autocomplete="off">
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-              <!-- /.box-body -->
 
               <div class="box-footer">
                 <button type="submit" class="btn btn-primary" onclick="this.disabled=true;this.value='Submitting...';this.form.submit();">Create Order</button>
@@ -228,18 +193,35 @@
     $('#net_amount').val(mysave);
   });
 
-  function calculateSum() {
-    var amount = 0;
-    //iterate through each textboxes and add the values
-    $(".amount").each(function() {
-      //add only if the value is number
-      if(!isNaN(this.value) && this.value.length!=0) {
-        amount += parseFloat(this.value);
-      }
+  function getSubscribedUsersData()
+  {
+    var store_id = $("#store_name").val();
+    
+    var table = $("#users_info_table");
+    var count_table_tbody_tr = $("#users_info_table tbody tr").length;
+    var extra = '';
+    var row_id = 0;
+    var html = '';
+  
+    $.ajax({
+        url: base_url + 'users/getSubscribedUsersData',
+        type: "post",
+        data: {store_id : store_id},
+        dataType: "json",
+        success:function(data) {
+          $('#users_info_table tbody tr').empty();
+          $.each(data, function(key, value) {
+            row_id++;
+            extra = '<td style="width:30%;text-align:center" id="extra_product_'+row_id+'"><select class="form-control" id="product_name" name="product_name" onchange="getProductsData()" style="width:100%;" required><option value="">Product</option><?php foreach ($products as $k => $v): ?><option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option><?php endforeach ?></select><td style="width:20%;text-align:center" id="extra_qty_'+row_id+'"><select type="text" class="form-control" id="qty" name="qty"><option value="">Select Quantity</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></td>';
+            html+= '<tr id="row_'+row_id+'"><td style="width:20%;text-align:left"><p>'+value.firstname+'</p></td><td style="width:10%;text-align:center"><input type="checkbox" name="subscribed[]" id="'+value.id+'"></td>';
+            html+=extra;
+            html+='</tr>';
+          });
+          if(count_table_tbody_tr >= 0) {
+            $("#users_info_table tbody tr:last").after(html);
+          }
+        }
     });
-    //.toFixed() method will roundoff the final sum to 2 decimal places
-    $('#net_amount').val(amount.toFixed(2));
-    $('#net_amount_value').val(amount.toFixed(2));
   }
 
   function removeRow(tr_id)

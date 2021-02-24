@@ -49,6 +49,15 @@ class Users extends Admin_Controller
         }
     }
 
+    public function getSubscribedUsersData()
+    {
+        $store_id = $this->input->post('store_id');
+        if($store_id){
+        	$users = $this->model_users->getSubscribedUsersData($store_id);
+        	echo json_encode($users);
+        }
+    }
+
 	public function create()
 	{
 

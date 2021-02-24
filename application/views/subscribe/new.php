@@ -70,7 +70,7 @@
                     <h4><label for="user_name" class="col-sm-5 control-label" style="text-align:center;">Select User:</label></h4>
                     <div class="col-sm-7">
                        <select class="form-control" id="user_name" name="user_name" style="width:100%;" required>
-                            <option>-- Select User --</option>
+                            <option value="">-- Select User --</option>
                         </select>
                     </div>
                   </div>
@@ -99,7 +99,7 @@
                           </select>
                           </select>
                         </td>
-                        <td><input type="number" name="qty[]" id="qty_1" class="form-control" required onkeyup="getTotal(1)"></td>
+                        <td><input type="test" name="qty[]" id="qty_1" class="form-control" required onkeyup="getTotal(1)"></td>
                         <td>
                           <input type="text" name="rate[]" id="rate_1" class="form-control" disabled autocomplete="off">
                           <input type="hidden" name="rate_value[]" id="rate_value_1" class="form-control" autocomplete="off">
@@ -214,7 +214,7 @@
     if(row) {
       var total = Number($("#rate_value_"+row).val()) * Number($("#qty_"+row).val());
       total = total.toFixed(2);
-      //$("#amount_"+row).val(total);
+      $("#amount_"+row).val(total);
       $("#amount_value_"+row).val(total);
       
       subAmount();
