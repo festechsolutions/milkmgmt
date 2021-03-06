@@ -117,19 +117,19 @@
               </a>
               <ul class="treeview-menu">
                 <?php if(in_array('createOrder', $user_permission)): ?>
-                  <li id="createOrderSubMenu"><a href="<?php echo base_url('orders/create') ?>"><i class="fa fa-circle-o"></i> To Colonies</a></li>
+                  <li id="createOrderSubMenu"><a href="<?php echo base_url('orders/create') ?>"><i class="fa fa-circle-o"></i> To Stores/Colonies</a></li>
                 <?php endif; ?>
-                <?php if(in_array('createOrder', $user_permission)): ?>
+                <!--<?php if(in_array('createOrder', $user_permission)): ?>
                   <li id="createOrderSubMenu"><a href="<?php echo base_url('orders/create') ?>"><i class="fa fa-circle-o"></i> To Stores</a></li>
                 <?php endif; ?>
                 <?php if(in_array('updateOrder', $user_permission) || in_array('viewOrder', $user_permission) || in_array('deleteOrder', $user_permission)): ?>
                 <li id="manageOrderSubMenu"><a href="<?php echo base_url('orders') ?>"><i class="fa fa-circle-o"></i> Manage Deliveries</a></li>
-                <?php endif; ?>
+                <?php endif; ?>-->
               </ul>
             </li>
           <?php endif; ?>
 
-          <?php if(in_array('viewReport', $user_permission)): ?>
+          <!--<?php if(in_array('viewReport', $user_permission)): ?>
             <li class="treeview" id="ReportMainNav">
               <a href="#">
                 <i class="fa fa-signal"></i>
@@ -147,7 +147,7 @@
                 <?php endif; ?>
               </ul>
             </li>
-          <?php endif; ?>
+          <?php endif; ?>-->
 
           <?php if(in_array('updateCompany', $user_permission)): ?>
             <li id="companyMainNav"><a href="<?php echo base_url('company/') ?>"><i class="fa fa-files-o"></i> <span>Company Info</span></a></li>
