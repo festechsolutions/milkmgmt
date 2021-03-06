@@ -1,5 +1,5 @@
 
-
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -23,15 +23,17 @@
         <div id="messages"></div>
 
         <?php if($this->session->flashdata('success')): ?>
-          <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <?php echo $this->session->flashdata('success'); ?>
-          </div>
+        <div class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+          <?php echo $this->session->flashdata('success'); ?>
+        </div>
         <?php elseif($this->session->flashdata('error')): ?>
-          <div class="alert alert-error alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <?php echo $this->session->flashdata('error'); ?>
-          </div>
+        <div class="alert alert-error alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+          <?php echo $this->session->flashdata('error'); ?>
+        </div>
         <?php endif; ?>
 
 
@@ -41,15 +43,17 @@
           </div>
           <!-- /.box-header -->
           <form role="form" action="<?php base_url('orders/create') ?>" method="post" class="form-horizontal">
-              <div class="box-body">
+            <div class="box-body">
 
-                <?php echo validation_errors(); ?>
+              <?php echo validation_errors(); ?>
 
-                <div class="form-group">
-                  <label for="gross_amount" class="col-sm-12 control-label">Date-Time: <?php date_default_timezone_set("Asia/Kolkata"); echo date('h:i A, d-M-Y') ?></label>
-                </div>
+              <div class="form-group">
+                <label for="gross_amount" class="col-sm-12 control-label">Date-Time:
+                  <?php date_default_timezone_set("Asia/Kolkata"); echo date('h:i A, d-M-Y') ?>
+                </label>
+              </div>
 
-                <!--<div class="col-md-4 col-xs-12 pull pull-right">
+              <!--<div class="col-md-4 col-xs-12 pull pull-right">
                   <div class="form-group">
                     <h4><label for="gross_amount" class="col-sm-5 control-label" style="text-align:left;">Select Date :</label></h4>
                     <div class="col-sm-7">
@@ -58,42 +62,40 @@
                   </div>
                 </div>-->
 
-                <div class="col-md-4 col-xs-12 pull pull-left">
-                  <div class="form-group">
-                    <h4><label for="store_name" class="col-sm-5 control-label" style="text-align:center;">Select Store / Colony Name:</label></h4>
-                    <div class="col-sm-7">
-                       <select class="form-control" id="store_name" name="store_name" onchange="getSubscribedUsersData()" style="width:100%;" required>
-                            <option value="">Please select Store / Colony</option>
-                            <?php foreach ($store as $k => $v): ?>
-                              <option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option>
-                            <?php endforeach ?>
-                        </select>
-                    </div>
+              <div class="col-md-4 col-xs-12 pull pull-left">
+                <div class="form-group">
+                  <h4><label for="store_name" class="col-sm-5 control-label" style="text-align:center;">Select Store /
+                      Colony Name:</label></h4>
+                  <div class="col-sm-7">
+                    <select class="form-control" id="store_name" name="store_name" onchange="getSubscribedUsersData()"
+                      style="width:100%;" required>
+                      <option value="">Please select Store / Colony</option>
+                      <?php foreach ($store as $k => $v): ?>
+                      <option value="<?php echo $v['id'] ?>">
+                        <?php echo $v['name'] ?>
+                      </option>
+                      <?php endforeach ?>
+                    </select>
                   </div>
-                </div><br>
-                
-                <br /> <br/>
-                <table class="table table-bordered" id="users_info_table">
-                  <thead>
-                    <tr valign="middle">
-                      <th style="width:30%;text-align:center">Name</th>
-                      <th style="width:10%;text-align:center">Subscribed</th>
-                      <th colspan='2' style="width:40%;text-align:center">Extra</th>
-                    </tr>
-                  </thead>
+                </div>
+              </div><br>
 
-                   <tbody>
-                      <tr></tr>
-                   </tbody>
+              <br /> <br />
+              <div id='newOne'>
+                <div class="prdiv">
+                  <div></div>
+                  <div>
+                    <h5> Name</h5>
+                  </div>
+                  <div>
+                    <h5>Subscribed</h5>
+                  </div>
+                </div>
+                <div id="tab1"></div>
                 </table>
-
-                <br /> <br/>
-
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary" onclick="this.disabled=true;this.value='Submitting...';this.form.submit();">Create Order</button>
-                <a href="<?php echo base_url('orders/') ?>" class="btn btn-warning">Back</a>
               </div>
-            </form>
+              <br/> <br/>
+          </form>
           <!-- /.box-body -->
         </div>
         <!-- /.box -->
@@ -109,78 +111,73 @@
 <script type="text/javascript">
   var base_url = "<?php echo base_url(); ?>";
 
-  $(document).ready(function() {
+  $(document).ready(function () {
     //var iCnt = 0;
     $(".select_group").select2();
     // $("#description").wysihtml5();
 
     $("#OrderMainNav").addClass('active');
     $("#createOrderSubMenu").addClass('active');
-    
-    var btnCust = '<button type="button" class="btn btn-secondary" title="Add picture tags" ' + 
-        'onclick="alert(\'Call your custom code here.\')">' +
-        '<i class="glyphicon glyphicon-tag"></i>' +
-        '</button>'; 
-  
+
+    var btnCust = '<button type="button" class="btn btn-secondary" title="Add picture tags" ' +
+      'onclick="alert(\'Call your custom code here.\')">' +
+      '<i class="glyphicon glyphicon-tag"></i>' +
+      '</button>';
+
     // Add new row in the table 
-    $("#add_row").unbind('click').bind('click', function() {
+    $("#add_row").unbind('click').bind('click', function () {
       //if (iCnt < 5) { 
-        //iCnt = iCnt + 1;
-        var table = $("#product_info_table");
-        var count_table_tbody_tr = $("#product_info_table tbody tr").length;
-        var row_id = count_table_tbody_tr + 1;
+      //iCnt = iCnt + 1;
+      var table = $("#product_info_table");
+      var count_table_tbody_tr = $("#product_info_table tbody tr").length;
+      var row_id = count_table_tbody_tr + 1;
 
-        $.ajax({
-          url: base_url + '/orders/getTableProductRow/',
-          type: 'post',
-          dataType: 'json',
-          success:function(response) {
-            
-              // console.log(reponse.x);
-               var html = '<tr id="row_'+row_id+'" valign="baseline">'+
-                   '<td><input type="number" name="qty[]" id="qty_'+row_id+'" class="form-control" placeholder="ENTER QUANTITY" required onkeyup="getTotal('+row_id+')"></td>'+
-                   '<td>'+ 
-                    '<select class="form-control select_group product" data-row-id="'+row_id+'" id="product_'+row_id+'" name="product[]" style="width:100%;" onchange="getProductData('+row_id+')">'+
-                        '<option value=""></option>';
-                        $.each(response, function(index, value) {
-                          html += '<option value="'+value.id+'">'+value.name+'</option>';             
-                        });
-                        
-                      html += '</select>'+
-                    '</td>'+ 
-                    '<td><input type="text" name="type[]" id="type_'+row_id+'" class="form-control" style="text-transform:uppercase" placeholder="ENTER TYPE" required></td>'+
-                    '<td><input type="text" name="amount[]" id="amount_'+row_id+'" class="form-control amount" placeholder="ENTER AMOUNT" required><input type="hidden" name="amount_value[]" id="amount_value_'+row_id+'" class="form-control"></td>'+
-                    '<td style="text-align:center"><button type="button" class="btn btn-default" style="background-color:#f44336" onclick="removeRow(\''+row_id+'\')"><i class="fa fa-close" style="color:white"></i></button></td>'+
-                    '</tr>';
+      $.ajax({
+        url: base_url + '/orders/getTableProductRow/',
+        type: 'post',
+        dataType: 'json',
+        success: function (response) {
 
-                if(count_table_tbody_tr >= 1) {
-                $("#product_info_table tbody tr:last").after(html);  
-              }
-              else {
-                $("#product_info_table tbody").html(html);
-              }
+          // console.log(reponse.x);
+          var html = '<tr id="row_' + row_id + '" valign="baseline">' +
+            '<td><input type="number" name="qty[]" id="qty_' + row_id + '" class="form-control" placeholder="ENTER QUANTITY" required onkeyup="getTotal(' + row_id + ')"></td>' +
+            '<td>' +
+            '<select class="form-control select_group product" data-row-id="' + row_id + '" id="product_' + row_id + '" name="product[]" style="width:100%;" onchange="getProductData(' + row_id + ')">' +
+            '<option value=""></option>';
+          $.each(response, function (index, value) {
+            html += '<option value="' + value.id + '">' + value.name + '</option>';
+          });
 
-              $(".product").select2();
+          html += '</select>' +
+            '</td>' +
+            '<td><input type="text" name="type[]" id="type_' + row_id + '" class="form-control" style="text-transform:uppercase" placeholder="ENTER TYPE" required></td>' +
+            '<td><input type="text" name="amount[]" id="amount_' + row_id + '" class="form-control amount" placeholder="ENTER AMOUNT" required><input type="hidden" name="amount_value[]" id="amount_value_' + row_id + '" class="form-control"></td>' +
+            '<td style="text-align:center"><button type="button" class="btn btn-default" style="background-color:#f44336" onclick="removeRow(\'' + row_id + '\')"><i class="fa fa-close" style="color:white"></i></button></td>' +
+            '</tr>';
 
+          if (count_table_tbody_tr >= 1) {
+            $("#product_info_table tbody tr:last").after(html);
           }
-        });
+          else {
+            $("#product_info_table tbody").html(html);
+          }
 
-        return false;
-      //}
-      //else{
-        //$('#add_row').attr('disabled', 'disabled');
-      //}
+          $(".product").select2();
+
+        }
+      });
+
+      return false;
     });
 
   }); // /document
 
   // get the product information from the server
-  function getProductData(row_id)
-  {
-    var product_id = $("#product_"+row_id).val();    
+  function getProductData(row_id) {
+    var product_id = $("#product_" + row_id).val();
   }
 
-  $(document).ready(function(){
+  $(document).ready(function () {
     //iterate through each textboxes and add keyup
     //handler to trigger sum event
     $("tbody").on("keyup", ".amount", function () {
@@ -193,59 +190,213 @@
     $('#net_amount').val(mysave);
   });
 
-  function getSubscribedUsersData()
-  {
+  function expand(e) { //to expand and vice versa
+    console.log(e);
+    if (document.getElementById(`datadiv${e}`).style.display != 'flex') {
+      document.getElementById(`datadiv${e}`).style.display = 'flex'
+      document.getElementById(`updown${e}`).setAttribute('class', 'fa fa-angle-up')
+    } else {
+      document.getElementById(`datadiv${e}`).style.display = 'none'
+      document.getElementById(`updown${e}`).setAttribute('class', 'fa fa-angle-down')
+    }
+
+  }
+
+  function remove(e) { // to remove unwanted childs
+    if (document.getElementById(`datadiv${e}`).childNodes.length > 1) {
+      document.getElementById(`datadiv${e}`).removeChild(document.getElementById(`datadiv${e}`).lastChild)
+    }
+  }
+
+  function func1(e) { // to add childs
+    var insideDiv = document.createElement('div');
+    insideDiv.className = 'same2'
+    var inschldDiv1 = document.createElement('div');
+
+    try {
+      if (document.getElementById(`datadiv${e}`).childNodes.length < 1) {
+        var button = document.createElement('div');
+        var icon = document.createElement('i')
+        icon.setAttribute('onclick', `addMore(${e})`)
+        icon.setAttribute('class', 'fa fa-plus')
+        button.appendChild(icon)
+        inschldDiv1.appendChild(button)
+      } else {
+        var button = document.createElement('div');
+        var icon2 = document.createElement('i')
+        icon2.setAttribute('onclick', `remove(${e})`)
+        icon2.setAttribute('class', 'fa fa-minus')
+        button.appendChild(icon2)
+        inschldDiv1.appendChild(button)
+      }
+    }
+    catch {
+      var button = document.createElement('div');
+      var icon = document.createElement('i')
+      icon.setAttribute('onclick', `addMore(${e})`)
+      icon.setAttribute('class', 'fa fa-plus')
+      button.appendChild(icon)
+      inschldDiv1.appendChild(button)
+
+
+    }
+
+    insideDiv.appendChild(inschldDiv1)
+
+    var inschldDiv2 = document.createElement('div');
+    var slct = document.createElement('select')
+    slct.setAttribute('type', 'text')
+    slct.setAttribute('class', 'form-control')
+    slct.setAttribute('id', 'product_name')
+    slct.setAttribute('name', 'product_name')
+    slct.setAttribute('onchange', 'getProductsData()')
+    for (var gg = -1; gg < productsData.length; gg++) {
+      var optn = document.createElement('option')
+      if (gg == -1) {
+        optn.setAttribute('value', 'select products')
+        optn.innerHTML = 'products';
+      } else {
+        optn.setAttribute('value', productsData[gg].name)
+        optn.innerHTML = productsData[gg].name;
+      }
+      slct.appendChild(optn)
+    }
+    inschldDiv2.appendChild(slct)
+    insideDiv.appendChild(inschldDiv2)
+
+    var inschldDiv3 = document.createElement('div');
+    var slct = document.createElement('select')
+    slct.setAttribute('type', 'text')
+    slct.setAttribute('class', 'form-control')
+    slct.setAttribute('id', 'qty')
+    slct.setAttribute('name', 'qty')
+    for (var gg = 1; gg < 6; gg++) {
+      var optn = document.createElement('option')
+      if (gg == 1) {
+        optn.setAttribute('value', 'select quantity')
+        optn.innerHTML = 'quantity';
+      } else {
+        optn.setAttribute('value', gg)
+        optn.innerHTML = gg;
+      }
+      slct.appendChild(optn)
+    }
+    inschldDiv3.appendChild(slct)
+    insideDiv.appendChild(inschldDiv3)
+    return insideDiv
+  }
+  function addMore(e) {
+    console.log(e);
+
+    document.getElementById(`datadiv${e}`).appendChild(func1(e))
+  }
+
+
+  var productsData;
+  $.ajax({
+    url: base_url + 'products/getTableProductRow',
+    type: "get",
+    dataType: "json",
+    success: function (data) {
+      console.log(data);
+      productsData = data;
+    }
+  })
+
+  function getSubscribedUsersData() {
     var store_id = $("#store_name").val();
-    
+
     var table = $("#users_info_table");
     var count_table_tbody_tr = $("#users_info_table tbody tr").length;
     var extra = '';
     var row_id = 0;
     var html = '';
-  
+
     $.ajax({
-        url: base_url + 'users/getSubscribedUsersData',
-        type: "post",
-        data: {store_id : store_id},
-        dataType: "json",
-        success:function(data) {
-          $('#users_info_table tbody tr').empty();
-          $.each(data, function(key, value) {
-            row_id++;
-            extra = '<td style="width:30%;text-align:center" id="extra_product_'+row_id+'"><select class="form-control" id="product_name" name="product_name" onchange="getProductsData()" style="width:100%;" required><option value="">Product</option><?php foreach ($products as $k => $v): ?><option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option><?php endforeach ?></select><td style="width:20%;text-align:center" id="extra_qty_'+row_id+'"><select type="text" class="form-control" id="qty" name="qty"><option value="">Select Quantity</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></td>';
-            html+= '<tr id="row_'+row_id+'"><td style="width:20%;text-align:left"><p>'+value.firstname+'</p></td><td style="width:10%;text-align:center"><input type="checkbox" name="subscribed[]" id="'+value.id+'"></td>';
-            html+=extra;
-            html+='</tr>';
-          });
-          if(count_table_tbody_tr >= 0) {
-            $("#users_info_table tbody tr:last").after(html);
-          }
+      url: base_url + 'users/getSubscribedUsersData',
+      type: "post",
+      data: { store_id: store_id },
+      dataType: "json",
+      success: function (data) {
+        console.log(data);
+        $('#tab1').empty();
+        $.each(data, function (key, value) {
+          console.log(row_id);
+          row_id++;
+
+          console.log(key, value);
+
+          var trdiv = document.createElement('div')
+          trdiv.id = `TabPardiv${value.id}`
+          trdiv.className = 'trPardiv'
+
+          var tr = document.createElement('div')
+          tr.id = `Tabdiv${value.id}`
+          tr.className = 'same2'
+
+          var td1 = document.createElement('div')
+          td1.setAttribute('onclick', `expand(${value.id})`)
+          var icon = document.createElement('i')
+          icon.setAttribute('class', 'fa fa-angle-down')
+          icon.id = `updown${value.id}`
+          td1.appendChild(icon)
+
+          var td2 = document.createElement('div')
+          td2.innerHTML = value.firstname;
+
+          var td3 = document.createElement('div')
+          var chkbx = document.createElement('input')
+          chkbx.setAttribute('name', 'subscribed[]')
+          chkbx.setAttribute('id', value.id)
+          chkbx.setAttribute('type', 'checkbox')
+          td3.appendChild(chkbx)
+
+          tr.appendChild(td1)
+          tr.appendChild(td2)
+          tr.appendChild(td3)
+          trdiv.appendChild(tr)
+
+          var datadiv = document.createElement('div')
+          datadiv.id = `datadiv${value.id}`
+
+          datadiv.appendChild(func1(value.id))
+          trdiv.appendChild(datadiv)
+          document.getElementById('tab1').appendChild(trdiv)
+          
+          // extra = '<td style="width:30%;text-align:center" id="extra_product_' + row_id + '"><select class="form-control" id="product_name" name="product_name" onchange="getProductsData()" style="width:100%;" required><option value="">Product</option><?php foreach ($products as $k => $v): ?><option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option><?php endforeach ?></select><td style="width:20%;text-align:center" id="extra_qty_' + row_id + '"><select type="text" class="form-control" id="qty" name="qty"><option value="">Select Quantity</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></td>';
+          // html += '<tr id="row_' + row_id + '"><td style="width:20%;text-align:left"><p>' + value.firstname + '</p></td><td style="width:10%;text-align:center"><input type="checkbox" name="subscribed[]" id="' + value.id + '"></td>';
+          // html += extra;
+          // html += '</tr>';
+
+        });
+        if (count_table_tbody_tr >= 0) {
+          $("#users_info_table tbody tr:last").after(html);
         }
+      }
     });
   }
 
-  function removeRow(tr_id)
-  {
-    $("#product_info_table tbody tr#row_"+tr_id).remove();
+  function removeRow(tr_id) {
+    $("#product_info_table tbody tr#row_" + tr_id).remove();
     calculateSum();
   }
-  
+
   // Get today's date
-  $(function(){
+  $(function () {
     //date_default_timezone_set("Asia/Kolkata");
     var dtToday = new Date();
-    
+
     var month = dtToday.getMonth() + 1;
     var day = dtToday.getDate();
     var year = dtToday.getFullYear();
-    if(month < 10)
-        month = '0' + month.toString();
-    if(day < 10)
-        day = '0' + day.toString();
-    
+    if (month < 10)
+      month = '0' + month.toString();
+    if (day < 10)
+      day = '0' + day.toString();
+
     var maxDate = year + '-' + month + '-' + day;
     //alert(maxDate);
     $('#date').attr('max', maxDate);
-});
+  });
 
 </script>
