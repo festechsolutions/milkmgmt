@@ -30,7 +30,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `billno` (
   `sno` int(11) NOT NULL,
-  `count` int(11) NOT NULL
+  `subscribers_count` int(11) NOT NULL,
+  `orders_count` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -104,10 +105,7 @@ CREATE TABLE `orders` (
   `due_date` varchar(255) NOT NULL,
   `paid_date` varchar(255) DEFAULT NULL,
   `gross_amount` varchar(255) NOT NULL,
-  `service_charge_rate` varchar(255) NOT NULL,
   `service_charge_amount` varchar(255) NOT NULL,
-  `vat_charge_rate` varchar(255) NOT NULL,
-  `vat_charge_amount` varchar(255) NOT NULL,
   `net_amount` varchar(255) NOT NULL,
   `user_id` int(11) NOT NULL,
   `paid_status` int(11) NOT NULL,
@@ -126,7 +124,7 @@ CREATE TABLE `order_items` (
   `product_id` int(11) NOT NULL,
   `product_name` varchar(255) NOT NULL,
   `qty` varchar(255) NOT NULL,
-  `type` varchar(255) NOT NULL,
+  `category` varchar(255) NOT NULL,
   `amount` varchar(255) NOT NULL,
   `date` varchar(255) NOT NULL,
   `store_id` int(11) NOT NULL

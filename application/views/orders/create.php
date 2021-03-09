@@ -132,41 +132,6 @@
       var count_table_tbody_tr = $("#product_info_table tbody tr").length;
       var row_id = count_table_tbody_tr + 1;
 
-      $.ajax({
-        url: base_url + '/orders/getTableProductRow/',
-        type: 'post',
-        dataType: 'json',
-        success: function (response) {
-
-          // console.log(reponse.x);
-          var html = '<tr id="row_' + row_id + '" valign="baseline">' +
-            '<td><input type="number" name="qty[]" id="qty_' + row_id + '" class="form-control" placeholder="ENTER QUANTITY" required onkeyup="getTotal(' + row_id + ')"></td>' +
-            '<td>' +
-            '<select class="form-control select_group product" data-row-id="' + row_id + '" id="product_' + row_id + '" name="product[]" style="width:100%;" onchange="getProductData(' + row_id + ')">' +
-            '<option value=""></option>';
-          $.each(response, function (index, value) {
-            html += '<option value="' + value.id + '">' + value.name + '</option>';
-          });
-
-          html += '</select>' +
-            '</td>' +
-            '<td><input type="text" name="type[]" id="type_' + row_id + '" class="form-control" style="text-transform:uppercase" placeholder="ENTER TYPE" required></td>' +
-            '<td><input type="text" name="amount[]" id="amount_' + row_id + '" class="form-control amount" placeholder="ENTER AMOUNT" required><input type="hidden" name="amount_value[]" id="amount_value_' + row_id + '" class="form-control"></td>' +
-            '<td style="text-align:center"><button type="button" class="btn btn-default" style="background-color:#f44336" onclick="removeRow(\'' + row_id + '\')"><i class="fa fa-close" style="color:white"></i></button></td>' +
-            '</tr>';
-
-          if (count_table_tbody_tr >= 1) {
-            $("#product_info_table tbody tr:last").after(html);
-          }
-          else {
-            $("#product_info_table tbody").html(html);
-          }
-
-          $(".product").select2();
-
-        }
-      });
-
       return false;
     });
 
@@ -237,8 +202,6 @@
       icon.setAttribute('class', 'fa fa-plus')
       button.appendChild(icon)
       inschldDiv1.appendChild(button)
-
-
     }
 
     insideDiv.appendChild(inschldDiv1)
@@ -248,15 +211,15 @@
     slct.setAttribute('type', 'text')
     slct.setAttribute('class', 'form-control')
     slct.setAttribute('id', 'product_name')
-    slct.setAttribute('name', 'product_name')
+    slct.setAttribute('name', 'product_name[]')
     slct.setAttribute('onchange', 'getProductsData()')
     for (var gg = -1; gg < productsData.length; gg++) {
       var optn = document.createElement('option')
       if (gg == -1) {
-        optn.setAttribute('value', 'select products')
-        optn.innerHTML = 'products';
+        optn.setAttribute('value', '')
+        optn.innerHTML = 'Select Product';
       } else {
-        optn.setAttribute('value', productsData[gg].name)
+        optn.setAttribute('value', productsData[gg].id)
         optn.innerHTML = productsData[gg].name;
       }
       slct.appendChild(optn)
@@ -269,12 +232,12 @@
     slct.setAttribute('type', 'text')
     slct.setAttribute('class', 'form-control')
     slct.setAttribute('id', 'qty')
-    slct.setAttribute('name', 'qty')
-    for (var gg = 1; gg < 6; gg++) {
+    slct.setAttribute('name', 'qty[]')
+    for (var gg = 0; gg < 6; gg++) {
       var optn = document.createElement('option')
-      if (gg == 1) {
-        optn.setAttribute('value', 'select quantity')
-        optn.innerHTML = 'quantity';
+      if (gg == 0) {
+        optn.setAttribute('value', '')
+        optn.innerHTML = 'Select Quantity';
       } else {
         optn.setAttribute('value', gg)
         optn.innerHTML = gg;
@@ -342,7 +305,7 @@
           td1.appendChild(icon)
 
           var td2 = document.createElement('div')
-          td2.innerHTML = value.firstname;
+          td2.innerHTML = value.firstname+' '+value.lastname;
 
           var td3 = document.createElement('div')
           var chkbx = document.createElement('input')

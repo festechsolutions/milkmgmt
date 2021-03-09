@@ -73,47 +73,34 @@ class Model_orders extends CI_Model
 
 	public function create()
 	{
-		$user_id = $this->session->userdata('id');
+		$user_id = $this->input->post('id');
 		// get store id from user id 
 		$user_data = $this->model_users->getUserData($user_id);
 		$store_id = $user_data['store_id'];
 
 		$bill_no = $this->generateBill($store_id);
 		date_default_timezone_set("Asia/Kolkata");
-		$time = strtotime(date('d-m-Y'));
-		$mobile = $this->input->post('mobile_no');
-		$select = $this->db->query("SELECT * FROM customer WHERE mobile_no = $mobile");
-		$num_row = $select->num_rows();
-		if($num_row==1){
-			$i = 0;
-			$row = $select->row_array();
-			$i=$row['orders_count']+1;
-			$sqli = $this->db->query("UPDATE customer SET orders_count=$i WHERE mobile_no = $mobile");
-		}
-		else{
-			$customer_data = array(
-				'mobile_no' => $mobile,
-				'orders_count' => 1,
-			);
-            $customer_insert = $this->db->insert('customer', $customer_data);
-		}
-		
-		date_default_timezone_set("Asia/Kolkata");
-		$date = date('d-m-Y');
-		$date=((string)$date);
-		$due_date = $this->input->post('due_date');
-		$new_due_date = date("d-m-Y", strtotime($due_date));
+		$time = strtotime(date('d-m-Y h:i:sa'));
 
+		$get_company_data = $this->model_company->getCompanyData(1);
+		$service_charge_amount = $get_company_data['service_charge_amount'];
+
+		$count_product = count($this->input->post('product'));
+		for($x = 0; $x < $count_product; $x++) {
+			$gross_amount += $this->input->post('amount')[$x];
+		}
+
+		$net_amount = $gross_amount + $service_charge_amount;
+		
 		$data = array(
     		'bill_no' => $bill_no,
 			'date_time' => $time,
-			'date' => $date,
-			'due_date' => $new_due_date,
-    		'net_amount' => $this->input->post('net_amount_value'),
+			'gross_amount' => $gross_amount,
+			'service_charge_amount' => $service_charge_amount,
+			'net_amount' => $net_amount,
     		'paid_status' => 2,
     		'user_id' => $user_id,
 			'store_id' => $store_id,
-			'mobile_no' => $mobile,
     	);
 
 		$insert = $this->db->insert('orders', $data);
@@ -121,19 +108,18 @@ class Model_orders extends CI_Model
 
 		date_default_timezone_set("Asia/Kolkata");
 		$date = date('d-m-Y');
-		$count_product = count($this->input->post('product'));
 		for($x = 0; $x < $count_product; $x++) {
-			 $type = $this->input->post('type')[$x];
+			 $category_id = $this->input->post('category_id')[$x];
 			 $pid = $this->input->post('product')[$x];
 			 $sql = $this->db->query("SELECT * FROM products where id=$pid");
 			 $query = $sql->row_array();
     		$items = array(
     			'order_id' => $order_id,
 				'product_id' => $pid,
+				'category_id' => $category_id,
 				'product_name' => $query['name'],
     			'qty' => $this->input->post('qty')[$x],
-    			'type' => strtoupper($type),
-				'amount' => $this->input->post('amount')[$x],
+    			'amount' => $this->input->post('amount')[$x],
 				'date' => $date,
 			    'store_id' => $store_id,
     		);
@@ -152,29 +138,10 @@ class Model_orders extends CI_Model
 			$query = $select->row_array();
 			$result = $query['code'];
 		    $i=0;
-			$sql =  $this->db->query("SELECT count FROM billno WHERE sno=$store_id");
+			$sql =  $this->db->query("SELECT orders_count FROM billno WHERE sno=$store_id");
 			$row = $sql->row_array();
 			$i=$row['count']+1;
-			$sqli = $this->db->query("UPDATE billno SET count=$i WHERE sno=$store_id");
-			$l=strlen((string)$i);
-			$sum='';
-			for($j=0;$j<5-$l;$j++)
-			    $sum.='0';
-			return 'N-'.$result.'/'.$sum.$i;
-		}
-	}
-
-	public function getNextBill($store_id)
-	{
-		if($store_id)
-		{
-			$select = $this->db->query("SELECT code FROM stores WHERE id = $store_id");
-			$query = $select->row_array();
-			$result = $query['code'];
-		    $i=0;
-			$sql =  $this->db->query("SELECT count FROM billno WHERE sno=$store_id");
-			$row = $sql->row_array();
-			$i=$row['count']+1;
+			$sqli = $this->db->query("UPDATE billno SET orders_count=$i WHERE sno=$store_id");
 			$l=strlen((string)$i);
 			$sum='';
 			for($j=0;$j<5-$l;$j++)

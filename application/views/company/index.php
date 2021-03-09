@@ -76,6 +76,10 @@
                     <?php endforeach ?>
                   </select>
                 </div>
+                <div class="form-group">
+                  <label for="service_charge_value">Service Charge Amount (%)</label>
+                  <input type="text" class="form-control" id="service_charge_value" name="service_charge_value" placeholder="Enter charge amount %" value="<?php echo $company_data['service_charge_value'] ?>" autocomplete="off">
+                </div>
                 
               </div>
               <!-- /.box-body -->

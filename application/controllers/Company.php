@@ -27,7 +27,7 @@ class Company extends Admin_Controller
         }
         
 		$this->form_validation->set_rules('company_name', 'Company name', 'trim|required');
-		//$this->form_validation->set_rules('service_charge_value', 'Charge Amount', 'trim|integer');
+		$this->form_validation->set_rules('service_charge_value', 'Charge Amount', 'trim|integer');
 		//$this->form_validation->set_rules('vat_charge_value', 'Vat Charge', 'trim|integer');
 		$this->form_validation->set_rules('discount', 'Discount', 'trim|integer');
 		$this->form_validation->set_rules('address', 'Address', 'trim|required');
@@ -39,7 +39,7 @@ class Company extends Admin_Controller
 
         	$data = array(
         		'company_name' => $this->input->post('company_name'),
-        		'service_charge_value' => 0,
+        		'service_charge_value' => $this->input->post('service_charge_value'),
         		'vat_charge_value' => 0,
 				'address' => $this->input->post('address'),
         		'phone' => $this->input->post('phone'),

@@ -120,11 +120,10 @@ class Orders extends Admin_Controller
 
 		$this->data['page_title'] = 'Add Order';
 
+		$this->form_validation->set_rules('id', 'UserID', 'trim|required');
 		$this->form_validation->set_rules('product[]', 'Item name', 'trim|required');
-		$this->form_validation->set_rules('mobile_no', 'Mobile', 'trim|required');
-		$this->form_validation->set_rules('due_date', 'Delivery Date', 'trim|required');
 		$this->form_validation->set_rules('qty[]', 'Quantity', 'trim|required');
-		$this->form_validation->set_rules('type[]', 'Type', 'trim|required');
+		$this->form_validation->set_rules('category_id[]', 'CategoryID', 'trim|required');
 		$this->form_validation->set_rules('amount[]', 'Amount', 'trim|required');
 		
 	

@@ -91,10 +91,10 @@ class Model_subscribe extends CI_Model
 			$query = $select->row_array();
 			$result = $query['code'];
 		    $i=0;
-			$sql =  $this->db->query("SELECT count FROM billno WHERE sno=$store_id");
+			$sql =  $this->db->query("SELECT subscriber_count FROM billno WHERE sno=$store_id");
 			$row = $sql->row_array();
 			$i=$row['count']+1;
-			$sqli = $this->db->query("UPDATE billno SET count=$i WHERE sno=$store_id");
+			$sqli = $this->db->query("UPDATE billno SET subscriber_count=$i WHERE sno=$store_id");
 			$l=strlen((string)$i);
 			$sum='';
 			for($j=0;$j<5-$l;$j++)
