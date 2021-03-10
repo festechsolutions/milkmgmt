@@ -120,11 +120,13 @@ class Orders extends Admin_Controller
 
 		$this->data['page_title'] = 'Add Order';
 
-		$this->form_validation->set_rules('id', 'UserID', 'trim|required');
-		$this->form_validation->set_rules('product[]', 'Item name', 'trim|required');
-		$this->form_validation->set_rules('qty[]', 'Quantity', 'trim|required');
-		$this->form_validation->set_rules('category_id[]', 'CategoryID', 'trim|required');
-		$this->form_validation->set_rules('amount[]', 'Amount', 'trim|required');
+		$this->form_validation->set_rules('user_id', 'UserID', 'trim|required');
+		$this->form_validation->set_rules('product_name', 'Product_name name', 'trim|required');
+		$this->form_validation->set_rules('product_id', 'Product_name name', 'trim|required');
+		$this->form_validation->set_rules('qty', 'Quantity', 'trim|required');
+		$this->form_validation->set_rules('category_id', 'Category ID', 'trim|required');
+		$this->form_validation->set_rules('store_id', 'Store ID', 'trim|required');
+		$this->form_validation->set_rules('amount', 'Amount', 'trim|required');
 		
 	
         if ($this->form_validation->run() == TRUE) {        	
@@ -142,11 +144,7 @@ class Orders extends Admin_Controller
         }
         else {
             // false case
-            $company = $this->model_company->getCompanyData(1);
-        	$this->data['company_data'] = $company;
-        	$this->data['is_vat_enabled'] = ($company['vat_charge_value'] > 0) ? true : false;
-        	$this->data['is_service_enabled'] = ($company['service_charge_value'] > 0) ? true : false;
-
+            
 			$this->data['products'] = $this->model_products->getActiveProductData();
 			$this->data['store'] = $this->model_stores->getStoresData();
 

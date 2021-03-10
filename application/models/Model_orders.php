@@ -85,10 +85,7 @@ class Model_orders extends CI_Model
 		$get_company_data = $this->model_company->getCompanyData(1);
 		$service_charge_amount = $get_company_data['service_charge_amount'];
 
-		$count_product = count($this->input->post('product'));
-		for($x = 0; $x < $count_product; $x++) {
-			$gross_amount += $this->input->post('amount')[$x];
-		}
+		$gross_amount += $this->input->post('amount');
 
 		$net_amount = $gross_amount + $service_charge_amount;
 		
@@ -108,23 +105,18 @@ class Model_orders extends CI_Model
 
 		date_default_timezone_set("Asia/Kolkata");
 		$date = date('d-m-Y');
-		for($x = 0; $x < $count_product; $x++) {
-			 $category_id = $this->input->post('category_id')[$x];
-			 $pid = $this->input->post('product')[$x];
-			 $sql = $this->db->query("SELECT * FROM products where id=$pid");
-			 $query = $sql->row_array();
-    		$items = array(
-    			'order_id' => $order_id,
-				'product_id' => $pid,
-				'category_id' => $category_id,
-				'product_name' => $query['name'],
-    			'qty' => $this->input->post('qty')[$x],
-    			'amount' => $this->input->post('amount')[$x],
-				'date' => $date,
-			    'store_id' => $store_id,
-    		);
+		$items = array(
+    		'order_id' => $order_id,
+    		'category_id' => $this->input->post('category_id'),
+			'product_id' => $this->input->post('product_id'),
+			'product_name' => $this->input->post('product_name'),
+    		'qty' => $this->input->post('qty'),
+    		'amount' => $this->input->post('amount'),
+			'date' => $date,
+		    'store_id' => $store_id,
+    	);
 
-    		$this->db->insert('order_items', $items);
+    	$this->db->insert('order_items', $items);
     	}
 
 		return ($order_id) ? $order_id : false;
@@ -146,7 +138,7 @@ class Model_orders extends CI_Model
 			$sum='';
 			for($j=0;$j<5-$l;$j++)
 			    $sum.='0';
-			return 'N-'.$result.'/'.$sum.$i;
+			return $result.'-'.$sum.$i;
 		}
 	}
 

@@ -36,7 +36,6 @@
         </div>
         <?php endif; ?>
 
-
         <div class="box">
           <div class="box-header">
             <h3 class="box-title">Deliver to Colony</h3>
@@ -325,11 +324,6 @@
           datadiv.appendChild(func1(value.id))
           trdiv.appendChild(datadiv)
           document.getElementById('tab1').appendChild(trdiv)
-          
-          // extra = '<td style="width:30%;text-align:center" id="extra_product_' + row_id + '"><select class="form-control" id="product_name" name="product_name" onchange="getProductsData()" style="width:100%;" required><option value="">Product</option><?php foreach ($products as $k => $v): ?><option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option><?php endforeach ?></select><td style="width:20%;text-align:center" id="extra_qty_' + row_id + '"><select type="text" class="form-control" id="qty" name="qty"><option value="">Select Quantity</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></td>';
-          // html += '<tr id="row_' + row_id + '"><td style="width:20%;text-align:left"><p>' + value.firstname + '</p></td><td style="width:10%;text-align:center"><input type="checkbox" name="subscribed[]" id="' + value.id + '"></td>';
-          // html += extra;
-          // html += '</tr>';
 
         });
         if (count_table_tbody_tr >= 0) {

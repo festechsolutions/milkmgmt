@@ -52,10 +52,10 @@ class Model_products extends CI_Model
 		$user_id = $this->session->userdata('id');
 
 		if($user_id) {
-			$sql = "SELECT * FROM products WHERE active = ? ORDER BY id DESC";
+			$sql = "SELECT category_id,name FROM products WHERE active = ? ORDER BY id DESC";
 			$query = $this->db->query($sql, array(1));
 			return $query->result_array();
-		}		
+		}
 	}
 
 	public function create($data)

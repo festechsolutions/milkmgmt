@@ -44,7 +44,7 @@ class Model_subscribe extends CI_Model
 	public function getUserSubscribedData($id)
 	{
 		if($id) {
-			$sql = "SELECT subscribed_items.product_name,subscribed_items.qty,subscribed_items.amount FROM subscribe	INNER JOIN subscribed_items ON subscribe.id = subscribed_items.order_id WHERE subscribe.user_id = ?";
+			$sql = "SELECT subscribed_items.product_name,subscribed_items.qty,subscribed_items.product_id,subscribed_items.amount FROM subscribe	INNER JOIN subscribed_items ON subscribe.id = subscribed_items.order_id WHERE subscribe.user_id = ?";
 			$query = $this->db->query($sql, array($id));
 			return $query->resuly_array();
 		}
