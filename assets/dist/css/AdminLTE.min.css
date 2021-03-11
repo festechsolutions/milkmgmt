@@ -1,7 +1,7 @@
 /*!
  *   AdminLTE v2.4.0
  *   Author: Almsaeed Studio
- *	 Website: Almsaeed Studio <https://adminlte.io>
+ *   Website: Almsaeed Studio <https://adminlte.io>
  *   License: Open source - MIT
  *           Please visit http://opensource.org/licenses/MIT for more information
  */
@@ -5959,10 +5959,6 @@ table.text-center, table.text-center td, table.text-center th {
     font-weight: 600;
 }
 
-/* #tab1, th, td {
-    border: 1px solid #f4f4f4;
-} */
-
 .same2, .prdiv {
     /* background-color: #005384; */
     width: 100%;
@@ -5976,13 +5972,16 @@ table.text-center, table.text-center td, table.text-center th {
     margin: auto;
     /* color: white; */
 }
+
 [id^=datadiv] i {
     color: white;
 }
+
 .trPardiv {
     display: flex;
     flex-direction: column;
     border: 1px solid #f4f4f4;
+    position: relative;
 }
 
 [id^=datadiv] {
@@ -5999,7 +5998,43 @@ table.text-center, table.text-center td, table.text-center th {
     background-color: #f44336;
     width: 33px;
 }
+
 [id^=datadiv] div:nth-child(1) div div:nth-child(1), [id^=datadiv] div:nth-child(1) div div:nth-child(1) {
     background-color: #4CAF50;
     width: 33px;
+}
+
+[id^=addbutt] {
+    width: 60px;
+    border-radius: 3px;
+    height: 26px;
+    background-color: #f39c12;
+    color: white;
+    display: none;
+    margin: 0px 8px 4px auto;
+    justify-content: center;
+    align-items: center;
+}
+
+[id^=infoTble], [id^=infoTble] th, [id^=infoTble] td {
+    border: 2px solid #dfdfdf;
+    text-align: center;
+    font-weight: 300;
+    white-space: nowrap;
+    padding: 3px 21px;
+    font-size: 13px;
+    
+}
+[id^=infoTble] th{
+    font-weight:400;
+    font-size: 14px;
+}
+[id^=infoTble]{
+    border: none;
+    position: absolute;
+    margin-bottom: 26%;
+    margin-right: 37%;
+    background-color: white;
+    color: black;
+    display: none;
 }

@@ -44,9 +44,9 @@ class Model_subscribe extends CI_Model
 	public function getUserSubscribedData($id)
 	{
 		if($id) {
-			$sql = "SELECT subscribed_items.product_name,subscribed_items.qty,subscribed_items.product_id,subscribed_items.amount FROM subscribe	INNER JOIN subscribed_items ON subscribe.id = subscribed_items.order_id WHERE subscribe.user_id = ?";
+			$sql = "SELECT subscribed_items.product_name,subscribed_items.qty,subscribed_items.product_id,subscribed_items.category_id,subscribed_items.amount FROM subscribe	INNER JOIN subscribed_items ON subscribe.id = subscribed_items.order_id WHERE subscribe.user_id = ?";
 			$query = $this->db->query($sql, array($id));
-			return $query->resuly_array();
+			return $query->result_array();
 		}
 	}
 
@@ -78,6 +78,7 @@ class Model_subscribe extends CI_Model
 			 $query = $sql->row_array();
     		$items = array(
     			'order_id' => $order_id,
+    			'category_id' => $query['category_id'],
 				'product_id' => $pid,
 				'product_name' => $query['name'],
     			'qty' => $this->input->post('qty')[$x],
@@ -102,7 +103,7 @@ class Model_subscribe extends CI_Model
 		    $i=0;
 			$sql =  $this->db->query("SELECT subscriber_count FROM billno WHERE sno=$store_id");
 			$row = $sql->row_array();
-			$i=$row['count']+1;
+			$i=$row['subscriber_count']+1;
 			$sqli = $this->db->query("UPDATE billno SET subscriber_count=$i WHERE sno=$store_id");
 			$l=strlen((string)$i);
 			$sum='';
@@ -144,6 +145,7 @@ class Model_subscribe extends CI_Model
 			    $query = $sql->row_array();
 	    		$items = array(
 					'order_id' => $id,
+					'category_id' => $query['category_id'],
 					'product_id' => $pid,
 					'product_name' => $query['name'],
 	    			'qty' => $this->input->post('qty')[$x],
@@ -161,11 +163,16 @@ class Model_subscribe extends CI_Model
 	public function remove($id)
 	{
 		if($id) {
+			$fetch_id = $this->db->query("SELECT * FROM subscribe where id=$id");
+			$que = $fetch_id->row_array();
+			$user_id = $que['user_id'];
+
 			$this->db->where('id', $id);
 			$delete = $this->db->delete('subscribe');
 
 			$this->db->where('order_id', $id);
 			$delete_item = $this->db->delete('subscribed_items');
+			$update_subscribe = $this->db->query("UPDATE users SET subscribed = 2 WHERE id = $user_id");
 			return ($delete == true && $delete_item) ? true : false;
 		}
 	}

@@ -183,6 +183,7 @@ CREATE TABLE `subscribe` (
 CREATE TABLE `subscribed_items` (
   `id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `product_name` varchar(255) NOT NULL,
   `qty` varchar(255) NOT NULL,

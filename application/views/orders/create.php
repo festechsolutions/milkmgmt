@@ -1,4 +1,3 @@
-
 <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -35,6 +34,7 @@
           <?php echo $this->session->flashdata('error'); ?>
         </div>
         <?php endif; ?>
+
 
         <div class="box">
           <div class="box-header">
@@ -93,7 +93,7 @@
                 <div id="tab1"></div>
                 </table>
               </div>
-              <br/> <br/>
+              <br /> <br />
           </form>
           <!-- /.box-body -->
         </div>
@@ -158,10 +158,12 @@
     console.log(e);
     if (document.getElementById(`datadiv${e}`).style.display != 'flex') {
       document.getElementById(`datadiv${e}`).style.display = 'flex'
+      document.getElementById(`addbutt${e}`).style.display = 'flex'
       document.getElementById(`updown${e}`).setAttribute('class', 'fa fa-angle-up')
     } else {
       document.getElementById(`datadiv${e}`).style.display = 'none'
       document.getElementById(`updown${e}`).setAttribute('class', 'fa fa-angle-down')
+      document.getElementById(`addbutt${e}`).style.display = 'none'
     }
 
   }
@@ -209,9 +211,9 @@
     var slct = document.createElement('select')
     slct.setAttribute('type', 'text')
     slct.setAttribute('class', 'form-control')
-    slct.setAttribute('id', 'product_name')
-    slct.setAttribute('name', 'product_name[]')
-    slct.setAttribute('onchange', 'getProductsData()')
+    // slct.setAttribute('id', 'product_name')
+    // slct.setAttribute('name', 'product_name[]')
+    // slct.setAttribute('onchange', 'getProductsData()')
     for (var gg = -1; gg < productsData.length; gg++) {
       var optn = document.createElement('option')
       if (gg == -1) {
@@ -264,6 +266,33 @@
       productsData = data;
     }
   })
+  var globalIdnData1;
+  var globalIdnData2 = [];
+  function updateaddData(e) {
+    console.log(e);
+    console.log(globalIdnData2, globalIdnData1);
+    // var postdata = {
+    //   'user_id':
+    //     'store_id':,
+    //   'product_name':
+    //     'qty':
+    //   'amount':
+    // 'category_id '
+    // 'product_id'
+    // }
+    // $.post(base_url + 'orders/create', (data, status) => {
+    //   log
+    // })
+  }
+
+  function informationShower(a, b) {
+    console.log(a);
+    if (b == 'start') {
+      document.getElementById(`infoTble${a}`).style.display = 'block'
+    } else {
+      document.getElementById(`infoTble${a}`).style.display = 'none'
+    }
+  }
 
   function getSubscribedUsersData() {
     var store_id = $("#store_name").val();
@@ -280,13 +309,14 @@
       data: { store_id: store_id },
       dataType: "json",
       success: function (data) {
-        console.log(data);
+        globalIdnData1 = data;
+        // console.log(globalIdnData1);
         $('#tab1').empty();
         $.each(data, function (key, value) {
-          console.log(row_id);
+          // console.log(row_id);
           row_id++;
 
-          console.log(key, value);
+          console.log('key is :', key, 'value :', value);
 
           var trdiv = document.createElement('div')
           trdiv.id = `TabPardiv${value.id}`
@@ -304,33 +334,85 @@
           td1.appendChild(icon)
 
           var td2 = document.createElement('div')
-          td2.innerHTML = value.firstname+' '+value.lastname;
+          td2.innerHTML = value.firstname + ' ' + value.lastname;
+          td2beta = `<table id=infoTble${value.id}><tr><th>product Name</th><th>quantity</th></tr></table>`;
 
           var td3 = document.createElement('div')
           var chkbx = document.createElement('input')
           chkbx.setAttribute('name', 'subscribed[]')
           chkbx.setAttribute('id', value.id)
           chkbx.setAttribute('type', 'checkbox')
+          chkbx.style.margin = 'auto';
+
+
+
+          var td3kabeta = document.createElement('i')
+          td3kabeta.setAttribute('ontouchstart', `informationShower(${value.id}, "start")`)
+          td3kabeta.setAttribute('ontouchend', `informationShower(${value.id}, "end")`)
+          td3kabeta.className = 'fa fa-info-circle';
+
+          // td2beta.id =
+
+          td3.appendChild(td3kabeta)
           td3.appendChild(chkbx)
+          td3.innerHTML += td2beta;
 
           tr.appendChild(td1)
           tr.appendChild(td2)
           tr.appendChild(td3)
           trdiv.appendChild(tr)
 
+          //other data for information tag using its iteration
+          $.post(base_url + 'subscribe/fetchUserSubscriptionData', { 'id': value.id }, (data, status) => {
+            // console.log(status);
+            data = JSON.parse(data);
+            //console.log(data);
+            globalIdnData2.push(data) //for global use
+            for (var a = 0; a < data.length; a++) {
+              console.log(data[a].product_name, data[a].qty);
+              document.getElementById(`infoTble${value.id}`).innerHTML += `<tr><td>${data[a].product_name}</td><td>${data[a].qty}</td></tr>`
+            }
+
+          })
+
+
           var datadiv = document.createElement('div')
           datadiv.id = `datadiv${value.id}`
 
           datadiv.appendChild(func1(value.id))
+
+          addbutt = document.createElement('div')
+          addbutt.id = `addbutt${value.id}`
+          addbutt.setAttribute('onclick', `updateaddData(${value.id})`)
+          addbutt.innerHTML = 'Add'
+
           trdiv.appendChild(datadiv)
+          trdiv.appendChild(addbutt)
           document.getElementById('tab1').appendChild(trdiv)
+
 
         });
         if (count_table_tbody_tr >= 0) {
           $("#users_info_table tbody tr:last").after(html);
         }
+
+
+        // console.log(globalIdnData1[0].id, globalIdnData1[(globalIdnData1.length - 1)].id);
+
+        // for (var a = parseInt(globalIdnData1[0].id); a <= parseInt(globalIdnData1[(globalIdnData1.length - 1)].id); a++) {
+        //   console.log(a);
+        //   $.post(base_url + 'subscribe/fetchUserSubscriptionData', { 'id': a }, (data, status) => {
+        //     // console.log(status);
+        //     console.log(JSON.parse(data));
+        //     globalIdnData2.push(JSON.parse(data))
+        //   })
+        // }
+
       }
     });
+
+
+
   }
 
   function removeRow(tr_id) {

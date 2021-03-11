@@ -129,17 +129,35 @@ class Orders extends Admin_Controller
 		$this->form_validation->set_rules('amount', 'Amount', 'trim|required');
 		
 	
-        if ($this->form_validation->run() == TRUE) {        	
-        	
-        	$order_id = $this->model_orders->create();
-        	
-        	if($order_id) {
-        		$this->session->set_flashdata('success', 'Successfully created');
-        		redirect('orders/update/'.$order_id, 'refresh');
+        if ($this->form_validation->run() == TRUE) {
+
+        	$check_order = $this->model_orders->checkIfOrderExists();
+
+        	if($check_order == TRUE){
+
+        		$order_id = $this->model_orders->update();
+
+        		if($order_id) {
+	        		$this->session->set_flashdata('success', 'Successfully created');
+	        		redirect('orders/update/'.$order_id, 'refresh');
+	        	}
+	        	else {
+	        		$this->session->set_flashdata('errors', 'Error occurred!!');
+	        		redirect('orders/create/', 'refresh');
+	        	}
         	}
-        	else {
-        		$this->session->set_flashdata('errors', 'Error occurred!!');
-        		redirect('orders/create/', 'refresh');
+        	else{
+
+        		$order_id = $this->model_orders->create();
+        	
+	        	if($order_id) {
+	        		$this->session->set_flashdata('success', 'Successfully created');
+	        		redirect('orders/update/'.$order_id, 'refresh');
+	        	}
+	        	else {
+	        		$this->session->set_flashdata('errors', 'Error occurred!!');
+	        		redirect('orders/create/', 'refresh');
+	        	}
         	}
         }
         else {
@@ -149,7 +167,7 @@ class Orders extends Admin_Controller
 			$this->data['store'] = $this->model_stores->getStoresData();
 
             $this->render_template('orders/create', $this->data);
-        }	
+        }
 	}
 
 	/*
@@ -180,8 +198,6 @@ class Orders extends Admin_Controller
 		if(!$id) {
 			redirect('dashboard', 'refresh');
 		}
-
-
 
 		$this->data['page_title'] = 'Update Order';
 

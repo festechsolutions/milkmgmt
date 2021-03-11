@@ -71,6 +71,21 @@ class Model_orders extends CI_Model
 		return $query->result_array();
 	}
 
+	public function checkIfOrderExists()
+	{
+		$user_id = $this->input->post('user_id');
+		date_default_timezone_set("Asia/Kolkata");
+		$date = date('d-m-Y');
+
+		$sql = $this->db->query("SELECT * FROM orders WHERE user_id = $user_id && date = '$date'");
+		$count = $sql->num_rows();
+		if($count == 1){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 	public function create()
 	{
 		$user_id = $this->input->post('id');
@@ -80,18 +95,22 @@ class Model_orders extends CI_Model
 
 		$bill_no = $this->generateBill($store_id);
 		date_default_timezone_set("Asia/Kolkata");
-		$time = strtotime(date('d-m-Y h:i:sa'));
+		$date = date('d-m-Y');
+		$date =((string)$date);
+		$time = date('h:i:sa');
+		$time = ((string)$time);
 
 		$get_company_data = $this->model_company->getCompanyData(1);
 		$service_charge_amount = $get_company_data['service_charge_amount'];
 
-		$gross_amount += $this->input->post('amount');
+		$gross_amount = $this->input->post('amount');
 
 		$net_amount = $gross_amount + $service_charge_amount;
 		
 		$data = array(
     		'bill_no' => $bill_no,
-			'date_time' => $time,
+			'date' => $date,
+			'time' => $time,
 			'gross_amount' => $gross_amount,
 			'service_charge_amount' => $service_charge_amount,
 			'net_amount' => $net_amount,
@@ -117,7 +136,6 @@ class Model_orders extends CI_Model
     	);
 
     	$this->db->insert('order_items', $items);
-    	}
 
 		return ($order_id) ? $order_id : false;
 	}
@@ -151,56 +169,54 @@ class Model_orders extends CI_Model
 		}
 	}
 
-	public function update($id)
+	public function update()
 	{
-		if($id) {
-			$user_id = $this->session->userdata('id');
-			$user_data = $this->model_users->getUserData($user_id);
-			$store_id = $user_data['store_id'];
-			// update the table info
 
-			$order_data = $this->getOrdersData($id);
-			$due_date = $order_data['due_date'];
+		$user_id = $this->input->post('id');
+		// get store id from user id 
+		$user_data = $this->model_users->getUserData($user_id);
+		$store_id = $user_data['store_id'];
+		// update the table info
 
-			date_default_timezone_set("Asia/Kolkata");
-		    $date = date('d-m-Y');
-		    $date=((string)$date);
-			
-			$data = array(
-				'due_date' => $due_date,
-				'paid_date' => $date,
-	    		'net_amount' => $this->input->post('net_amount_value'),
-	    		'paid_status' => $this->input->post('paid_status'),
-	    		'user_id' => $user_id,
-				'store_id' => $store_id, 
-	    	);
+		date_default_timezone_set("Asia/Kolkata");
+	    $date_time = date('d-m-Y h:i:sa');
+	    $date_time =((string)$date_time);
 
-			$this->db->where('id', $id);
-			$update = $this->db->update('orders', $data);
+	    $get_company_data = $this->model_company->getCompanyData(1);
+		$service_charge_amount = $get_company_data['service_charge_amount'];
 
-			// now remove the order item data 
-			$this->db->where('order_id', $id);
-			$this->db->delete('order_items');
-			
-			$count_product = count($this->input->post('product'));
-	    	for($x = 0; $x < $count_product; $x++) {
-				$pid = $this->input->post('product')[$x];
-			    $sql = $this->db->query("SELECT * FROM products where id=$pid");
-			    $query = $sql->row_array();
-	    		$items = array(
-	    			'order_id' => $id,
-					'product_id' => $this->input->post('product')[$x],
-					'product_name' => $query['name'],
-	    			'qty' => $this->input->post('qty')[$x],
-	    			'type' => $this->input->post('type')[$x],
-					'amount' => $this->input->post('amount')[$x],
-					'date' => $due_date,
-					'store_id' => $store_id,
-	    		);
-	    		$this->db->insert('order_items', $items);
-	    	}
-			return true;
-		}
+		$gross_amount = $this->input->post('amount');
+
+		$net_amount = $gross_amount + $service_charge_amount;
+		
+		$data = array(
+			'gross_amount' => $gross_amount,
+			'service_charge_amount' => $service_charge_amount,
+			'net_amount' => $net_amount,
+			'paid_status' => 2,
+    		'modified_datetime' => $date_time,
+    	);
+
+		$this->db->where('id', $id);
+		$update = $this->db->update('orders', $data);
+
+		// now remove the order item data 
+		$this->db->where('order_id', $id);
+		$this->db->delete('order_items');
+		
+		$items = array(
+    		'order_id' => $order_id,
+    		'category_id' => $this->input->post('category_id'),
+			'product_id' => $this->input->post('product_id'),
+			'product_name' => $this->input->post('product_name'),
+    		'qty' => $this->input->post('qty'),
+    		'amount' => $this->input->post('amount'),
+			'date' => $date,
+		    'store_id' => $store_id,
+		);
+		$this->db->insert('order_items', $items);
+
+		return ($order_id) ? $order_id : false;
 	}
 
 

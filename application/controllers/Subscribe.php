@@ -74,8 +74,9 @@ class Subscribe extends Admin_Controller
 		echo json_encode($result);
 	}
 
-    public function fetchUserSubscriptionData($id)
+    public function fetchUserSubscriptionData()
     {
+        $id = $this->input->post('id');
         if($id) {
             $subscription_data = $this->model_subscribe->getUserSubscribedData($id);
             echo json_encode($subscription_data);
