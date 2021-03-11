@@ -101,7 +101,8 @@ INSERT INTO `groups` (`id`, `group_name`, `permission`) VALUES
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `bill_no` varchar(255) NOT NULL,
-  `date_time` varchar(255) NOT NULL,
+  `date` varchar(255) NOT NULL,
+  `time` varchar(255) NOT NULL,
   `due_date` varchar(255) NOT NULL,
   `paid_date` varchar(255) DEFAULT NULL,
   `gross_amount` varchar(255) NOT NULL,
@@ -109,7 +110,8 @@ CREATE TABLE `orders` (
   `net_amount` varchar(255) NOT NULL,
   `user_id` int(11) NOT NULL,
   `paid_status` int(11) NOT NULL,
-  `store_id` int(11) NOT NULL
+  `store_id` int(11) NOT NULL,
+  `modified_datetime` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
