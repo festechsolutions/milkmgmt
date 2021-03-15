@@ -118,56 +118,48 @@ class Orders extends Admin_Controller
             redirect('dashboard', 'refresh');
         }
 
-		$this->data['page_title'] = 'Add Order';
+		$this->data['page_title'] = 'Add Deliveries';
+            
+		$this->data['products'] = $this->model_products->getActiveProductData();
+		$this->data['store'] = $this->model_stores->getStoresData();
 
-		$this->form_validation->set_rules('user_id', 'UserID', 'trim|required');
-		$this->form_validation->set_rules('product_name', 'Product_name name', 'trim|required');
-		$this->form_validation->set_rules('product_id', 'Product_name name', 'trim|required');
-		$this->form_validation->set_rules('qty', 'Quantity', 'trim|required');
-		$this->form_validation->set_rules('category_id', 'Category ID', 'trim|required');
-		$this->form_validation->set_rules('store_id', 'Store ID', 'trim|required');
-		$this->form_validation->set_rules('amount', 'Amount', 'trim|required');
+        $this->render_template('orders/create', $this->data);
+	}
+
+	public function create_order()
+	{
+		// $this->form_validation->set_rules('user_id', 'UserID', 'trim|required');
+		// $this->form_validation->set_rules('product_name', 'Product_name name', 'trim|required');
+		// $this->form_validation->set_rules('product_id', 'Product_name name', 'trim|required');
+		// $this->form_validation->set_rules('qty', 'Quantity', 'trim|required');
+		// $this->form_validation->set_rules('category_id', 'Category ID', 'trim|required');
+		// $this->form_validation->set_rules('store_id', 'Store ID', 'trim|required');
+		// $this->form_validation->set_rules('amount', 'Amount', 'trim|required');
 		
 	
-        if ($this->form_validation->run() == TRUE) {
+        // if ($this->form_validation->run() == TRUE) {
 
-        	$check_order = $this->model_orders->checkIfOrderExists();
+			$user_id = $this->input->post('user_id');
+			$category_id = $this->input->post('category_id');
+			$product_id = $this->input->post('product_id');
+			$product_name = $this->input->post('product_name');
+    		$qty = $this->input->post('qty');
+    		$amount = $this->input->post('amount');
+    		$is_subscribed = $this->input->post('is_subscribed');
 
-        	if($check_order == TRUE){
+        	$check_order = $this->model_orders->checkIfOrderExists($user_id);
+        	
+        	$ifOrderExists = $check_order['bool'];
+        	$order_id = $check_order['order_id'];
+        	
+			if($ifOrderExists == TRUE){
 
-        		$order_id = $this->model_orders->update();
-
-        		if($order_id) {
-	        		$this->session->set_flashdata('success', 'Successfully created');
-	        		redirect('orders/update/'.$order_id, 'refresh');
-	        	}
-	        	else {
-	        		$this->session->set_flashdata('errors', 'Error occurred!!');
-	        		redirect('orders/create/', 'refresh');
-	        	}
+        		$update = $this->model_orders->update($order_id,$user_id,$category_id,$product_id,$product_name,$qty,$amount,$is_subscribed);
         	}
         	else{
 
-        		$order_id = $this->model_orders->create();
-        	
-	        	if($order_id) {
-	        		$this->session->set_flashdata('success', 'Successfully created');
-	        		redirect('orders/update/'.$order_id, 'refresh');
-	        	}
-	        	else {
-	        		$this->session->set_flashdata('errors', 'Error occurred!!');
-	        		redirect('orders/create/', 'refresh');
-	        	}
+        		$create = $this->model_orders->create($user_id,$category_id,$product_id,$product_name,$qty,$amount,$is_subscribed);
         	}
-        }
-        else {
-            // false case
-            
-			$this->data['products'] = $this->model_products->getActiveProductData();
-			$this->data['store'] = $this->model_stores->getStoresData();
-
-            $this->render_template('orders/create', $this->data);
-        }
 	}
 
 	/*

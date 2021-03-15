@@ -6016,25 +6016,31 @@ table.text-center, table.text-center td, table.text-center th {
     align-items: center;
 }
 
-[id^=infoTble], [id^=infoTble] th, [id^=infoTble] td {
+/* [id^=infoTble], [id^=infoTble] th, [id^=infoTble] td {
     border: 2px solid #dfdfdf;
     text-align: center;
     font-weight: 300;
     white-space: nowrap;
     padding: 3px 21px;
     font-size: 13px;
-    
 }
-[id^=infoTble] th{
-    font-weight:400;
+[id^=infoTble] th {
+    font-weight: 400;
     font-size: 14px;
-}
-[id^=infoTble]{
-    border: none;
+} */
+
+[id^=infoTble] {
     position: absolute;
     margin-bottom: 26%;
     margin-right: 37%;
-    background-color: white;
-    color: black;
+    background-color: #464646;
+    color: white;
+    border-radius: 4px;
     display: none;
+}
+
+[id^=infoTble] p {
+    margin: 0;
+    padding: 6px 30px;
+    white-space: nowrap;
 }

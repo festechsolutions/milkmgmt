@@ -71,24 +71,26 @@ class Model_orders extends CI_Model
 		return $query->result_array();
 	}
 
-	public function checkIfOrderExists()
+	public function checkIfOrderExists($user_id)
 	{
-		$user_id = $this->input->post('user_id');
+		//$user_id = $this->input->post('user_id');
 		date_default_timezone_set("Asia/Kolkata");
 		$date = date('d-m-Y');
-
-		$sql = $this->db->query("SELECT * FROM orders WHERE user_id = $user_id && date = '$date'");
+		$id = 0;
+		$sql = $this->db->query("SELECT id FROM orders WHERE user_id ='$user_id' && date ='$date'");
+		$res = $sql->row_array();
 		$count = $sql->num_rows();
 		if($count == 1){
-			return true;
+			$id = $res['id'];
+			return array('bool' => TRUE,'order_id' => $id);
 		}else{
-			return false;
+			return array('bool' => FALSE,'order_id' => $id);;
 		}
 	}
 
-	public function create()
+	public function create($user_id,$category_id,$product_id,$product_name,$qty,$amount,$is_subscribed)
 	{
-		$user_id = $this->input->post('id');
+		// $user_id = $this->input->post('user_id');
 		// get store id from user id 
 		$user_data = $this->model_users->getUserData($user_id);
 		$store_id = $user_data['store_id'];
@@ -101,11 +103,15 @@ class Model_orders extends CI_Model
 		$time = ((string)$time);
 
 		$get_company_data = $this->model_company->getCompanyData(1);
-		$service_charge_amount = $get_company_data['service_charge_amount'];
+		$service_charge_amount = $get_company_data['service_charge_value'];
 
-		$gross_amount = $this->input->post('amount');
+		$gross_amount = $amount;
+		$gross_amount = number_format($gross_amount, 2);
 
 		$net_amount = $gross_amount + $service_charge_amount;
+		$net_amount = number_format($net_amount, 2);
+
+		$amount = number_format($amount, 2);
 		
 		$data = array(
     		'bill_no' => $bill_no,
@@ -126,13 +132,14 @@ class Model_orders extends CI_Model
 		$date = date('d-m-Y');
 		$items = array(
     		'order_id' => $order_id,
-    		'category_id' => $this->input->post('category_id'),
-			'product_id' => $this->input->post('product_id'),
-			'product_name' => $this->input->post('product_name'),
-    		'qty' => $this->input->post('qty'),
-    		'amount' => $this->input->post('amount'),
+    		'category_id' => $category_id,
+			'product_id' => $product_id,
+			'product_name' => $product_name,
+    		'qty' => $qty,
+    		'amount' => $amount,
 			'date' => $date,
 		    'store_id' => $store_id,
+		    'is_subscribed' => $is_subscribed,
     	);
 
     	$this->db->insert('order_items', $items);
@@ -150,7 +157,7 @@ class Model_orders extends CI_Model
 		    $i=0;
 			$sql =  $this->db->query("SELECT orders_count FROM billno WHERE sno=$store_id");
 			$row = $sql->row_array();
-			$i=$row['count']+1;
+			$i=$row['orders_count']+1;
 			$sqli = $this->db->query("UPDATE billno SET orders_count=$i WHERE sno=$store_id");
 			$l=strlen((string)$i);
 			$sum='';
@@ -169,25 +176,35 @@ class Model_orders extends CI_Model
 		}
 	}
 
-	public function update()
+	public function update($order_id,$user_id,$category_id,$product_id,$product_name,$qty,$amount,$is_subscribed)
 	{
 
-		$user_id = $this->input->post('id');
+		//$user_id = $this->input->post('id');
 		// get store id from user id 
 		$user_data = $this->model_users->getUserData($user_id);
 		$store_id = $user_data['store_id'];
 		// update the table info
 
 		date_default_timezone_set("Asia/Kolkata");
+		$date = date('d-m-Y');
+		$date =((string)$date);
 	    $date_time = date('d-m-Y h:i:sa');
 	    $date_time =((string)$date_time);
 
 	    $get_company_data = $this->model_company->getCompanyData(1);
-		$service_charge_amount = $get_company_data['service_charge_amount'];
+		$service_charge_amount = $get_company_data['service_charge_value'];
 
-		$gross_amount = $this->input->post('amount');
+		$select = $this->db->query("SELECT gross_amount FROM orders WHERE id = $order_id");
+		$query = $select->row_array();
+		$existing_gross = $query['gross_amount'];
+
+		$gross_amount = $existing_gross + $amount;
+		$gross_amount = number_format($gross_amount, 2);
 
 		$net_amount = $gross_amount + $service_charge_amount;
+		$net_amount = number_format($net_amount, 2);
+
+		$amount = number_format($amount, 2);
 		
 		$data = array(
 			'gross_amount' => $gross_amount,
@@ -197,22 +214,19 @@ class Model_orders extends CI_Model
     		'modified_datetime' => $date_time,
     	);
 
-		$this->db->where('id', $id);
+		$this->db->where('id', $order_id);
 		$update = $this->db->update('orders', $data);
-
-		// now remove the order item data 
-		$this->db->where('order_id', $id);
-		$this->db->delete('order_items');
 		
 		$items = array(
     		'order_id' => $order_id,
-    		'category_id' => $this->input->post('category_id'),
-			'product_id' => $this->input->post('product_id'),
-			'product_name' => $this->input->post('product_name'),
-    		'qty' => $this->input->post('qty'),
-    		'amount' => $this->input->post('amount'),
+    		'category_id' => $category_id,
+			'product_id' => $product_id,
+			'product_name' => $product_name,
+    		'qty' => $qty,
+    		'amount' => $amount,
 			'date' => $date,
 		    'store_id' => $store_id,
+		    'is_subscribed' => $is_subscribed,
 		);
 		$this->db->insert('order_items', $items);
 

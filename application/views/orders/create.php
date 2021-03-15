@@ -210,6 +210,7 @@
     var inschldDiv2 = document.createElement('div');
     var slct = document.createElement('select')
     slct.setAttribute('type', 'text')
+    // slct.id = `productName${e}`
     slct.setAttribute('class', 'form-control')
     // slct.setAttribute('id', 'product_name')
     // slct.setAttribute('name', 'product_name[]')
@@ -220,7 +221,7 @@
         optn.setAttribute('value', '')
         optn.innerHTML = 'Select Product';
       } else {
-        optn.setAttribute('value', productsData[gg].id)
+        optn.setAttribute('value', productsData[gg].name)
         optn.innerHTML = productsData[gg].name;
       }
       slct.appendChild(optn)
@@ -232,7 +233,7 @@
     var slct = document.createElement('select')
     slct.setAttribute('type', 'text')
     slct.setAttribute('class', 'form-control')
-    slct.setAttribute('id', 'qty')
+    // slct.setAttribute('id', `qty${e}`)
     slct.setAttribute('name', 'qty[]')
     for (var gg = 0; gg < 6; gg++) {
       var optn = document.createElement('option')
@@ -268,33 +269,112 @@
   })
   var globalIdnData1;
   var globalIdnData2 = [];
-  function updateaddData(e) {
+  function updateaddData(e) { //on Add button click
     console.log(e);
-    console.log(globalIdnData2, globalIdnData1);
-    // var postdata = {
-    //   'user_id':
-    //     'store_id':,
-    //   'product_name':
-    //     'qty':
-    //   'amount':
-    // 'category_id '
-    // 'product_id'
-    // }
-    // $.post(base_url + 'orders/create', (data, status) => {
-    //   log
-    // })
+
+
+    var chNo = document.getElementById(`datadiv${e}`).childNodes;
+    console.log(chNo)
+    pData = [];
+    pqty = [];
+    pamt = []
+    prodId = [];
+    catgId = [];
+    userId = [];
+    for (var i = 0; i < chNo.length; i++) {
+      for (var n = 0; n < 2; n++) {
+        console.log(i, n);
+        var info = chNo[i].getElementsByTagName('select')[n].value;
+        if (n == 0) {
+          pData.push(info)//product name
+          for (var bla2 = 0; bla2 < productsData.length; bla2++) {
+            if (info == productsData[bla2].name) {//catgId
+              catgId.push(productsData[bla2].category_id)
+              break;
+            }
+          }
+          for (var bla2 = 0; bla2 < productsData.length; bla2++) { //prodId
+            if (info == productsData[bla2].name) {
+              prodId.push(productsData[bla2].id)
+              break;
+            }
+          }
+        } else {
+          pqty.push(info) // qty
+          for (var bla1 = 0; bla1 < productsData.length; bla1++) {
+            if (chNo[i].getElementsByTagName('select')[0].value == productsData[bla1].name) {
+              console.log(parseInt(productsData[bla1].price) * parseInt(info));
+              pamt.push(parseInt(productsData[bla1].price) * parseInt(info))//amount
+              break;
+            }
+          }
+        }
+        // console.log(info);
+      }
+    }
+    console.log(pData, pqty);
+
+    for (var d = 0; d < pData.length; d++) {
+      var postdata = {
+        'user_id': e,
+        // 'store_id': document.getElementById('store_name').value,
+        'product_name': pData[d],
+        'qty': pqty[d],
+        'amount': pamt[d],
+        'category_id': catgId[d],
+        'product_id': prodId[d]
+      }
+      console.log(postdata);
+    }
+
+    $.post(base_url + 'orders/create_order', postdata, (data, status) => {
+      console.log(status);
+      if (status == 'success') {
+        document.getElementById(`addbutt${e}`).remove()
+      }
+    })
   }
 
-  function informationShower(a, b) {
-    console.log(a);
-    if (b == 'start') {
-      document.getElementById(`infoTble${a}`).style.display = 'block'
-    } else {
-      document.getElementById(`infoTble${a}`).style.display = 'none'
+  function informationShower(a) {
+    // console.log(a);
+    $('[id^=infoTble]').css('display', 'none');
+    document.getElementById(`infoTble${a}`).style.display = 'block'
+  }
+
+  document.onclick = (e) => {
+    // console.log(e);
+    if (e.target.className != 'fa fa-info-circle') {
+      $('[id^=infoTble]').css('display', 'none');
     }
   }
 
+  function saveData(e, f) { //on checkbox click
+    console.log('user id is :', e, '\t', 'no of prods: ', f);
+    if (document.getElementById(e).checked == true) {
+      for (var a = 0; a < globalIdnData2[f].length; a++) {
+        globalIdnData2[f][a].user_id = e;
+        console.log(globalIdnData2[f][a]);
+        $.post(base_url + 'orders/create_order', globalIdnData2[f][a], (data, status) => {
+          console.log(status);
+        })
+
+        // $.ajax({
+        //   url: base_url + 'orders/create_order',
+        //   type: "post",
+        //   data: globalIdnData2[f][a],
+        //   dataType: "json",
+        //   success: function (status, data) {
+        //     console.log(status, data);
+        //   }
+        // })
+
+
+      }
+    }
+  }
   function getSubscribedUsersData() {
+    globalIdnData1 = []
+    globalIdnData2 = []
     var store_id = $("#store_name").val();
 
     var table = $("#users_info_table");
@@ -312,6 +392,8 @@
         globalIdnData1 = data;
         // console.log(globalIdnData1);
         $('#tab1').empty();
+        globalIdnData2.length = data.length;
+        console.log(globalIdnData2.length);
         $.each(data, function (key, value) {
           // console.log(row_id);
           row_id++;
@@ -324,6 +406,7 @@
 
           var tr = document.createElement('div')
           tr.id = `Tabdiv${value.id}`
+          // tr.value = 
           tr.className = 'same2'
 
           var td1 = document.createElement('div')
@@ -335,20 +418,21 @@
 
           var td2 = document.createElement('div')
           td2.innerHTML = value.firstname + ' ' + value.lastname;
-          td2beta = `<table id=infoTble${value.id}><tr><th>product Name</th><th>quantity</th></tr></table>`;
+          td2beta = `<span id=infoTble${value.id}></span>`;
 
           var td3 = document.createElement('div')
           var chkbx = document.createElement('input')
-          chkbx.setAttribute('name', 'subscribed[]')
+          // chkbx.setAttribute('name', 'subscribed[]')
           chkbx.setAttribute('id', value.id)
           chkbx.setAttribute('type', 'checkbox')
+          chkbx.setAttribute('onclick', `saveData(${value.id},${key})`)
           chkbx.style.margin = 'auto';
 
 
 
           var td3kabeta = document.createElement('i')
-          td3kabeta.setAttribute('ontouchstart', `informationShower(${value.id}, "start")`)
-          td3kabeta.setAttribute('ontouchend', `informationShower(${value.id}, "end")`)
+          td3kabeta.setAttribute('onclick', `informationShower(${value.id})`)
+          // td3kabeta.setAttribute('onblur', `informationShower(${value.id},'end')`)
           td3kabeta.className = 'fa fa-info-circle';
 
           // td2beta.id =
@@ -363,18 +447,20 @@
           trdiv.appendChild(tr)
 
           //other data for information tag using its iteration
+          // async () => {
           $.post(base_url + 'subscribe/fetchUserSubscriptionData', { 'id': value.id }, (data, status) => {
             // console.log(status);
             data = JSON.parse(data);
-            //console.log(data);
-            globalIdnData2.push(data) //for global use
+            // console.log(data);
+            // globalIdnData2.push(data) //for global use
+            globalIdnData2[key] = data; // for alignment of data
             for (var a = 0; a < data.length; a++) {
-              console.log(data[a].product_name, data[a].qty);
-              document.getElementById(`infoTble${value.id}`).innerHTML += `<tr><td>${data[a].product_name}</td><td>${data[a].qty}</td></tr>`
+              // console.log(data[a].product_name, data[a].qty);
+              document.getElementById(`infoTble${value.id}`).innerHTML += `<p>${data[a].product_name} - ${data[a].qty}</p>`
             }
 
           })
-
+          // }
 
           var datadiv = document.createElement('div')
           datadiv.id = `datadiv${value.id}`
@@ -396,7 +482,7 @@
           $("#users_info_table tbody tr:last").after(html);
         }
 
-
+        console.log(globalIdnData2, '\n', globalIdnData1, '\n', productsData);
         // console.log(globalIdnData1[0].id, globalIdnData1[(globalIdnData1.length - 1)].id);
 
         // for (var a = parseInt(globalIdnData1[0].id); a <= parseInt(globalIdnData1[(globalIdnData1.length - 1)].id); a++) {
