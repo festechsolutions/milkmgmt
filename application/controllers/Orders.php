@@ -60,15 +60,13 @@ class Orders extends Admin_Controller
 
 		foreach ($data as $key => $value) {
 
+			$user_data =  $this->model_users->getUserData($value['user_id']);
+
 			$store_data = $this->model_stores->getStoresData($value['store_id']);
 
 			$count_total_item = $this->model_orders->countOrderItem($value['id']);
-			date_default_timezone_set("Asia/Kolkata");
-			$date_time = date('d-m-Y', $value['date_time']);
-			//$time = date('h:i a', $value['date_time']);
-
-			//$date_time = $date . ' ' . $time;
-			$due_date = $value['due_date'];
+			
+			$name = $user_data['firstname'].' '.$user_data['lastname'];
 
 			// button
 			$buttons = '';
@@ -93,11 +91,10 @@ class Orders extends Admin_Controller
 			}
 
 			$result['data'][$key] = array(
+				$name,
 				$value['bill_no'],
-				$date_time,
-				$due_date,
-				$value['mobile_no'],
-				$count_total_item,
+				$value['date'],
+				$store_data['name'],
 				$value['net_amount'],
 				$paid_status,
 				$buttons

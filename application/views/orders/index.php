@@ -49,11 +49,10 @@
             <table id="manageTable" class="table table-bordered table-striped">
               <thead>
               <tr>
+                <th>Customer Name</th>
                 <th>Bill no</th>
                 <th>Order Date</th>
-                <th>Delivery Date</th>
-                <th>Mobile No</th>
-                <th>Total Items</th>
+                <th>Store/Colony Name</th>
                 <th>Total Amount</th>
                 <th>Paid status</th>
                 <?php if(in_array('updateOrder', $user_permission) || in_array('viewOrder', $user_permission) || in_array('deleteOrder',$user_permission)):  ?>
@@ -94,7 +93,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary" disabled>Save changes</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
         </div>
       </form>
 
@@ -118,7 +117,8 @@ $(document).ready(function() {
   // initialize the datatable 
   manageTable = $('#manageTable').DataTable({
     'ajax': base_url + 'orders/fetchOrdersData',
-    'order': []
+    'order': [],
+    "sScrollX": '100%'
   });
 
 });

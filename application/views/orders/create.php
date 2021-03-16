@@ -317,12 +317,12 @@
     for (var d = 0; d < pData.length; d++) {
       var postdata = {
         'user_id': e,
-        // 'store_id': document.getElementById('store_name').value,
         'product_name': pData[d],
         'qty': pqty[d],
         'amount': pamt[d],
         'category_id': catgId[d],
-        'product_id': prodId[d]
+        'product_id': prodId[d],
+        'is_subscribed': 0
       }
       console.log(postdata);
     }

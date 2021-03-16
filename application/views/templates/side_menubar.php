@@ -121,10 +121,10 @@
                 <?php endif; ?>
                 <!--<?php if(in_array('createOrder', $user_permission)): ?>
                   <li id="createOrderSubMenu"><a href="<?php echo base_url('orders/create') ?>"><i class="fa fa-circle-o"></i> To Stores</a></li>
-                <?php endif; ?>
+                <?php endif; ?>-->
                 <?php if(in_array('updateOrder', $user_permission) || in_array('viewOrder', $user_permission) || in_array('deleteOrder', $user_permission)): ?>
                 <li id="manageOrderSubMenu"><a href="<?php echo base_url('orders') ?>"><i class="fa fa-circle-o"></i> Manage Deliveries</a></li>
-                <?php endif; ?>-->
+                <?php endif; ?>
               </ul>
             </li>
           <?php endif; ?>
