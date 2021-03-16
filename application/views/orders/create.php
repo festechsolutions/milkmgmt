@@ -353,6 +353,7 @@
     if (document.getElementById(e).checked == true) {
       for (var a = 0; a < globalIdnData2[f].length; a++) {
         globalIdnData2[f][a].user_id = e;
+        globalIdnData2[f][a].is_subscribed = 1;
         console.log(globalIdnData2[f][a]);
         $.post(base_url + 'orders/create_order', globalIdnData2[f][a], (data, status) => {
           console.log(status);

@@ -34,16 +34,6 @@ class Orders extends Admin_Controller
 		$this->render_template('orders/index', $this->data);		
 	}
 
-	public function current()
-	{
-		if(!in_array('viewOrder', $this->permission)) {
-            redirect('dashboard', 'refresh');
-        }
-
-		$this->data['page_title'] = 'Manage Orders';
-		$this->render_template('orders/current', $this->data);		
-	}
-
 	/*
 	* Fetches the orders data from the orders table 
 	* this function is called from the datatable ajax function
@@ -170,6 +160,31 @@ class Orders extends Admin_Controller
 		if($product_id) {
 			$product_data = $this->model_products->getProductData($product_id);
 			echo json_encode($product_data);
+		}
+	}
+
+	public function checkIfUserIsDeliveredSubscribedItems()
+	{
+		$users_data = $this->model_orders->getIfUserIsDelivered();
+		echo json_encode($users_data);
+		}
+	}
+
+	public function RemoveSubscribedItems()
+	{
+		$user_id = $this->input->post('user_id');
+		$response = array();
+
+		if($user_id)
+		{
+			$delete_items = $this->model_orders->removeSubscribedItems($user_id);
+			if($delete_items == true) {
+                $response['success'] = true;
+            }
+            else {
+                $response['success'] = false;
+            }
+			echo json_encode($response);
 		}
 	}
 

@@ -35,30 +35,6 @@ class Model_orders extends CI_Model
 		}
 	}
 
-	public function getCurrentOrdersData($id = null)
-	{
-	    date_default_timezone_set("Asia/Kolkata");
-		$date = date('d-m-Y');
-		$date=((string)$date);
-		if($id) {
-			$sql = "SELECT * FROM orders WHERE paid_status='2' && due_date= '$date'";
-			$query = $this->db->query($sql, array($id));
-			return $query->row_array();
-		}
-		$user_id = $this->session->userdata('id');
-		if($user_id == 1) {
-			$sql = "SELECT * FROM orders WHERE due_date= '$date' ORDER BY id DESC";
-			$query = $this->db->query($sql);
-			return $query->result_array();
-		}
-		else {
-			$user_data = $this->model_users->getUserData($user_id);
-			$sql = "SELECT * FROM orders WHERE store_id = ? && due_date= '$date' ORDER BY id DESC";
-			$query = $this->db->query($sql, array($user_data['store_id']));
-			return $query->result_array();	
-		}
-	}
-
 	// get the orders item data
 	public function getOrdersItemData($order_id = null)
 	{
@@ -69,6 +45,14 @@ class Model_orders extends CI_Model
 		$sql = "SELECT * FROM order_items WHERE order_id = ?";
 		$query = $this->db->query($sql, array($order_id));
 		return $query->result_array();
+	}
+
+	public function getIfUserIsDelivered()
+	{
+		date_default_timezone_set("Asia/Kolkata");
+		$date = date('d-m-Y');
+		$sql = $this->db->query("SELECT DISTINCT orders.user_id FROM orders INNER JOIN order_items ON orders.id = order_items.order_id WHERE order_items.is_subscribed ='1' && order_items.date='$date'");
+		return $sql->result_array();
 	}
 
 	public function checkIfOrderExists($user_id)
@@ -246,6 +230,18 @@ class Model_orders extends CI_Model
 			return ($delete == true && $delete_item) ? true : false;
 		}
 	}
+
+	/*public function removeSubscribedItems($user_id)
+	{
+		if($user_id) {
+			$this->db->where('id', $id);
+			$delete = $this->db->delete('order_items');
+				DELETE FROM orders INNER JOIN order_items ON orders.id = order_items.order_id WHERE order_items.is_subscribed ='1' && orders.user_id ='$user_id' && order_items.date='$date'
+			$this->db->where('order_id', $id);
+			$delete_item = $this->db->delete('order_items');
+			return ($delete == true && $delete_item) ? true : false;
+		}
+	}*/
 
 	public function countCurrentUnPaidOrders($date)
 	{
