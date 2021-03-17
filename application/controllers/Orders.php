@@ -165,26 +165,10 @@ class Orders extends Admin_Controller
 
 	public function checkIfUserIsDeliveredSubscribedItems()
 	{
-		$users_data = $this->model_orders->getIfUserIsDelivered();
-		echo json_encode($users_data);
-		}
-	}
-
-	public function RemoveSubscribedItems()
-	{
-		$user_id = $this->input->post('user_id');
-		$response = array();
-
-		if($user_id)
-		{
-			$delete_items = $this->model_orders->removeSubscribedItems($user_id);
-			if($delete_items == true) {
-                $response['success'] = true;
-            }
-            else {
-                $response['success'] = false;
-            }
-			echo json_encode($response);
+		$store_id = $this->input->post('store_id');
+		if($product_id) {
+			$users_data = $this->model_orders->getIfUserIsDelivered($store_id);
+			echo json_encode($users_data);
 		}
 	}
 
