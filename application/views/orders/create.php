@@ -267,6 +267,8 @@
       productsData = data;
     }
   })
+
+
   var globalIdnData1;
   var globalIdnData2 = [];
   function updateaddData(e) { //on Add button click
@@ -348,6 +350,7 @@
     }
   }
 
+  var globalvalidation;
   function saveData(e, f) { //on checkbox click
     console.log('user id is :', e, '\t', 'no of prods: ', f);
     if (document.getElementById(e).checked == true) {
@@ -359,21 +362,23 @@
           console.log(status);
         })
 
-        // $.ajax({
-        //   url: base_url + 'orders/create_order',
-        //   type: "post",
-        //   data: globalIdnData2[f][a],
-        //   dataType: "json",
-        //   success: function (status, data) {
-        //     console.log(status, data);
-        //   }
-        // })
-
-
       }
+    } else {
+      for (var a = 0; a < globalvalidation.length; a++) {
+        if (globalvalidation[a].user_id == e) {
+          console.log(globalvalidation[a].id);
+          $.post(base_url + 'orders/remove', { order_id: globalvalidation[a].id }, (data, status) => {
+            console.log(data, status);
+          })
+          break;
+        }
+      }
+
     }
   }
-  function getSubscribedUsersData() {
+
+
+  async function getSubscribedUsersData() {
     globalIdnData1 = []
     globalIdnData2 = []
     var store_id = $("#store_name").val();
@@ -383,6 +388,7 @@
     var extra = '';
     var row_id = 0;
     var html = '';
+
 
     $.ajax({
       url: base_url + 'users/getSubscribedUsersData',
@@ -479,6 +485,24 @@
 
 
         });
+
+        //checkboxvalidations 
+        console.log(parseInt(store_id));
+        $.post(base_url + 'orders/checkIfUserIsDeliveredSubscribedItems', { store_id: store_id }, (data, status) => {
+          data = JSON.parse(data)
+
+          globalvalidation = data;
+          console.log(globalvalidation);
+          console.log(status, data);
+          for (var l = 0; l < data.length; l++) {
+            console.log(document.getElementById(data[l].user_id).checked);
+            document.getElementById(data[l].user_id).checked = 'true';
+          }
+
+        })
+
+
+
         if (count_table_tbody_tr >= 0) {
           $("#users_info_table tbody tr:last").after(html);
         }

@@ -36,8 +36,7 @@
 
         <?php if(in_array('createOrder', $user_permission)): ?>
           <a href="<?php echo base_url('orders/create') ?>" class="btn btn-primary">Add Order</a>
-          <a href="<?php echo base_url('orders/current') ?>" class="btn btn-success">Current Orders</a>
-          <br /> <br />
+          <br /><br />
         <?php endif; ?>
 
         <div class="box">
@@ -118,7 +117,7 @@ $(document).ready(function() {
   manageTable = $('#manageTable').DataTable({
     'ajax': base_url + 'orders/fetchOrdersData',
     'order': [],
-    "sScrollX": '100%'
+    "sScrollX": '150%'
   });
 
 });

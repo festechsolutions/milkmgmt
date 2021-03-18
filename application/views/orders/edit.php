@@ -87,9 +87,10 @@
                               <?php endforeach ?>
                             </select>
                         </td>
-                        <td><input type="text" name="qty[]" id="qty_<?php echo $x; ?>" class="form-control" placeholder="ENTER QUANTITY" required onkeyup="getTotal(<?php echo $x; ?>)" value="<?php echo $val['qty'] ?>" autocomplete="off"></td>
+                        <td><input type="text" name="qty[]" id="qty_<?php echo $x; ?>" class="form-control" placeholder="Quantity" required onkeyup="getTotal(<?php echo $x; ?>)" value="<?php echo $val['qty'] ?>" autocomplete="off"></td>
                         <td>
                           <input type="text" name="rate[]" id="type_<?php echo $x; ?>" class="form-control" readonly="true" style='text-transform:uppercase' placeholder="Product Price" required value="<?php echo $val['amount']/$val['qty'] ?>" autocomplete="off">
+                          <input type="hidden" name="rate_value[]" id="rate_value_<?php echo $x; ?>" value="<?php echo $val['amount']/$val['qty']?>" class="form-control" autocomplete="off">
                         </td>
                         <td>
                           <input type="text" name="amount[]" id="amount_<?php echo $x; ?>" class="form-control amount" placeholder="Total Amount" readonly="true" required value="<?php echo $val['amount'] ?>" autocomplete="off">
@@ -110,7 +111,7 @@
                   <div class="form-group">
                     <label for="net_amount" class="col-sm-5 control-label">Gross Amount</label>
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" id="gross_amount" name="gross_amount" readonly="true" disabled value="<?php echo $order_data['order']['gross_amount'] ?>" autocomplete="off">
+                      <input type="text" class="form-control" id="gross_amount" name="gross_amount" readonly="true" value="<?php echo $order_data['order']['gross_amount'] ?>" autocomplete="off">
                       <input type="hidden" class="form-control" id="gross_amount_value" name="gross_amount_value" value="<?php echo $order_data['order']['gross_amount'] ?>" autocomplete="off">
                     </div>
                   </div>
@@ -126,8 +127,9 @@
                   <div class="form-group">
                     <label for="net_amount" class="col-sm-5 control-label">Net Amount</label>
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" id="net_amount" name="net_amount" readonly="true" disabled value="<?php echo $order_data['order']['net_amount'] ?>" autocomplete="off">
+                      <input type="text" class="form-control" id="net_amount" name="net_amount" readonly="true" value="<?php echo $order_data['order']['net_amount'] ?>" autocomplete="off">
                       <input type="hidden" class="form-control" id="net_amount_value" name="net_amount_value" value="<?php echo $order_data['order']['net_amount'] ?>" autocomplete="off">
+                      <input type="hidden" class="form-control" id="uedudwekb" name="uedudwekb" value="<?php echo $order_data['order']['user_id'] ?>" autocomplete="off">
                     </div>
                   </div>
 
@@ -317,7 +319,7 @@
   function removeRow(tr_id)
   {
     $("#product_info_table tbody tr#row_"+tr_id).remove();
-    calculateSum();
+    subAmount();
   }
 
   $(function(){

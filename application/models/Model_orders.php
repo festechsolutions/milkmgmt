@@ -160,7 +160,7 @@ class Model_orders extends CI_Model
 		}
 	}
 
-	public function update($order_id,$user_id,$category_id,$product_id,$product_name,$qty,$amount,$is_subscribed)
+	public function update_order($order_id,$user_id,$category_id,$product_id,$product_name,$qty,$amount,$is_subscribed)
 	{
 
 		//$user_id = $this->input->post('id');
@@ -217,6 +217,58 @@ class Model_orders extends CI_Model
 		return ($order_id) ? $order_id : false;
 	}
 
+	public function update($id)
+	{
+		if($id) {
+			$user_id = $this->input->post('uedudwekb');
+			$user_data = $this->model_users->getUserData($user_id);
+			$store_id = $user_data['store_id'];
+			// update the table info
+
+			$order_data = $this->getOrdersData($id);
+			
+			date_default_timezone_set("Asia/Kolkata");
+		    $date = date('d-m-Y');
+		    $date=((string)$date);
+		    $date_time = date('d-m-Y h:i:sa');
+	    	$date_time =((string)$date_time);
+			
+			$data = array(
+				'gross_amount' => $this->input->post('gross_amount'),
+				'net_amount' => $this->input->post('net_amount'),
+	    		'modified_datetime' => $date_time,
+	    	);
+
+			$this->db->where('id', $id);
+			$update = $this->db->update('orders', $data);
+
+			// now remove the order item data 
+			$this->db->where('order_id', $id);
+			$this->db->delete('order_items');
+			
+			$count_product = count($this->input->post('product'));
+	    	for($x = 0; $x < $count_product; $x++) {
+				$pid = $this->input->post('product')[$x];
+				$category_id = $this->model_products->getCategoryID($pid);
+			    $sql = $this->db->query("SELECT * FROM products where id=$pid");
+			    $query = $sql->row_array();
+	    		$items = array(
+	    			'order_id' => $id,
+	    			'category_id' => $category_id['category_id'],
+					'product_id' => $this->input->post('product')[$x],
+					'product_name' => $query['name'],
+	    			'qty' => $this->input->post('qty')[$x],
+	    			'amount' => $this->input->post('amount')[$x],
+					'date' => $date,
+					'store_id' => $store_id,
+					'is_subscribed' => 0,
+	    		);
+	    		$this->db->insert('order_items', $items);
+	    	}
+			return true;
+		}
+	}
+
 
 
 	public function remove($id)
@@ -226,6 +278,23 @@ class Model_orders extends CI_Model
 			$delete = $this->db->delete('orders');
 
 			$this->db->where('order_id', $id);
+			$delete_item = $this->db->delete('order_items');
+			return ($delete == true && $delete_item) ? true : false;
+		}
+	}
+
+	public function remove_order($user_id)
+	{
+		if($user_id) {
+			date_default_timezone_set("Asia/Kolkata");
+		    $date = date('d-m-Y');
+			$sql = $this->db->query("SELECT id FROM orders where user_id=$user_id && date='$date'");
+			$query = $sql->row_array();
+			$order_id = $query['id'];
+			$this->db->where('id', $order_id);
+			$delete = $this->db->delete('orders');
+
+			$this->db->where('order_id', $order_id);
 			$delete_item = $this->db->delete('order_items');
 			return ($delete == true && $delete_item) ? true : false;
 		}

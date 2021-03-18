@@ -61,9 +61,9 @@ class Orders extends Admin_Controller
 			// button
 			$buttons = '';
 
-			if(in_array('viewOrder', $this->permission)) {
+			/*if(in_array('viewOrder', $this->permission)) {
 				$buttons .= '<a target="__blank" href="'.base_url('orders/printDiv/'.$value['id']).'" style="border: 2px solid #008CBA" class="btn btn-default"><i class="fa fa-print style="color:#008CBA"></i></a>';
-			}
+			}*/
 
 			if(in_array('updateOrder', $this->permission)) {
 				$buttons .= ' <a href="'.base_url('orders/update/'.$value['id']).'" style="border: 2px solid #4CAF50" class="btn btn-default"><i class="fa fa-pencil" style="color:#4CAF50"></i></a>';
@@ -138,15 +138,30 @@ class Orders extends Admin_Controller
         	
         	$ifOrderExists = $check_order['bool'];
         	$order_id = $check_order['order_id'];
+
+        	$response = array();
         	
 			if($ifOrderExists == TRUE){
 
-        		$update = $this->model_orders->update($order_id,$user_id,$category_id,$product_id,$product_name,$qty,$amount,$is_subscribed);
+        		$update = $this->model_orders->update_order($order_id,$user_id,$category_id,$product_id,$product_name,$qty,$amount,$is_subscribed);
+        		if($update == true) {
+                	$response['success'] = true;
+            	}
+            	else {
+                	$response['success'] = false;
+                }
         	}
         	else{
 
         		$create = $this->model_orders->create($user_id,$category_id,$product_id,$product_name,$qty,$amount,$is_subscribed);
+        		if($create == true) {
+                	$response['success'] = true;
+            	}
+            	else {
+                	$response['success'] = false;
+                }
         	}
+        	return json_encode($response);
 	}
 
 	/*
@@ -166,7 +181,7 @@ class Orders extends Admin_Controller
 	public function checkIfUserIsDeliveredSubscribedItems()
 	{
 		$store_id = $this->input->post('store_id');
-		if($product_id) {
+		if($store_id) {
 			$users_data = $this->model_orders->getIfUserIsDelivered($store_id);
 			echo json_encode($users_data);
 		}
@@ -189,8 +204,12 @@ class Orders extends Admin_Controller
 
 		$this->data['page_title'] = 'Update Order';
 
+		$this->form_validation->set_rules('uedudwekb', 'Extra', 'trim|required');
 		$this->form_validation->set_rules('product[]', 'Product name', 'trim|required');
-		
+		$this->form_validation->set_rules('qty[]', 'Quantity', 'trim|required');
+		$this->form_validation->set_rules('amount[]', 'Amount', 'trim|required');
+		$this->form_validation->set_rules('gross_amount', 'Gross Amount', 'trim|required');
+		$this->form_validation->set_rules('net_amount', 'Net Amount', 'trim|required');
 	
         if ($this->form_validation->run() == TRUE) {        	
 
@@ -210,7 +229,7 @@ class Orders extends Admin_Controller
         	
         	$company = $this->model_company->getCompanyData(1);
         	$this->data['company_data'] = $company;
-        	$this->data['is_vat_enabled'] = ($company['vat_charge_value'] > 0) ? true : false;
+        	//$this->data['is_vat_enabled'] = ($company['vat_charge_value'] > 0) ? true : false;
         	$this->data['is_service_enabled'] = ($company['service_charge_value'] > 0) ? true : false;
 
         	$result = array();
@@ -253,6 +272,34 @@ class Orders extends Admin_Controller
         $response = array();
         if($order_id) {
             $delete = $this->model_orders->remove($order_id);
+            if($delete == true) {
+                $response['success'] = true;
+                $response['messages'] = "Successfully removed"; 
+            }
+            else {
+                $response['success'] = false;
+                $response['messages'] = "Error in the database while removing the product information";
+            }
+        }
+        else {
+            $response['success'] = false;
+            $response['messages'] = "Refersh the page again!!";
+        }
+
+        echo json_encode($response); 
+	}
+
+	public function remove_order()
+	{
+		if(!in_array('deleteOrder', $this->permission)) {
+            redirect('dashboard', 'refresh');
+        }
+
+		$user_id = $this->input->post('user_id');
+
+        $response = array();
+        if($user_id) {
+            $delete = $this->model_orders->remove_order($user_id);
             if($delete == true) {
                 $response['success'] = true;
                 $response['messages'] = "Successfully removed"; 

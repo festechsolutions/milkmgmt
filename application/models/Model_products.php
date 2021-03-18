@@ -47,6 +47,14 @@ class Model_products extends CI_Model
 		}	
 	}
 
+	public function getCategoryID($id)
+	{
+		if($id) {
+			$sql = $this->db->query("SELECT category_id FROM products WHERE id = $id");
+			return $sql->row_array();
+		}
+	}
+
 	public function getActiveProductData()
 	{
 		$user_id = $this->session->userdata('id');

@@ -66,7 +66,6 @@ class Company extends Admin_Controller
 			$this->render_template('company/index', $this->data);			
         }	
 
-		
 	}
 
 }
