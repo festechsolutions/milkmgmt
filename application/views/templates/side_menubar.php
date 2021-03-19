@@ -85,7 +85,7 @@
             </li>
         <?php endif; ?>
 
-        <?php if(in_array('createOrder', $user_permission) || in_array('updateOrder', $user_permission) || in_array('viewOrder', $user_permission) || in_array('deleteOrder', $user_permission)): ?>
+        <?php if(in_array('createSubscription', $user_permission) || in_array('updateSubscription', $user_permission) || in_array('viewSubscription', $user_permission) || in_array('deleteSubscription', $user_permission)): ?>
             <li class="treeview" id="SubscribeMainNav">
               <a href="#">
                 <i class="fa fa-bell"></i>
@@ -95,10 +95,10 @@
                 </span>
               </a>
               <ul class="treeview-menu">
-                <?php if(in_array('createOrder', $user_permission)): ?>
+                <?php if(in_array('createSubscription', $user_permission)): ?>
                   <li id="newSubscriptionSubMenu"><a href="<?php echo base_url('subscribe/new') ?>"><i class="fa fa-circle-o"></i> New Subscription</a></li>
                 <?php endif; ?>
-                <?php if(in_array('updateOrder', $user_permission) || in_array('viewOrder', $user_permission) || in_array('deleteOrder', $user_permission)): ?>
+                <?php if(in_array('updateSubscription', $user_permission) || in_array('viewSubscription', $user_permission) || in_array('deleteSubscription', $user_permission)): ?>
                 <li id="manageSubscriptionSubMenu"><a href="<?php echo base_url('subscribe') ?>"><i class="fa fa-circle-o"></i> Manage Subscriptions</a></li>
                 <?php endif; ?>
               </ul>
