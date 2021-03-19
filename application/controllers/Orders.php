@@ -58,6 +58,8 @@ class Orders extends Admin_Controller
 			
 			$name = $user_data['firstname'].' '.$user_data['lastname'];
 
+			$date = date('d-m-Y', $value['date']);
+
 			// button
 			$buttons = '';
 
@@ -83,7 +85,7 @@ class Orders extends Admin_Controller
 			$result['data'][$key] = array(
 				$name,
 				$value['bill_no'],
-				$value['date'],
+				$date,
 				$store_data['name'],
 				$value['net_amount'],
 				$paid_status,

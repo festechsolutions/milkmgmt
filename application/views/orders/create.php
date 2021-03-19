@@ -364,15 +364,15 @@
 
       }
     } else {
-      for (var a = 0; a < globalvalidation.length; a++) {
-        if (globalvalidation[a].user_id == e) {
-          console.log(globalvalidation[a].id);
-          $.post(base_url + 'orders/remove', { order_id: globalvalidation[a].id }, (data, status) => {
-            console.log(data, status);
-          })
-          break;
-        }
-      }
+      // for (var a = 0; a < globalvalidation.length; a++) {
+      //   if (globalvalidation[a].user_id == e) {
+      // console.log(globalvalidation[a].id);
+      $.post(base_url + 'orders/remove_order', { user_id: e }, (data, status) => {
+        console.log(data, status);
+      })
+      // break;
+      // }
+      // }
 
     }
   }

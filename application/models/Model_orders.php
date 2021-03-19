@@ -13,8 +13,6 @@ class Model_orders extends CI_Model
 	public function getOrdersData($id = null)
 	{
 		date_default_timezone_set("Asia/Kolkata");
-		$date = date('d-m-Y');
-		$date=((string)$date);
 		if($id) {
 			$sql = "SELECT * FROM orders WHERE id = ? && paid_status='2' ORDER BY id ASC";
 			$query = $this->db->query($sql, array($id));
@@ -50,7 +48,7 @@ class Model_orders extends CI_Model
 	public function getIfUserIsDelivered($store_id)
 	{
 		date_default_timezone_set("Asia/Kolkata");
-		$date = date('d-m-Y');
+		$date = strtotime(date('d-m-Y'));
 		$sql = $this->db->query("SELECT DISTINCT orders.id,orders.user_id FROM orders INNER JOIN order_items ON orders.id = order_items.order_id WHERE order_items.is_subscribed ='1' && order_items.store_id ='$store_id' && order_items.date='$date'");
 		return $sql->result_array();
 	}
@@ -59,7 +57,7 @@ class Model_orders extends CI_Model
 	{
 		//$user_id = $this->input->post('user_id');
 		date_default_timezone_set("Asia/Kolkata");
-		$date = date('d-m-Y');
+		$date = strtotime(date('d-m-Y'));
 		$id = 0;
 		$sql = $this->db->query("SELECT id FROM orders WHERE user_id ='$user_id' && date ='$date'");
 		$res = $sql->row_array();
@@ -81,11 +79,9 @@ class Model_orders extends CI_Model
 
 		$bill_no = $this->generateBill($store_id);
 		date_default_timezone_set("Asia/Kolkata");
-		$date = date('d-m-Y');
-		$date =((string)$date);
+		$date = strtotime(date('d-m-Y'));
 		$time = date('h:i:sa');
-		$time = ((string)$time);
-
+		
 		$get_company_data = $this->model_company->getCompanyData(1);
 		$service_charge_amount = $get_company_data['service_charge_value'];
 
@@ -113,7 +109,6 @@ class Model_orders extends CI_Model
 		$order_id = $this->db->insert_id();
 
 		date_default_timezone_set("Asia/Kolkata");
-		$date = date('d-m-Y');
 		$items = array(
     		'order_id' => $order_id,
     		'category_id' => $category_id,
@@ -170,11 +165,9 @@ class Model_orders extends CI_Model
 		// update the table info
 
 		date_default_timezone_set("Asia/Kolkata");
-		$date = date('d-m-Y');
-		$date =((string)$date);
-	    $date_time = date('d-m-Y h:i:sa');
-	    $date_time =((string)$date_time);
-
+		$date = strtotime(date('d-m-Y'));
+	    $date_time = strtotime(date('d-m-Y h:i:sa'));
+	    
 	    $get_company_data = $this->model_company->getCompanyData(1);
 		$service_charge_amount = $get_company_data['service_charge_value'];
 
@@ -228,10 +221,8 @@ class Model_orders extends CI_Model
 			$order_data = $this->getOrdersData($id);
 			
 			date_default_timezone_set("Asia/Kolkata");
-		    $date = date('d-m-Y');
-		    $date=((string)$date);
-		    $date_time = date('d-m-Y h:i:sa');
-	    	$date_time =((string)$date_time);
+		    $date = strtotime(date('d-m-Y'));
+		    $date_time = strtotime(date('d-m-Y h:i:sa'));
 			
 			$data = array(
 				'gross_amount' => $this->input->post('gross_amount'),
@@ -287,7 +278,7 @@ class Model_orders extends CI_Model
 	{
 		if($user_id) {
 			date_default_timezone_set("Asia/Kolkata");
-		    $date = date('d-m-Y');
+		    $date = strtotime(date('d-m-Y'));
 			$sql = $this->db->query("SELECT id FROM orders where user_id=$user_id && date='$date'");
 			$query = $sql->row_array();
 			$order_id = $query['id'];
