@@ -91,8 +91,7 @@
   <script type="text/javascript">
     $(document).ready(function() {
       $('#groupTable').DataTable({
-        'order': [],
-        "sScrollX": '100%'
+        'order': []
       });
       $('#groupMainNav').addClass('active');
       $('#manageGroupSubMenu').addClass('active');

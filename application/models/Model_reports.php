@@ -22,7 +22,7 @@ class Model_reports extends CI_Model
 		
 		$return_data = array();
 		foreach ($result as $k => $v) {
-			$date = date('Y', $v['date_time']);
+			$date = date('Y', $v['date']);
 			$return_data[] = $date;
 		}
 
@@ -47,7 +47,7 @@ class Model_reports extends CI_Model
 
 				$final_data[$get_mon_year][] = '';
 				foreach ($result as $k => $v) {
-					$month_year = date('Y-m', $v['date_time']);
+					$month_year = date('Y-m', $v['date']);
 
 					if($get_mon_year == $month_year) {
 						$final_data[$get_mon_year][] = $v;
@@ -76,7 +76,7 @@ class Model_reports extends CI_Model
 
 				$final_data[$get_mon_year][] = '';
 				foreach ($result as $k => $v) {
-					$month_year = date('Y-m', $v['date_time']);
+					$month_year = date('Y-m', $v['date']);
 
 					if($get_mon_year == $month_year) {
 						$final_data[$get_mon_year][] = $v;
@@ -85,31 +85,6 @@ class Model_reports extends CI_Model
 			}	
 			
 			return $final_data;
-		}
-	}
-
-	public function getOrdersData($id = null)
-	{
-		date_default_timezone_set("Asia/Kolkata");
-		$date = date('d-m-Y');
-		$date=((string)$date);
-		if($id) {
-			$sql = "SELECT * FROM orders WHERE id = ? && date='$date' ";
-			$query = $this->db->query($sql, array($id));
-			return $query->row_array();
-		}
-
-		$user_id = $this->session->userdata('id');
-		if($user_id == 1) {
-			$sql = "SELECT * FROM orders WHERE date='$date' ORDER BY id DESC";
-			$query = $this->db->query($sql);
-			return $query->result_array();
-		}
-		else {
-			$user_data = $this->model_users->getUserData($user_id);
-			$sql = "SELECT * FROM orders WHERE store_id = ? && date='$date' ORDER BY id DESC";
-			$query = $this->db->query($sql, array($user_data['store_id']));
-			return $query->result_array();	
 		}
 	}
 

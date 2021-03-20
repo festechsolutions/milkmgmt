@@ -14,20 +14,20 @@ class Model_orders extends CI_Model
 	{
 		date_default_timezone_set("Asia/Kolkata");
 		if($id) {
-			$sql = "SELECT * FROM orders WHERE id = ? && paid_status='2' ORDER BY id ASC";
+			$sql = "SELECT * FROM orders WHERE id = ? ORDER BY id ASC";
 			$query = $this->db->query($sql, array($id));
 			return $query->row_array();
 		}
 
 		$user_id = $this->session->userdata('id');
 		if($user_id == 1) {
-			$sql = "SELECT * FROM orders  WHERE paid_status='2' ORDER BY id ASC";
+			$sql = "SELECT * FROM orders ORDER BY id ASC";
 			$query = $this->db->query($sql);
 			return $query->result_array();
 		}
 		else {
 			$user_data = $this->model_users->getUserData($user_id);
-			$sql = "SELECT * FROM orders WHERE store_id = ? && paid_status='2' ORDER BY id ASC";
+			$sql = "SELECT * FROM orders WHERE store_id = ? ORDER BY id ASC";
 			$query = $this->db->query($sql, array($user_data['store_id']));
 			return $query->result_array();	
 		}
@@ -66,14 +66,21 @@ class Model_orders extends CI_Model
 			$id = $res['id'];
 			return array('bool' => TRUE,'order_id' => $id);
 		}else{
-			return array('bool' => FALSE,'order_id' => $id);;
+			return array('bool' => FALSE,'order_id' => $id);
+		}
+	}
+
+	public function getUserDeliveriesData($store_id,$user_id,$month,$year)
+	{
+		if($store_id && $user_id && $month && $year)
+		{
+			$sql = $this->db->query("SELECT order_items.product_name,order_items.qty,order_items.amount FROM orders INNER JOIN order_items ON orders.id = order_items.order_id WHERE orders.user_id ='$user_id' && order_items.store_id ='$store_id' && order_items.date='$date'");
+			return $sql->result_array();
 		}
 	}
 
 	public function create($user_id,$category_id,$product_id,$product_name,$qty,$amount,$is_subscribed)
 	{
-		// $user_id = $this->input->post('user_id');
-		// get store id from user id 
 		$user_data = $this->model_users->getUserData($user_id);
 		$store_id = $user_data['store_id'];
 
@@ -138,11 +145,11 @@ class Model_orders extends CI_Model
 			$row = $sql->row_array();
 			$i=$row['orders_count']+1;
 			$sqli = $this->db->query("UPDATE billno SET orders_count=$i WHERE sno=$store_id");
-			$l=strlen((string)$i);
-			$sum='';
-			for($j=0;$j<5-$l;$j++)
-			    $sum.='0';
-			return $result.'-'.$sum.$i;
+			date_default_timezone_set("Asia/Kolkata");
+			$year = date('Y');
+			$mon = date('m');
+			$day = date('d');
+			return $result.'-'.$year.$mon.$day.$i;
 		}
 	}
 

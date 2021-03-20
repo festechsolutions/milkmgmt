@@ -102,12 +102,18 @@
                         <td><input type="checkbox" name="permission[]" id="permission" value="deleteSubscription"></td>
                       </tr>
                       <tr>
-                        <td>Deliver</td>
+                        <td>Deliveries</td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="createOrder"></td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="updateOrder"></td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="viewOrder"></td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="deleteOrder"></td>
                       </tr>
+                      <tr>
+                        <td>Payments</td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="createPayments"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="updatePayments"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="viewPayments"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="deletePayments"></td>
                       <tr>
                         <td>Report</td>
                         <td> - </td>

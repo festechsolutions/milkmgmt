@@ -48,6 +48,19 @@ class Model_users extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getUsersData($store_id)
+	{
+		if($store_id) {
+			$sql = "SELECT id,firstname,lastname from users WHERE store_id = ? AND id > 5";
+			$query = $this->db->query($sql, array($store_id));
+			return $query->result_array();
+		}
+
+		$sql = "SELECT id,username from users WHERE store_id = ? AND id > 5 ORDER BY id DESC";
+		$query = $this->db->query($sql, array($store_id));
+		return $query->result_array();
+	}
+
 	public function getSubscribedUsersData($store_id)
 	{
 		if($store_id) {

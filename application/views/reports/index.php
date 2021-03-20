@@ -31,10 +31,6 @@
             <button type="submit" class="btn btn-default">Submit</button>
           </form>
         </div>
-
-        <br /> <br />
-
-
         <div class="col-md-12 col-xs-12">
 
           <?php if($this->session->flashdata('success')): ?>

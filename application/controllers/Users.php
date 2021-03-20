@@ -40,11 +40,20 @@ class Users extends Admin_Controller
 		$this->render_template('users/index', $this->data);
 	}
 
-	public function getUsersData()
+	public function getActiveUsersData()
     {
         $store_id = $this->input->post('store_id');
         if($store_id){
         	$users = $this->model_users->getActiveUsersData($store_id);
+        	echo json_encode($users);
+        }
+    }
+
+    public function getUsersData()
+    {
+        $store_id = $this->input->post('store_id');
+        if($store_id){
+        	$users = $this->model_users->getUsersData($store_id);
         	echo json_encode($users);
         }
     }

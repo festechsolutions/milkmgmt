@@ -272,7 +272,7 @@
     else{
       
         $.ajax({
-            url: base_url + 'users/getUsersData',
+            url: base_url + 'users/getActiveUsersData',
             type: "post",
             data: {store_id : store_id},
             dataType: "json",
