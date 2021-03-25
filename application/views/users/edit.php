@@ -39,7 +39,14 @@
             <form role="form" action="<?php base_url('users/create') ?>" method="post">
               <div class="box-body">
 
-                <?php echo validation_errors(); ?>
+                <?php $errors = ''; ?>
+                <?php $errors = validation_errors(); ?>
+                <?php if($errors != ''): ?>
+                  <div class="alert alert-warning alert-dismissible" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <?php echo validation_errors(); ?>
+                  </div>
+                <?php endif; ?>
 
                 <div class="form-group">
                   <label for="groups">Groups</label>
@@ -126,7 +133,7 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    $("#groups").select2();
+    //$("#groups").select2();
 
     $("#userMainNav").addClass('active');
     $("#manageUserSubNav").addClass('active');

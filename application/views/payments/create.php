@@ -97,13 +97,19 @@
                 </tr>
               </thead>
               <tbody>
-                
-              </tbody>
-              <tbody>
                 <tr>
                   <th colspan="3">Total Amount</th>
                   <th>
-                    
+                    <?php foreach ($results as $k => $v): ?>
+                    <tr>
+                      <td><?php 
+                      
+                        //echo $v['product_name'];
+                        echo $v;
+                      
+                      ?></td>
+                    </tr>
+                  <?php endforeach ?>
                   </th>
                 </tr>
               </tbody>

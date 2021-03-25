@@ -15,7 +15,7 @@ class Model_category extends CI_Model
 			return $query->row_array();
 		}
 
-		$sql = "SELECT * FROM category ORDER BY id DESC";
+		$sql = "SELECT * FROM category";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}

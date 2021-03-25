@@ -43,11 +43,18 @@
           <form role="form" action="" method="post" enctype="multipart/form-data">
               <div class="box-body">
 
-                <?php echo validation_errors(); ?>
+                <?php $errors = ''; ?>
+                <?php $errors = validation_errors(); ?>
+                <?php if($errors != ''): ?>
+                  <div class="alert alert-warning alert-dismissible" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <?php echo validation_errors(); ?>
+                  </div>
+                <?php endif; ?>
 
                 <div class="form-group">
                   <label for="category">Category</label>
-                  <select class="form-control select_group" id="category" name="category">
+                  <select class="form-control" id="category" name="category">
                     <option value="">Select Category</option>
                     <?php foreach ($category as $k => $v): ?>
                       <option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option>
@@ -97,7 +104,7 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    $(".select_group").select2();
+    //$(".select_group").select2();
     $("#description").wysihtml5();
 
     $("#productMainNav").addClass('active');

@@ -48,7 +48,7 @@ class Model_orders extends CI_Model
 	public function getIfUserIsDelivered($store_id)
 	{
 		date_default_timezone_set("Asia/Kolkata");
-		$date = strtotime(date('d-m-Y'));
+		$date = date('d-m-Y');
 		$sql = $this->db->query("SELECT DISTINCT orders.id,orders.user_id FROM orders INNER JOIN order_items ON orders.id = order_items.order_id WHERE order_items.is_subscribed ='1' && order_items.store_id ='$store_id' && order_items.date='$date'");
 		return $sql->result_array();
 	}
@@ -74,6 +74,8 @@ class Model_orders extends CI_Model
 	{
 		if($store_id && $user_id && $month && $year)
 		{
+			date_default_timezone_set("Asia/Kolkata");
+			$date = date('d-m-Y');
 			$sql = $this->db->query("SELECT order_items.product_name,order_items.qty,order_items.amount FROM orders INNER JOIN order_items ON orders.id = order_items.order_id WHERE orders.user_id ='$user_id' && order_items.store_id ='$store_id' && order_items.date='$date'");
 			return $sql->result_array();
 		}
@@ -87,6 +89,7 @@ class Model_orders extends CI_Model
 		$bill_no = $this->generateBill($store_id);
 		date_default_timezone_set("Asia/Kolkata");
 		$date = strtotime(date('d-m-Y'));
+		$date1 = date('d-m-Y');
 		$time = date('h:i:sa');
 		
 		$get_company_data = $this->model_company->getCompanyData(1);
@@ -123,7 +126,7 @@ class Model_orders extends CI_Model
 			'product_name' => $product_name,
     		'qty' => $qty,
     		'amount' => $amount,
-			'date' => $date,
+			'date' => $date1,
 		    'store_id' => $store_id,
 		    'is_subscribed' => $is_subscribed,
     	);
@@ -173,6 +176,7 @@ class Model_orders extends CI_Model
 
 		date_default_timezone_set("Asia/Kolkata");
 		$date = strtotime(date('d-m-Y'));
+		$date1 = date('d-m-Y');
 	    $date_time = strtotime(date('d-m-Y h:i:sa'));
 	    
 	    $get_company_data = $this->model_company->getCompanyData(1);
@@ -208,7 +212,7 @@ class Model_orders extends CI_Model
 			'product_name' => $product_name,
     		'qty' => $qty,
     		'amount' => $amount,
-			'date' => $date,
+			'date' => $date1,
 		    'store_id' => $store_id,
 		    'is_subscribed' => $is_subscribed,
 		);
@@ -229,6 +233,7 @@ class Model_orders extends CI_Model
 			
 			date_default_timezone_set("Asia/Kolkata");
 		    $date = strtotime(date('d-m-Y'));
+		    $date1 = date('d-m-Y');
 		    $date_time = strtotime(date('d-m-Y h:i:sa'));
 			
 			$data = array(
@@ -257,7 +262,7 @@ class Model_orders extends CI_Model
 					'product_name' => $query['name'],
 	    			'qty' => $this->input->post('qty')[$x],
 	    			'amount' => $this->input->post('amount')[$x],
-					'date' => $date,
+					'date' => $date1,
 					'store_id' => $store_id,
 					'is_subscribed' => 0,
 	    		);

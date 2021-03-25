@@ -158,9 +158,6 @@
               <ul class="treeview-menu">
                 <?php if(in_array('viewReport', $user_permission)): ?>
                   <li id="productReportSubMenu"><a href="<?php echo base_url('reports') ?>"><i class="fa fa-circle-o"></i>Total Revenue</a></li>
-                  <!--<li id="storeReportSubMenu"><a href="<?php echo base_url('reports/storewise') ?>"><i class="fa fa-circle-o"></i> Shop wise</a></li>
-                  <li id="daywiseReportSubMenu"><a href="<?php echo base_url('reports/daywise') ?>"><i class="fa fa-circle-o"></i> Day wise</a></li>
-                  <li id="summaryReportSubMenu"><a href="<?php echo base_url('reports/summary') ?>"><i class="fa fa-circle-o"></i> Summary</a></li>-->
                 <?php endif; ?>
               </ul>
             </li>

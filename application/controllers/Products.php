@@ -98,7 +98,7 @@ class Products extends Admin_Controller
             $result[$k]['category'] = $v;
             $result[$k]['products'] = $this->model_products->getProductDataByCat($v['id']);
         }
-
+        //echo json_encode($result);
         // based on the category get all the products 
 
         $html = '<!-- Main content -->

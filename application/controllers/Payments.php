@@ -15,7 +15,7 @@ class Payments extends Admin_Controller
 		$this->load->model('model_payments');
 		$this->load->model('model_products');
 		$this->load->model('model_category');
-        $this->load->model('model_users');
+        $this->load->model('model_orders');
 		$this->load->model('model_stores');
         $this->load->model('model_subscribe');
 	}
@@ -55,10 +55,10 @@ class Payments extends Admin_Controller
         }
         else {
             // false case
-
+        	$order_data = array();
         	$this->data['category'] = $this->model_category->getActiveCategory();
             $this->data['stores'] = $this->model_stores->getActiveStore();
-			
+			$this->data['results'] = $order_data;
             $this->render_template('payments/create', $this->data);
         }	
 	}
@@ -74,10 +74,11 @@ class Payments extends Admin_Controller
         $month = $this->input->post('month');
         $year = $this->input->post('year');
 
+        $order_data = array();
     	$order_data = $this->model_orders->getUserDeliveriesData($store_id,$user_id,$month,$year);
-		$this->data['report_years'] = $this->model_reports->getOrderYear();
+		//$this->data['report_years'] = $this->model_reports->getOrderYear();
 
-		$final_order_data = array();
+		/*$final_order_data = array();
 		foreach ($order_data as $k => $v) {
 			
 			if(count($v) > 1) {
@@ -93,11 +94,11 @@ class Payments extends Admin_Controller
 				$final_order_data[$k] = 0;
 			}
 			
-		}
+		}*/
 		
-		$this->data['selected_year'] = $today_year;
+		//$this->data['selected_year'] = $today_year;
 		$this->data['company_currency'] = $this->company_currency();
-		$this->data['results'] = $final_order_data;
+		$this->data['results'] = $order_data;
 
 		$this->render_template('payments/create', $this->data);
 	}

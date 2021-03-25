@@ -32,7 +32,7 @@ class Model_products extends CI_Model
 
 			$user_id = $this->session->userdata('id');
 			if($user_id == 1) {
-				$sql = "SELECT * FROM products ORDER BY id DESC";
+				$sql = "SELECT * FROM products where category_id = $cat_id";
 				$query = $this->db->query($sql);
 				$result = array();
 				foreach($query->result_array() as $key => $value) {
@@ -40,8 +40,7 @@ class Model_products extends CI_Model
 					if($category_ids) {
 						$result[] = $value;
 					}
-				} 
-
+				}
 				return $result;
 			}
 		}	
