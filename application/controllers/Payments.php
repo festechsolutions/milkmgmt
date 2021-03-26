@@ -42,9 +42,6 @@ class Payments extends Admin_Controller
 
 	public function fetch()
 	{
-		if(!in_array('viewPayments', $this->permission)) {
-            redirect('dashboard', 'refresh');
-        }
 
         $store_id = $this->input->post('store_name');
         $user_id = $this->input->post('user_id');
