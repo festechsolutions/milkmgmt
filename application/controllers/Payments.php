@@ -38,7 +38,6 @@ class Payments extends Admin_Controller
         $this->data['category'] = $this->model_category->getActiveCategory();
         $this->data['stores'] = $this->model_stores->getActiveStore();
 		$this->render_template('payments/main', $this->data);
-        }	
 	}
 
 	public function fetch()

@@ -75,8 +75,8 @@ class Model_orders extends CI_Model
 		if($store_id && $user_id && $month && $year)
 		{
 			date_default_timezone_set("Asia/Kolkata");
-			$date = date('d-m-Y');
-			$sql = $this->db->query("SELECT order_items.product_name,order_items.qty,order_items.amount,order_items.date FROM orders INNER JOIN order_items ON orders.id = order_items.order_id WHERE orders.user_id ='$user_id' && order_items.store_id ='$store_id' && order_items.date='$date'");
+			$date = $month.'-'.$year;
+			$sql = $this->db->query("SELECT order_items.product_name,order_items.qty,order_items.amount,order_items.date FROM orders INNER JOIN order_items ON orders.id = order_items.order_id WHERE orders.user_id ='$user_id' && order_items.store_id ='$store_id' && order_items.date='%$date'");
 			return $sql->result_array();
 		}
 	}
