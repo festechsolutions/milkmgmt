@@ -6044,3 +6044,8 @@ table.text-center, table.text-center td, table.text-center th {
     padding: 6px 30px;
     white-space: nowrap;
 }
+/* for main.php payments */
+
+#tabledata tr td:nth-child(1){
+    width: 83px;
+}

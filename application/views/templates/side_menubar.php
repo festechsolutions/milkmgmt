@@ -137,7 +137,7 @@
               </a>
               <ul class="treeview-menu">
                 <?php if(in_array('createPayments', $user_permission)): ?>
-                  <li id="createPaymentsSubMenu"><a href="<?php echo base_url('payments/create') ?>"><i class="fa fa-circle-o"></i> New Payment</a></li>
+                  <li id="createPaymentsSubMenu"><a href="<?php echo base_url('payments/main') ?>"><i class="fa fa-circle-o"></i> New Payment</a></li>
                 <?php endif; ?>
                 <?php if(in_array('viewPayments', $user_permission)): ?>
                   <li id="managepaymentsSubMenu"><a href="<?php echo base_url('payments') ?>"><i class="fa fa-circle-o"></i>Manage Payments</a></li>
