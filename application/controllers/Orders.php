@@ -210,7 +210,6 @@ class Orders extends Admin_Controller
 		$this->form_validation->set_rules('product[]', 'Product name', 'trim|required');
 		$this->form_validation->set_rules('qty[]', 'Quantity', 'trim|required');
 		$this->form_validation->set_rules('amount[]', 'Amount', 'trim|required');
-		$this->form_validation->set_rules('gross_amount', 'Gross Amount', 'trim|required');
 		$this->form_validation->set_rules('net_amount', 'Net Amount', 'trim|required');
 	
         if ($this->form_validation->run() == TRUE) {        	

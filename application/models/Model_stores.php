@@ -27,7 +27,8 @@ class Model_stores extends CI_Model
 			$store_id = $this->db->insert_id();
 			$items = array(
 			    'sno' => $store_id,
-			    'count' => 0,
+			    'subscriber_count' => 0,
+			    'orders_count' => 0,
     		);
 
     		$bill = $this->db->insert('billno', $items); 
@@ -49,7 +50,9 @@ class Model_stores extends CI_Model
 		if($id) {
 			$this->db->where('id', $id);
 			$delete = $this->db->delete('stores');
-			return ($delete == true) ? true : false;
+			$this->db->where('sno', $id);
+			$delete_bill = $this->db->delete('billno');
+			return ($delete && $delete_bill == true) ? true : false;
 		}
 
 		return false;

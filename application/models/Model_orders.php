@@ -76,7 +76,7 @@ class Model_orders extends CI_Model
 		{
 			date_default_timezone_set("Asia/Kolkata");
 			$date = $month.'-'.$year;
-			$sql = $this->db->query("SELECT order_items.product_name,order_items.qty,order_items.amount,order_items.date FROM orders INNER JOIN order_items ON orders.id = order_items.order_id WHERE orders.user_id ='$user_id' && order_items.store_id ='$store_id' && order_items.date='%$date'");
+			$sql = $this->db->query("SELECT order_items.product_name,order_items.qty,order_items.amount,order_items.date FROM orders INNER JOIN order_items ON orders.id = order_items.order_id WHERE orders.user_id ='$user_id' && order_items.store_id ='$store_id' && order_items.date LIKE '%$date'");
 			return $sql->result_array();
 		}
 	}
@@ -95,11 +95,7 @@ class Model_orders extends CI_Model
 		$get_company_data = $this->model_company->getCompanyData(1);
 		$service_charge_amount = $get_company_data['service_charge_value'];
 
-		$gross_amount = $amount;
-		$gross_amount = number_format($gross_amount, 2);
-
-		$net_amount = $gross_amount + $service_charge_amount;
-		$net_amount = number_format($net_amount, 2);
+		$net_amount = number_format($amount, 2);
 
 		$amount = number_format($amount, 2);
 		
@@ -107,8 +103,6 @@ class Model_orders extends CI_Model
     		'bill_no' => $bill_no,
 			'date' => $date,
 			'time' => $time,
-			'gross_amount' => $gross_amount,
-			'service_charge_amount' => $service_charge_amount,
 			'net_amount' => $net_amount,
     		'paid_status' => 2,
     		'user_id' => $user_id,
@@ -180,23 +174,17 @@ class Model_orders extends CI_Model
 	    $date_time = strtotime(date('d-m-Y h:i:sa'));
 	    
 	    $get_company_data = $this->model_company->getCompanyData(1);
-		$service_charge_amount = $get_company_data['service_charge_value'];
-
-		$select = $this->db->query("SELECT gross_amount FROM orders WHERE id = $order_id");
+		
+		$select = $this->db->query("SELECT net_amount FROM orders WHERE id = $order_id");
 		$query = $select->row_array();
-		$existing_gross = $query['gross_amount'];
+		$existing_net = $query['net_amount'];
 
-		$gross_amount = $existing_gross + $amount;
-		$gross_amount = number_format($gross_amount, 2);
-
-		$net_amount = $gross_amount + $service_charge_amount;
+		$net_amount = $existing_net + $amount;
 		$net_amount = number_format($net_amount, 2);
 
 		$amount = number_format($amount, 2);
 		
 		$data = array(
-			'gross_amount' => $gross_amount,
-			'service_charge_amount' => $service_charge_amount,
 			'net_amount' => $net_amount,
 			'paid_status' => 2,
     		'modified_datetime' => $date_time,
@@ -237,7 +225,6 @@ class Model_orders extends CI_Model
 		    $date_time = strtotime(date('d-m-Y h:i:sa'));
 			
 			$data = array(
-				'gross_amount' => $this->input->post('gross_amount'),
 				'net_amount' => $this->input->post('net_amount'),
 	    		'modified_datetime' => $date_time,
 	    	);

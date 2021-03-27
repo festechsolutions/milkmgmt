@@ -37,6 +37,8 @@ class Payments extends Admin_Controller
 
         $this->data['category'] = $this->model_category->getActiveCategory();
         $this->data['stores'] = $this->model_stores->getActiveStore();
+        $this->data['company_currency'] = $this->company_currency();
+        $this->data['company_data'] = $this->model_company->getCompanyData(1);
 		$this->render_template('payments/main', $this->data);
 	}
 

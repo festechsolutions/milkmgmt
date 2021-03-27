@@ -116,22 +116,6 @@
                 <div class="col-md-6 col-xs-12 pull pull-right">
 
                   <div class="form-group">
-                    <label for="net_amount" class="col-sm-5 control-label">Gross Amount</label>
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" id="gross_amount" name="gross_amount" readonly="true" value="<?php echo $order_data['order']['gross_amount'] ?>" autocomplete="off">
-                      <input type="hidden" class="form-control" id="gross_amount_value" name="gross_amount_value" value="<?php echo $order_data['order']['gross_amount'] ?>" autocomplete="off">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="net_amount" class="col-sm-5 control-label">Service Charge</label>
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" id="service_charge_amount" name="service_charge_amount" disabled readonly="true" value="<?php echo $order_data['order']['service_charge_amount'] ?>" autocomplete="off">
-                      <input type="hidden" class="form-control" id="service_charge_amount_value" name="service_charge_amount_value" value="<?php echo $order_data['order']['service_charge_amount'] ?>" autocomplete="off">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
                     <label for="net_amount" class="col-sm-5 control-label">Net Amount</label>
                     <div class="col-sm-7">
                       <input type="text" class="form-control" id="net_amount" name="net_amount" readonly="true" value="<?php echo $order_data['order']['net_amount'] ?>" autocomplete="off">
@@ -309,14 +293,8 @@
       totalSubAmount = Number(totalSubAmount) + Number($("#amount_"+count).val());
     }
 
-    totalSubAmount = totalSubAmount.toFixed(2);
-
-    // sub total
-    $("#gross_amount").val(totalSubAmount);
-    $("#gross_amount_value").val(totalSubAmount);
-
     // total amount
-    var totalAmount = Number(totalSubAmount) + Number($("#service_charge_amount").val());
+    var totalAmount = Number(totalSubAmount);
     totalAmount = totalAmount.toFixed(2);
     $("#net_amount").val(totalAmount);
     $("#totalAmountValue").val(totalAmount);
