@@ -72,6 +72,11 @@
                 </div>
 
                 <div class="form-group">
+                  <label for="lname">Address</label>
+                  <input type="text" class="form-control" id="address" name="address" placeholder="Address" value="<?php echo $user_data['address'] ?>" autocomplete="off">
+                </div>
+
+                <div class="form-group">
                   <div class="alert alert-info alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                       Leave the password field empty if you don't want to change.

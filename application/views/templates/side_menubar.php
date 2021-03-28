@@ -1,4 +1,4 @@
-<aside class="main-sidebar">
+ <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       
@@ -158,6 +158,9 @@
               <ul class="treeview-menu">
                 <?php if(in_array('viewReport', $user_permission)): ?>
                   <li id="productReportSubMenu"><a href="<?php echo base_url('reports') ?>"><i class="fa fa-circle-o"></i>Total Revenue</a></li>
+                <?php endif; ?>
+                <?php if(in_array('viewReport', $user_permission)): ?>
+                  <li id="productReportSubMenu"><a href="<?php echo base_url('reports/todayitemwise') ?>"><i class="fa fa-circle-o"></i>Today's Delivered Items</a></li>
                 <?php endif; ?>
               </ul>
             </li>

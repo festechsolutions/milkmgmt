@@ -17,25 +17,6 @@
     <section class="content">
       <!-- Small boxes (Stat box) -->
       <div class="row">
-        <div class="col-md-11 col-xs-11">
-          <form class="form-inline" action="<?php echo base_url('reports/todayitemwise') ?>" method="POST">
-            <div class="form-group">
-              <label for="date">Shop</label>
-              <select class="form-control" name="select_store" id="select_store">
-                <option value="">Select shop</option>
-                <?php foreach ($store_data as $key => $value): ?>
-                  <option value="<?php echo $value['id'] ?>" <?php if($selected_store == $value['id']) { echo 'selected="selected"'; } ?>><?php echo $value['name']; ?></option>
-                <?php endforeach ?>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-default">Submit</button>
-          </form>
-        </div>
-        <div class="col-md-1 col-xs-1">
-          <a target="__blank" href="<?php echo base_url() . 'reports/printDiv/'.$selected_store ?>" class="btn btn-default" >Print</a>
-        </div> 
-        <br /> <br />
-
 
         <div class="col-md-12 col-xs-12">
 
@@ -51,21 +32,22 @@
             </div>
           <?php endif; ?>
         <!-- col-md-12 -->
-      </div>
+        </div>
+      </div>  
 
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Total Items - Report</h3>
+          <h3 class="box-title">Delivered Items Report on <?php echo $date;?></h3>
         </div>
         <div class="box-body">
             <table id="datatables" class="table table-bordered table-striped">
               <thead>
               <tr>
-                  <th>Item Name</th>
-                  <th>Quantity</th>
+                  <th style="text-align: center">Product Name</th>
+                  <th style="text-align: center">Quantity</th>
               </tr>
               </thead>
-              <tbody>
+              <tbody style="text-align: center">
                 <?php $sum='0';?>
                 <?php foreach ($order_data as $k => $v): ?>
                  <tr>
@@ -73,19 +55,16 @@
                   <td><?php echo $v['qtysum']; $sum+=$v['qtysum'];?></td>
                  </tr>
                 <?php endforeach ?>
-                  
-              </tbody>
-              <tbody>
                 <tr>
-                 <th>Total Quantity</th>
-                 <th>
-                    <?php echo $sum; ?>
-                 </th>
+                 <th style="text-align: center">Total Quantity</th>
+                 <th style="text-align: center"><?php echo $sum; ?></th>
                 </tr>
               </tbody>
             </table>
         </div>
       </div>
+
+      
     </section>
     <!-- /.content -->
   </div>

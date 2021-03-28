@@ -11,7 +11,7 @@ class Model_subscribe extends CI_Model
 	public function getSubscriptionData($id = null)
 	{
 		if($id) {
-			$sql = "SELECT * FROM subscribe WHERE id = ?";
+			$sql = "SELECT * FROM subscribe WHERE id = ? ORDER BY id DESC";
 			$query = $this->db->query($sql, array($id));
 			return $query->row_array();
 		}

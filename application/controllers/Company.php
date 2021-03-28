@@ -36,10 +36,12 @@ class Company extends Admin_Controller
 	
         if ($this->form_validation->run() == TRUE) {
             // true case
+            $amount = $this->input->post('service_charge_value');
+            $service_charge_value = number_format($amount, 2);
 
         	$data = array(
         		'company_name' => $this->input->post('company_name'),
-        		'service_charge_value' => $this->input->post('service_charge_value'),
+        		'service_charge_value' => $service_charge_value,
         		'vat_charge_value' => 0,
 				'address' => $this->input->post('address'),
         		'phone' => $this->input->post('phone'),

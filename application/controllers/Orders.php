@@ -117,53 +117,42 @@ class Orders extends Admin_Controller
 
 	public function create_order()
 	{
-		// $this->form_validation->set_rules('user_id', 'UserID', 'trim|required');
-		// $this->form_validation->set_rules('product_name', 'Product_name name', 'trim|required');
-		// $this->form_validation->set_rules('product_id', 'Product_name name', 'trim|required');
-		// $this->form_validation->set_rules('qty', 'Quantity', 'trim|required');
-		// $this->form_validation->set_rules('category_id', 'Category ID', 'trim|required');
-		// $this->form_validation->set_rules('store_id', 'Store ID', 'trim|required');
-		// $this->form_validation->set_rules('amount', 'Amount', 'trim|required');
-		
-	
-        // if ($this->form_validation->run() == TRUE) {
+		$user_id = $this->input->post('user_id');
+		$category_id = $this->input->post('category_id');
+		$product_id = $this->input->post('product_id');
+		$product_name = $this->input->post('product_name');
+		$qty = $this->input->post('qty');
+		$amount = $this->input->post('amount');
+		$is_subscribed = $this->input->post('is_subscribed');
 
-			$user_id = $this->input->post('user_id');
-			$category_id = $this->input->post('category_id');
-			$product_id = $this->input->post('product_id');
-			$product_name = $this->input->post('product_name');
-    		$qty = $this->input->post('qty');
-    		$amount = $this->input->post('amount');
-    		$is_subscribed = $this->input->post('is_subscribed');
+    	$check_order = $this->model_orders->checkIfOrderExists($user_id);
+    	
+    	$ifOrderExists = $check_order['bool'];
+    	$order_id = $check_order['order_id'];
 
-        	$check_order = $this->model_orders->checkIfOrderExists($user_id);
-        	
-        	$ifOrderExists = $check_order['bool'];
-        	$order_id = $check_order['order_id'];
+    	$response = array();
+    	
+		if($ifOrderExists == TRUE){
 
-        	$response = array();
-        	
-			if($ifOrderExists == TRUE){
-
-        		$update = $this->model_orders->update_order($order_id,$user_id,$category_id,$product_id,$product_name,$qty,$amount,$is_subscribed);
-        		if($update == true) {
-                	$response['success'] = true;
-            	}
-            	else {
-                	$response['success'] = false;
-                }
+    		$update = $this->model_orders->update_order($order_id,$user_id,$category_id,$product_id,$product_name,$qty,$amount,$is_subscribed);
+    		if($update == true) {
+            	$response['success'] = true;
         	}
-        	else{
+        	else {
+            	$response['success'] = false;
+            }
+    	}
+    	else{
 
-        		$create = $this->model_orders->create($user_id,$category_id,$product_id,$product_name,$qty,$amount,$is_subscribed);
-        		if($create == true) {
-                	$response['success'] = true;
-            	}
-            	else {
-                	$response['success'] = false;
-                }
+    		$create = $this->model_orders->create($user_id,$category_id,$product_id,$product_name,$qty,$amount,$is_subscribed);
+    		if($create == true) {
+            	$response['success'] = true;
         	}
-        	return json_encode($response);
+        	else {
+            	$response['success'] = false;
+            }
+    	}
+    	return json_encode($response);
 	}
 
 	/*

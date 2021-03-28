@@ -85,7 +85,7 @@
 
                 <div class="form-group">
                   <label for="phone">Phone</label>
-                  <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" autocomplete="off">
+                  <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" autocomplete="off" required>
                 </div>
 
                 <div class="form-group">

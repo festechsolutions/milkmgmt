@@ -183,10 +183,12 @@ class Products extends Admin_Controller
             $category_id = $this->input->post('category');
             $product_name = $this->input->post('product_name');
             $category = $this->model_category->getCategoryData($category_id);
+            $amount = $this->input->post('price');
+            $net_price = number_format($amount, 2);
 
         	$data = array(
         		'name' => $product_name.' '.$category['name'],
-        		'price' => $this->input->post('price'),
+        		'price' => $net_price,
         		'category_id' => $category_id,
                 'active' => $this->input->post('active'),
         	);
@@ -203,13 +205,7 @@ class Products extends Admin_Controller
         }
         else {
             // false case
-
-        	// attributes 
-        	// $attribute_data = $this->model_attributes->getActiveAttributeData();
-
-
-        	// $this->data['attributes'] = $attributes_final_data;
-			// $this->data['brands'] = $this->model_brands->getActiveBrands();        	
+     	
 			$this->data['category'] = $this->model_category->getActiveCategory();        	
 			
             $this->render_template('products/create', $this->data);
@@ -269,10 +265,13 @@ class Products extends Admin_Controller
 
         if ($this->form_validation->run() == TRUE) {
             // true case
+
+            $amount = $this->input->post('price');
+            $net_price = number_format($amount, 2);
             
             $data = array(
                 'name' => $this->input->post('product_name'),
-                'price' => $this->input->post('price'),
+                'price' => $net_price,
                 'category_id' => $this->input->post('category'),
                 'active' => $this->input->post('active'),
             );

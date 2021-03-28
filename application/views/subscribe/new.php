@@ -89,7 +89,7 @@
                     <tr valign="middle">
                       <th style="width:35;text-align:center">Product Name</th>
                       <th style="width:15%;text-align:center">Quantity</th>
-                      <th style="width:20%;text-align:center">Amount</th>
+                      <th style="width:20%;text-align:center">Price</th>
                       <th style="width:20%;text-align:center">Total Amount</th>
                       <th style="width:10%;text-align:center"><button type="button" id="add_row" style="background-color:#4CAF50" class="btn btn-default"><i class="fa fa-plus" style="color:white"></i></button></th>
                     </tr>

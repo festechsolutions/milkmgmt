@@ -118,9 +118,14 @@ class Model_users extends CI_Model
 
 	public function countTotalUsers()
 	{
-		$sql = "SELECT * FROM users WHERE id != ?";
-		$query = $this->db->query($sql, array(1));
-		return $query->num_rows();
+		$sql = $this->db->query("SELECT COUNT(*) AS count FROM users INNER JOIN user_group ON users.id = user_group.user_id WHERE user_group.group_id != '1' && user_group.group_id != '2'")->row();
+		return $sql->count;
+	}  
+
+	public function countSubscribedUsers()
+	{
+		$sql = $this->db->query("SELECT COUNT(*) AS count FROM users INNER JOIN user_group ON users.id = user_group.user_id WHERE user_group.group_id != '1' && user_group.group_id != '2' && users.subscribed ='1'")->row();
+		return $sql->count;
 	}
 	
 }

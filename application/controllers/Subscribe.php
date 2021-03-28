@@ -48,6 +48,10 @@ class Subscribe extends Admin_Controller
 		foreach ($data as $key => $value) {
 
 			// button
+            $user_data =  $this->model_users->getUserData($value['user_id']);
+
+            $name = $user_data['firstname'].' '.$user_data['lastname'];
+
             $buttons = '';
             if(in_array('updateSubscription', $this->permission)) {
     			$buttons .= '<a href="'.base_url('subscribe/update/'.$value['id']).'" style="border: 2px solid #4CAF50" class="btn btn-default"><i class="fa fa-pencil" style="color:#4CAF50"></i></a>';
@@ -63,6 +67,7 @@ class Subscribe extends Admin_Controller
             $availability = ($value['active'] == 1) ? '<span class="label label-success">Active</span>' : '<span class="label label-warning">Inactive</span>';
 
 			$result['data'][$key] = array(
+                $name,
 				$value['subscribe_no'],
                 $store_name['name'],
                 $value['net_amount'],

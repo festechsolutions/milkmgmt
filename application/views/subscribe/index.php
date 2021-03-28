@@ -43,13 +43,14 @@
 
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Manage Products</h3>
+            <h3 class="box-title">Manage Subscriptions</h3>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
             <table id="manageTable" class="table table-bordered table-striped">
               <thead>
               <tr>
+                <th>Customer Name</th>
                 <th>Subscription No</th>
                 <th>Store/Colony Name</th>
                 <th>Net Amount</th>

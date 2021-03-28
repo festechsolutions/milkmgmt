@@ -78,7 +78,7 @@ class Users extends Admin_Controller
 		$this->form_validation->set_rules('store', 'Store', 'trim|required');
 		$this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]|max_length[12]|is_unique[users.username]');
 		$this->form_validation->set_rules('fname', 'First name', 'trim|required');
-		
+		$this->form_validation->set_rules('phone', 'Phone Number', 'trim|required');
 
         if ($this->form_validation->run() == TRUE) {
             // true case
@@ -134,6 +134,7 @@ class Users extends Admin_Controller
 			$this->form_validation->set_rules('groups', 'Group', 'required');
 			$this->form_validation->set_rules('store', 'Store', 'trim|required');
 			$this->form_validation->set_rules('fname', 'First name', 'trim|required');
+			$this->form_validation->set_rules('phone', 'Phone Number', 'trim|required');
 
 
 			if ($this->form_validation->run() == TRUE) {
@@ -275,6 +276,7 @@ class Users extends Admin_Controller
 
 		if($id) {
 			$this->form_validation->set_rules('fname', 'First name', 'trim|required');
+			$this->form_validation->set_rules('phone', 'Phone Number', 'trim|required');
 
 
 			if ($this->form_validation->run() == TRUE) {

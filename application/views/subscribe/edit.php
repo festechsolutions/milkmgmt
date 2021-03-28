@@ -92,7 +92,7 @@
                     <tr valign="middle">
                       <th style="width:35;text-align:center">Product Name</th>
                       <th style="width:15%;text-align:center">Quantity</th>
-                      <th style="width:20%;text-align:center">Amount</th>
+                      <th style="width:20%;text-align:center">Price</th>
                       <th style="width:20%;text-align:center">Total Amount</th>
                       <th style="width:10%;text-align:center"><button type="button" id="add_row" style="background-color:#4CAF50" class="btn btn-default"><i class="fa fa-plus" style="color:white"></i></button></th>
                     </tr>
@@ -114,7 +114,7 @@
                         </td>
                         <td><input type="text" name="qty[]" id="qty_<?php echo $x; ?>" class="form-control" required onkeyup="getTotal(<?php echo $x; ?>)" value="<?php echo $val['qty'] ?>" autocomplete="off"></td>
                         <td>
-                          <input type="text" name="rate[]" id="rate_<?php echo $x; ?>" class="form-control" readonly="true" value="<?php echo $val['amount']/$val['qty'] ?>" autocomplete="off">
+                          <input type="text" name="rate[]" id="rate_<?php echo $x; ?>" class="form-control" readonly="true" value="<?php echo $val['amount']/$val['qty'].'.00' ?>" autocomplete="off">
                           <input type="hidden" name="rate_value[]" id="rate_value_<?php echo $x; ?>" value="<?php echo $val['amount']/$val['qty']?>" class="form-control" autocomplete="off">
                         </td>
                         <td>

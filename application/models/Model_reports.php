@@ -101,11 +101,17 @@ class Model_reports extends CI_Model
 		return $sum;
 	}
 
-	public function getStoreWiseItemData($store_id,$date)
+	public function getStoreWiseItemData($date)
 	{		
-	    $sql = "SELECT SUM(qty) qtysum,product_name FROM order_items WHERE date= '$date' && store_id= $store_id GROUP BY product_id ";
+	    $sql = "SELECT SUM(qty) qtysum,product_name FROM order_items WHERE date= '$date' GROUP BY product_id ";
 	    $query = $this->db->query($sql);
 	    return $query->result_array();	
+	}
+
+	public function gettodaysItemData($date)
+	{		
+	    $sql = $this->db->query("SELECT SUM(qty)as sum FROM order_items WHERE date= '$date';")->row();
+	    return $sql->sum;	
 	}
 
 	public function countStorepayment($user_id,$date)
