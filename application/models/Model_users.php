@@ -48,6 +48,19 @@ class Model_users extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getUsersData($store_id)
+	{
+		if($store_id) {
+			$sql = "SELECT id,firstname,lastname from users WHERE store_id = ? AND id > 5";
+			$query = $this->db->query($sql, array($store_id));
+			return $query->result_array();
+		}
+
+		$sql = "SELECT id,username from users WHERE store_id = ? AND id > 5 ORDER BY id DESC";
+		$query = $this->db->query($sql, array($store_id));
+		return $query->result_array();
+	}
+
 	public function getSubscribedUsersData($store_id)
 	{
 		if($store_id) {
@@ -105,9 +118,14 @@ class Model_users extends CI_Model
 
 	public function countTotalUsers()
 	{
-		$sql = "SELECT * FROM users WHERE id != ?";
-		$query = $this->db->query($sql, array(1));
-		return $query->num_rows();
+		$sql = $this->db->query("SELECT COUNT(*) AS count FROM users INNER JOIN user_group ON users.id = user_group.user_id WHERE user_group.group_id != '1' && user_group.group_id != '2'")->row();
+		return $sql->count;
+	}  
+
+	public function countSubscribedUsers()
+	{
+		$sql = $this->db->query("SELECT COUNT(*) AS count FROM users INNER JOIN user_group ON users.id = user_group.user_id WHERE user_group.group_id != '1' && user_group.group_id != '2' && users.subscribed ='1'")->row();
+		return $sql->count;
 	}
 	
 }

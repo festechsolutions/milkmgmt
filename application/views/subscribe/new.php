@@ -43,7 +43,14 @@
           <form role="form" action="<?php base_url('orders/create') ?>" method="post" class="form-horizontal">
               <div class="box-body">
 
-                <?php echo validation_errors(); ?>
+                <?php $errors = ''; ?>
+                <?php $errors = validation_errors(); ?>
+                <?php if($errors != ''): ?>
+                  <div class="alert alert-warning alert-dismissible" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <?php echo validation_errors(); ?>
+                  </div>
+                <?php endif; ?>
 
                 <div class="form-group">
                   <label for="gross_amount" class="col-sm-12 control-label">Date: <?php date_default_timezone_set("Asia/Kolkata"); echo date('d-m-Y') ?></label>
@@ -82,7 +89,7 @@
                     <tr valign="middle">
                       <th style="width:35;text-align:center">Product Name</th>
                       <th style="width:15%;text-align:center">Quantity</th>
-                      <th style="width:20%;text-align:center">Amount</th>
+                      <th style="width:20%;text-align:center">Price</th>
                       <th style="width:20%;text-align:center">Total Amount</th>
                       <th style="width:10%;text-align:center"><button type="button" id="add_row" style="background-color:#4CAF50" class="btn btn-default"><i class="fa fa-plus" style="color:white"></i></button></th>
                     </tr>
@@ -272,7 +279,7 @@
     else{
       
         $.ajax({
-            url: base_url + 'users/getUsersData',
+            url: base_url + 'users/getActiveUsersData',
             type: "post",
             data: {store_id : store_id},
             dataType: "json",

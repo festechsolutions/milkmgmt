@@ -41,7 +41,14 @@
             <form role="form" action="<?php base_url('users/setting') ?>" method="post">
               <div class="box-body">
 
-                <?php echo validation_errors(); ?>
+                <?php $errors = ''; ?>
+                <?php $errors = validation_errors(); ?>
+                <?php if($errors != ''): ?>
+                  <div class="alert alert-warning alert-dismissible" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <?php echo validation_errors(); ?>
+                  </div>
+                <?php endif; ?>
 
 
                 <div class="form-group">
@@ -62,6 +69,11 @@
                 <div class="form-group">
                   <label for="phone">Phone</label>
                   <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" value="<?php echo $user_data['phone'] ?>" autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                  <label for="lname">Address</label>
+                  <input type="text" class="form-control" id="address" name="address" placeholder="Address" value="<?php echo $user_data['address'] ?>" autocomplete="off">
                 </div>
 
                 <div class="form-group">

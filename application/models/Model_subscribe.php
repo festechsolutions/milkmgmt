@@ -11,7 +11,7 @@ class Model_subscribe extends CI_Model
 	public function getSubscriptionData($id = null)
 	{
 		if($id) {
-			$sql = "SELECT * FROM subscribe WHERE id = ?";
+			$sql = "SELECT * FROM subscribe WHERE id = ? ORDER BY id DESC";
 			$query = $this->db->query($sql, array($id));
 			return $query->row_array();
 		}
@@ -105,11 +105,10 @@ class Model_subscribe extends CI_Model
 			$row = $sql->row_array();
 			$i=$row['subscriber_count']+1;
 			$sqli = $this->db->query("UPDATE billno SET subscriber_count=$i WHERE sno=$store_id");
-			$l=strlen((string)$i);
-			$sum='';
-			for($j=0;$j<5-$l;$j++)
-			    $sum.='0';
-			return $result.'/'.$sum.$i;
+			$year = date('Y');
+			$mon = date('m');
+			$day = date('d');
+			return $result.'/'.$year.$mon.$day.$i;
 		}
 	}
 

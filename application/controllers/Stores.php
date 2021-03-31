@@ -67,8 +67,8 @@ class Stores extends Admin_Controller
 
 		$response = array();
 
-		$this->form_validation->set_rules('name', 'Store name', 'trim|required');
-		$this->form_validation->set_rules('code', 'Store code', 'trim|required');
+		$this->form_validation->set_rules('name', 'Store/Colony name', 'trim|required');
+		$this->form_validation->set_rules('code', 'Store/Colony code', 'trim|required');
 		$this->form_validation->set_rules('type', 'Type', 'trim|required');
 		$this->form_validation->set_rules('active', 'Active', 'trim|required');
 
@@ -120,12 +120,14 @@ class Stores extends Admin_Controller
 		$response = array();
 
 		if($id) {
+			$this->form_validation->set_rules('edit_name', 'Store/Colony name', 'trim|required');
 			$this->form_validation->set_rules('edit_active', 'Active', 'trim|required');
 
 			$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
 	        if ($this->form_validation->run() == TRUE) {
 	        	$data = array(
+	        		'name' => $this->input->post('edit_name'),
 	        		'active' => $this->input->post('edit_active'),
 	        	);
 

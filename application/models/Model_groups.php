@@ -15,7 +15,7 @@ class Model_groups extends CI_Model
 			return $query->row_array();
 		}
 
-		$sql = "SELECT * FROM groups WHERE id != ? ORDER BY id DESC";
+		$sql = "SELECT * FROM groups WHERE id != ?";
 		$query = $this->db->query($sql, array(1));
 		return $query->result_array();
 	}

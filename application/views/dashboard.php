@@ -25,77 +25,57 @@
             <!-- small box -->
             <div class="small-box bg-green">
               <div class="inner">
-                <h3><?php  ?></h3>
+                <h3><?php echo $todays_itemdata; ?></h3>
 
-                <p>Today's Payable Orders</p>
+                <p>Today's Delivered Items</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
               </div>
-              <a href="<?php echo base_url('orders/current') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              <a href="<?php echo base_url('reports/todayitemwise') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
-          <!-- ./col -->
           <div class="col-lg-3 col-xs-6">
             <!-- small box -->
             <div class="small-box bg-aqua">
               <div class="inner">
-                <h3><?php  ?></h3>
+                <h3><?php echo $total_subscribed_users; ?></h3>
 
-                <p>Today's Paid Orders Amount</p>
+                <p>Total Subscribed Customers</p> 
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>
               </div>
-              <a href="<?php echo base_url('reports/dailystoreamount') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              <a href="<?php echo base_url('subscribe/index') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-yellow">
-              <div class="inner">
-                <h3><?php  ?></h3>
-
-                <p>Total Items Received</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-android-people"></i>
-              </div>
-              <a href="<?php echo base_url('reports/todayitemwise') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-red">
-              <div class="inner">
-                <h3><?php ?></h3>
-
-                <p>Total Colonies</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-android-home"></i>
-              </div>
-              <a href="<?php echo base_url('stores/') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-        </div>
-        <div class="row">
           <!-- ./col -->
           <div class="col-lg-3 col-xs-6">
             <!-- small box -->
             <div class="small-box bg-blue">
               <div class="inner">
-                <h3><?php ?></h3>
+                <h3><?php echo $total_users; ?></h3>
 
-                <p>Today's Received Orders Amount</p>
+                <p>Total Customers</p>
               </div>
               <div class="icon">
                 <i class="ion ion-wifi"></i>
               </div>
-              <a href="<?php echo base_url('orders') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              <a href="<?php echo base_url('users/index') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-yellow">
+              <div class="inner">
+                <h3><?php echo $total_colonies; ?></h3>
+
+                <p>Total Stores/Colonies</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-android-home"></i>
+              </div>
+              <a href="<?php echo base_url('stores/index') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
         </div>
@@ -110,28 +90,28 @@
             <!-- small box -->
             <div class="small-box bg-green">
               <div class="inner">
-                <h3><?php  ?></h3>
+                <h3><?php echo $todays_itemdata; ?></h3>
 
-                <p>Today's Payable Orders</p>
+                <p>Today's Delivered Items</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
               </div>
-              <a href="<?php echo base_url('orders/current') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              <a href="<?php echo base_url('reports/todayitemwise') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <div class="col-lg-3 col-xs-6">
             <!-- small box -->
             <div class="small-box bg-aqua">
               <div class="inner">
-                <h3><?php  ?></h3>
+                <h3><?php echo $total_subscribed_users; ?></h3>
 
-                <p>Today's Paid Order Amount</p> 
+                <p>Total Subscribed Customers</p> 
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>
               </div>
-              <a href="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              <a href="<?php echo base_url('subscribe/index') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -139,28 +119,28 @@
             <!-- small box -->
             <div class="small-box bg-blue">
               <div class="inner">
-                <h3><?php  ?></h3>
+                <h3><?php echo $total_users; ?></h3>
 
-                <p>Today's Received Orders Amount</p>
+                <p>Total Customers</p>
               </div>
               <div class="icon">
                 <i class="ion ion-wifi"></i>
               </div>
-              <a href="<?php echo base_url('orders/index') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              <a href="<?php echo base_url('users/index') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <div class="col-lg-3 col-xs-6">
             <!-- small box -->
             <div class="small-box bg-yellow">
               <div class="inner">
-                <h3><?php  ?></h3>
+                <h3><?php echo $total_colonies; ?></h3>
 
-                <p>Total Items Received</p>
+                <p>Total Stores/Colonies</p>
               </div>
               <div class="icon">
                 <i class="ion ion-android-home"></i>
               </div>
-              <a href="<?php echo base_url('reports/todaystoreitemwise') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              <a href="<?php echo base_url('stores/index') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
         </div>

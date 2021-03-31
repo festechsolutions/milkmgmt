@@ -144,7 +144,7 @@
 
           <div class="form-group">
             <label for="brand_name">Store/Colony Name</label>
-            <input type="text" class="form-control" id="edit_name" name="edit_name" placeholder="Enter store (or) colony name" autocomplete="off" disabled>
+            <input type="text" class="form-control" id="edit_name" name="edit_name" placeholder="Enter store (or) colony name" autocomplete="off">
           </div>
 
           <div class="form-group">
@@ -190,7 +190,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary" disabled>Save changes</button>
+          <button type="submit" class="btn btn-primary" >Save changes</button>
         </div>
       </form>
 

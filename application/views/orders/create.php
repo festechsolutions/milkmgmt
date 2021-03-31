@@ -44,7 +44,14 @@
           <form role="form" action="<?php base_url('orders/create') ?>" method="post" class="form-horizontal">
             <div class="box-body">
 
-              <?php echo validation_errors(); ?>
+              <?php $errors = ''; ?>
+                <?php $errors = validation_errors(); ?>
+                <?php if($errors != ''): ?>
+                  <div class="alert alert-warning alert-dismissible" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <?php echo validation_errors(); ?>
+                  </div>
+                <?php endif; ?>
 
               <div class="form-group">
                 <label for="gross_amount" class="col-sm-12 control-label">Date-Time:
@@ -210,11 +217,7 @@
     var inschldDiv2 = document.createElement('div');
     var slct = document.createElement('select')
     slct.setAttribute('type', 'text')
-    // slct.id = `productName${e}`
     slct.setAttribute('class', 'form-control')
-    // slct.setAttribute('id', 'product_name')
-    // slct.setAttribute('name', 'product_name[]')
-    // slct.setAttribute('onchange', 'getProductsData()')
     for (var gg = -1; gg < productsData.length; gg++) {
       var optn = document.createElement('option')
       if (gg == -1) {
@@ -364,16 +367,9 @@
 
       }
     } else {
-      // for (var a = 0; a < globalvalidation.length; a++) {
-      //   if (globalvalidation[a].user_id == e) {
-      // console.log(globalvalidation[a].id);
       $.post(base_url + 'orders/remove_order', { user_id: e }, (data, status) => {
         console.log(data, status);
       })
-      // break;
-      // }
-      // }
-
     }
   }
 
@@ -388,7 +384,7 @@
     var extra = '';
     var row_id = 0;
     var html = '';
-
+    $('#tab1').empty();
 
     $.ajax({
       url: base_url + 'users/getSubscribedUsersData',
@@ -398,11 +394,9 @@
       success: function (data) {
         globalIdnData1 = data;
         // console.log(globalIdnData1);
-        $('#tab1').empty();
         globalIdnData2.length = data.length;
         console.log(globalIdnData2.length);
         $.each(data, function (key, value) {
-          // console.log(row_id);
           row_id++;
 
           console.log('key is :', key, 'value :', value);
@@ -435,14 +429,10 @@
           chkbx.setAttribute('onclick', `saveData(${value.id},${key})`)
           chkbx.style.margin = 'auto';
 
-
-
           var td3kabeta = document.createElement('i')
           td3kabeta.setAttribute('onclick', `informationShower(${value.id})`)
           // td3kabeta.setAttribute('onblur', `informationShower(${value.id},'end')`)
           td3kabeta.className = 'fa fa-info-circle';
-
-          // td2beta.id =
 
           td3.appendChild(td3kabeta)
           td3.appendChild(chkbx)
@@ -453,16 +443,10 @@
           tr.appendChild(td3)
           trdiv.appendChild(tr)
 
-          //other data for information tag using its iteration
-          // async () => {
           $.post(base_url + 'subscribe/fetchUserSubscriptionData', { 'id': value.id }, (data, status) => {
-            // console.log(status);
             data = JSON.parse(data);
-            // console.log(data);
-            // globalIdnData2.push(data) //for global use
             globalIdnData2[key] = data; // for alignment of data
             for (var a = 0; a < data.length; a++) {
-              // console.log(data[a].product_name, data[a].qty);
               document.getElementById(`infoTble${value.id}`).innerHTML += `<p>${data[a].product_name} - ${data[a].qty}</p>`
             }
 
@@ -501,24 +485,11 @@
 
         })
 
-
-
         if (count_table_tbody_tr >= 0) {
           $("#users_info_table tbody tr:last").after(html);
         }
 
         console.log(globalIdnData2, '\n', globalIdnData1, '\n', productsData);
-        // console.log(globalIdnData1[0].id, globalIdnData1[(globalIdnData1.length - 1)].id);
-
-        // for (var a = parseInt(globalIdnData1[0].id); a <= parseInt(globalIdnData1[(globalIdnData1.length - 1)].id); a++) {
-        //   console.log(a);
-        //   $.post(base_url + 'subscribe/fetchUserSubscriptionData', { 'id': a }, (data, status) => {
-        //     // console.log(status);
-        //     console.log(JSON.parse(data));
-        //     globalIdnData2.push(JSON.parse(data))
-        //   })
-        // }
-
       }
     });
 
@@ -533,7 +504,6 @@
 
   // Get today's date
   $(function () {
-    //date_default_timezone_set("Asia/Kolkata");
     var dtToday = new Date();
 
     var month = dtToday.getMonth() + 1;
@@ -545,7 +515,7 @@
       day = '0' + day.toString();
 
     var maxDate = year + '-' + month + '-' + day;
-    //alert(maxDate);
+    
     $('#date').attr('max', maxDate);
   });
 

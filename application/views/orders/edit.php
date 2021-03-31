@@ -43,7 +43,14 @@
           <form role="form" action="<?php base_url('orders/create') ?>" method="post" class="form-horizontal">
               <div class="box-body">
 
-                <?php echo validation_errors(); ?>
+                <?php $errors = ''; ?>
+                <?php $errors = validation_errors(); ?>
+                <?php if($errors != ''): ?>
+                  <div class="alert alert-warning alert-dismissible" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <?php echo validation_errors(); ?>
+                  </div>
+                <?php endif; ?>
 
                 <div class="form-group">
                   <label for="date" class="col-sm-12 control-label">Date: <?php date_default_timezone_set("Asia/Kolkata"); echo date('Y-m-d') ?></label>
@@ -107,22 +114,6 @@
                 <br /> <br/>
 
                 <div class="col-md-6 col-xs-12 pull pull-right">
-
-                  <div class="form-group">
-                    <label for="net_amount" class="col-sm-5 control-label">Gross Amount</label>
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" id="gross_amount" name="gross_amount" readonly="true" value="<?php echo $order_data['order']['gross_amount'] ?>" autocomplete="off">
-                      <input type="hidden" class="form-control" id="gross_amount_value" name="gross_amount_value" value="<?php echo $order_data['order']['gross_amount'] ?>" autocomplete="off">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="net_amount" class="col-sm-5 control-label">Service Charge</label>
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" id="service_charge_amount" name="service_charge_amount" disabled readonly="true" value="<?php echo $order_data['order']['service_charge_amount'] ?>" autocomplete="off">
-                      <input type="hidden" class="form-control" id="service_charge_amount_value" name="service_charge_amount_value" value="<?php echo $order_data['order']['service_charge_amount'] ?>" autocomplete="off">
-                    </div>
-                  </div>
 
                   <div class="form-group">
                     <label for="net_amount" class="col-sm-5 control-label">Net Amount</label>
@@ -302,14 +293,8 @@
       totalSubAmount = Number(totalSubAmount) + Number($("#amount_"+count).val());
     }
 
-    totalSubAmount = totalSubAmount.toFixed(2);
-
-    // sub total
-    $("#gross_amount").val(totalSubAmount);
-    $("#gross_amount_value").val(totalSubAmount);
-
     // total amount
-    var totalAmount = Number(totalSubAmount) + Number($("#service_charge_amount").val());
+    var totalAmount = Number(totalSubAmount);
     totalAmount = totalAmount.toFixed(2);
     $("#net_amount").val(totalAmount);
     $("#totalAmountValue").val(totalAmount);

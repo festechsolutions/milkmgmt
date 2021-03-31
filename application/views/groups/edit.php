@@ -40,7 +40,14 @@
             <form role="form" action="<?php base_url('groups/update') ?>" method="post">
               <div class="box-body">
 
-                <?php echo validation_errors(); ?>
+                <?php $errors = ''; ?>
+                <?php $errors = validation_errors(); ?>
+                <?php if($errors != ''): ?>
+                  <div class="alert alert-warning alert-dismissible" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <?php echo validation_errors(); ?>
+                  </div>
+                <?php endif; ?>
 
                 <div class="form-group">
                   <label for="group_name">Group Name</label>
@@ -199,7 +206,7 @@
                          ?>></td>
                       </tr>
                       <tr>
-                        <td>Orders</td>
+                        <td>Deliveries</td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="createOrder" <?php 
                         if($serialize_permission) {
                           if(in_array('createOrder', $serialize_permission)) { echo "checked"; }  
@@ -218,6 +225,29 @@
                         <td><input type="checkbox" name="permission[]" id="permission" value="deleteOrder" <?php 
                         if($serialize_permission) {
                           if(in_array('deleteOrder', $serialize_permission)) { echo "checked"; }  
+                        }
+                         ?>></td>
+                      </tr>
+                      <tr>
+                        <td>Payments</td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="createPayments" <?php 
+                        if($serialize_permission) {
+                          if(in_array('createPayments', $serialize_permission)) { echo "checked"; }  
+                        }
+                         ?>></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="updatePayments" <?php 
+                        if($serialize_permission) {
+                          if(in_array('updatePayments', $serialize_permission)) { echo "checked"; }  
+                        }
+                         ?>></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="viewOPayments" <?php 
+                        if($serialize_permission) {
+                          if(in_array('viewPayments', $serialize_permission)) { echo "checked"; }  
+                        }
+                         ?>></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="deletePayments" <?php 
+                        if($serialize_permission) {
+                          if(in_array('deletePayments', $serialize_permission)) { echo "checked"; }  
                         }
                          ?>></td>
                       </tr>

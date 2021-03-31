@@ -43,7 +43,14 @@
           <form role="form" action="<?php base_url('orders/create') ?>" method="post" class="form-horizontal">
               <div class="box-body">
 
-                <?php echo validation_errors(); ?>
+                <?php $errors = ''; ?>
+                <?php $errors = validation_errors(); ?>
+                <?php if($errors != ''): ?>
+                  <div class="alert alert-warning alert-dismissible" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <?php echo validation_errors(); ?>
+                  </div>
+                <?php endif; ?>
 
                 <div class="form-group">
                   <label for="gross_amount" class="col-sm-12 control-label">Date: <?php date_default_timezone_set("Asia/Kolkata"); echo date('d-m-Y') ?></label>
@@ -85,7 +92,7 @@
                     <tr valign="middle">
                       <th style="width:35;text-align:center">Product Name</th>
                       <th style="width:15%;text-align:center">Quantity</th>
-                      <th style="width:20%;text-align:center">Amount</th>
+                      <th style="width:20%;text-align:center">Price</th>
                       <th style="width:20%;text-align:center">Total Amount</th>
                       <th style="width:10%;text-align:center"><button type="button" id="add_row" style="background-color:#4CAF50" class="btn btn-default"><i class="fa fa-plus" style="color:white"></i></button></th>
                     </tr>
@@ -107,7 +114,7 @@
                         </td>
                         <td><input type="text" name="qty[]" id="qty_<?php echo $x; ?>" class="form-control" required onkeyup="getTotal(<?php echo $x; ?>)" value="<?php echo $val['qty'] ?>" autocomplete="off"></td>
                         <td>
-                          <input type="text" name="rate[]" id="rate_<?php echo $x; ?>" class="form-control" readonly="true" value="<?php echo $val['amount']/$val['qty'] ?>" autocomplete="off">
+                          <input type="text" name="rate[]" id="rate_<?php echo $x; ?>" class="form-control" readonly="true" value="<?php echo $val['amount']/$val['qty'].'.00' ?>" autocomplete="off">
                           <input type="hidden" name="rate_value[]" id="rate_value_<?php echo $x; ?>" value="<?php echo $val['amount']/$val['qty']?>" class="form-control" autocomplete="off">
                         </td>
                         <td>

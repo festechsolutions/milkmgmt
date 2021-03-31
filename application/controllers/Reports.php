@@ -110,21 +110,13 @@ class Reports extends Admin_Controller
 			redirect('dashboard', 'refresh');
 		}
 
-        $store_data = $this->model_stores->getStoresData();
-		$store_id = $store_data[0]['id'];
-
-		if($this->input->post('select_store')) {
-			$store_id = $this->input->post('select_store');
-		}	
-		
-		date_default_timezone_set("Asia/Kolkata");
+        date_default_timezone_set("Asia/Kolkata");
 		$date = date('d-m-Y');
 		$date=((string)$date);
-		$order_data = $this->model_reports->getStoreWiseItemData($store_id,$date);
+		$order_data = $this->model_reports->getStoreWiseItemData($date);
         
-		$this->data['selected_store'] = $store_id;
-		$this->data['store_data'] = $store_data;
 		$this->data['order_data'] = $order_data;
+		$this->data['date'] = $date;
 		$this->data['company_currency'] = $this->company_currency();
 
 		$this->render_template('reports/todayitemwise', $this->data);

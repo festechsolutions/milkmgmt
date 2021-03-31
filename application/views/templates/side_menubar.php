@@ -1,4 +1,4 @@
-<aside class="main-sidebar">
+ <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       
@@ -109,8 +109,8 @@
         <?php if(in_array('createOrder', $user_permission) || in_array('updateOrder', $user_permission) || in_array('viewOrder', $user_permission) || in_array('deleteOrder', $user_permission)): ?>
             <li class="treeview" id="OrderMainNav">
               <a href="#">
-                <i class="fa fa-database"></i>
-                <span>Deliver</span>
+                <i class="fa fa-truck"></i>
+                <span>Deliveries</span>
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
@@ -126,6 +126,48 @@
             </li>
           <?php endif; ?>
 
+<<<<<<< HEAD
+=======
+          <?php if(in_array('viewPayments', $user_permission)): ?>
+            <li class="treeview" id="PaymentsMainNav">
+              <a href="#">
+                <i class="fa fa-credit-card"></i>
+                <span>Payments</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <?php if(in_array('createPayments', $user_permission)): ?>
+                  <li id="createPaymentsSubMenu"><a href="<?php echo base_url('payments/main') ?>"><i class="fa fa-circle-o"></i> New Payment</a></li>
+                <?php endif; ?>
+                <?php if(in_array('viewPayments', $user_permission)): ?>
+                  <li id="managepaymentsSubMenu"><a href="<?php echo base_url('payments') ?>"><i class="fa fa-circle-o"></i>Manage Payments</a></li>
+                <?php endif; ?>
+              </ul>
+            </li>
+          <?php endif; ?>
+
+          <?php if(in_array('viewReport', $user_permission)): ?>
+            <li class="treeview" id="ReportMainNav">
+              <a href="#">
+                <i class="fa fa-signal"></i>
+                <span>Reports</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <?php if(in_array('viewReport', $user_permission)): ?>
+                  <li id="productReportSubMenu"><a href="<?php echo base_url('reports') ?>"><i class="fa fa-circle-o"></i>Total Revenue</a></li>
+                <?php endif; ?>
+                <?php if(in_array('viewReport', $user_permission)): ?>
+                  <li id="productReportSubMenu"><a href="<?php echo base_url('reports/todayitemwise') ?>"><i class="fa fa-circle-o"></i>Today's Delivered Items</a></li>
+                <?php endif; ?>
+              </ul>
+            </li>
+          <?php endif; ?>
+>>>>>>> dev
 
           <?php if(in_array('updateCompany', $user_permission)): ?>
             <li id="companyMainNav"><a href="<?php echo base_url('company/') ?>"><i class="fa fa-files-o"></i> <span>Company Info</span></a></li>

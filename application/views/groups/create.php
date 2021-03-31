@@ -39,7 +39,14 @@
             <form role="form" action="<?php base_url('groups/create') ?>" method="post">
               <div class="box-body">
 
-                <?php echo validation_errors(); ?>
+                <?php $errors = ''; ?>
+                <?php $errors = validation_errors(); ?>
+                <?php if($errors != ''): ?>
+                  <div class="alert alert-warning alert-dismissible" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <?php echo validation_errors(); ?>
+                  </div>
+                <?php endif; ?>
 
                 <div class="form-group">
                   <label for="group_name">Group Name</label>
@@ -102,12 +109,18 @@
                         <td><input type="checkbox" name="permission[]" id="permission" value="deleteSubscription"></td>
                       </tr>
                       <tr>
-                        <td>Deliver</td>
+                        <td>Deliveries</td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="createOrder"></td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="updateOrder"></td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="viewOrder"></td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="deleteOrder"></td>
                       </tr>
+                      <tr>
+                        <td>Payments</td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="createPayments"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="updatePayments"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="viewPayments"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="deletePayments"></td>
                       <tr>
                         <td>Report</td>
                         <td> - </td>

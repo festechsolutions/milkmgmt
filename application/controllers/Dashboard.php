@@ -14,6 +14,7 @@ class Dashboard extends Admin_Controller
 		$this->load->model('model_orders');
 		$this->load->model('model_users');
 		$this->load->model('model_stores');
+		$this->load->model('model_reports');
 	}
 
 	public function index()
@@ -28,19 +29,18 @@ class Dashboard extends Admin_Controller
 		$store_id = $this->model_stores->getStoreid($user_id);
 		
 		if($is_admin == false){
-			/*$this->data['total_store_unpaid_orders'] = $this->model_orders->countStoreUnPaidOrders($user_id,$date);
-			$this->data['total_store_amount'] = $this->model_orders->countStorepayment($user_id,$date);
-			$this->data['total_store_items_received'] = $this->model_orders->countStoreItemRec($store_id,$date);
-			$this->data['total_store_unpaid_amount'] = $this->model_orders->countStoreUnPaidAmount($user_id,$date);
-			$this->data['company_currency'] = $this->company_currency();*/
+			$this->data['todays_itemdata'] = $this->model_reports->gettodaysItemData($date);
+			$this->data['total_subscribed_users'] = $this->model_users->countSubscribedUsers();
+			$this->data['total_users'] = $this->model_users->countTotalUsers();
+			$this->data['total_colonies'] = $this->model_stores->countTotalStores();
+			$this->data['company_currency'] = $this->company_currency();
 		}
 		else{
-			/*$this->data['total_unpaid_orders'] = $this->model_orders->countCurrentUnPaidOrders($date);
-			$this->data['total_paid_amount'] = $this->model_orders->countCurrentpayment($date);
-			$this->data['total_items_received'] = $this->model_orders->countTotalItemRec($date);
-			$this->data['total_stores'] = $this->model_stores->countTotalStores();
-			$this->data['total_unpaid_amount'] = $this->model_orders->countCurrentUnPaidAmount($date);
-			$this->data['company_currency'] = $this->company_currency();*/
+			$this->data['todays_itemdata'] = $this->model_reports->gettodaysItemData($date);
+			$this->data['total_subscribed_users'] = $this->model_users->countSubscribedUsers();
+			$this->data['total_users'] = $this->model_users->countTotalUsers();
+			$this->data['total_colonies'] = $this->model_stores->countTotalStores();
+			$this->data['company_currency'] = $this->company_currency();
 		}
 
 		$this->data['is_admin'] = $is_admin;
